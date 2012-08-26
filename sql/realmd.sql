@@ -39,6 +39,7 @@ CREATE TABLE `account` (
   `expansion` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `mutetime` bigint(40) unsigned NOT NULL DEFAULT '0',
   `locale` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `os` varchar(4) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_username` (`username`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='Account System';
@@ -50,7 +51,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
-INSERT INTO `account` VALUES (1,'ADM','07f489ab4f6186e763bf1812d993476ebdf62798',NULL,NULL,NULL,'blizzlikegroup@hotmail.com','0000-00-00 00:00:00','127.0.0.1',0,0,'0000-00-00 00:00:00',0,1,0,0);
+INSERT INTO `account` VALUES (1,'ADM','07f489ab4f6186e763bf1812d993476ebdf62798',NULL,NULL,NULL,'blizzlikegroup@hotmail.com','0000-00-00 00:00:00','127.0.0.1',0,0,'0000-00-00 00:00:00',0,1,0,0,'');
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 

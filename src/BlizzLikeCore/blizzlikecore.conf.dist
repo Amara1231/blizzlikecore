@@ -2030,3 +2030,51 @@ AutoBroadcast.On = 0
 AutoBroadcast.Center = 0
 AutoBroadcast.Timer = 60000
 
+###############################################################################
+# WARDEN SETTINGS
+#
+#    Warden.Enabled
+#        Enable Warden anticheat system
+#        Default: 1 (Enabled)
+#                 0 (Disabled)
+#
+#    Warden.Action
+#        Action on failed check
+#        Default: 1 (Kick)
+#                 2 (Ban)
+#                 0 (Log)
+#
+#    Warden.BanDuration
+#        Time (in seconds) an account will be banned.
+#        Default: 86400 - (24 hours)
+#
+#    Warden.NumChecks
+#        Number of Warden checks that are sent to the client each cycle.
+#        Default: 3 - (Enabled)
+#                 0 - (Disabled)
+#
+#    Warden.ClientResponseDelay
+#        Time (in seconds) before client is getting disconnecting for not responding.
+#        Default: 600 - (600 Seconds)
+#                 0 - (Disabled, client won't be kicked)
+#
+#    Warden.ClientCheckHoldOff
+#        Time (in seconds) to wait before sending the next check request to the client.
+#        A low number increases traffic and load on client and server side.
+#        Default: 5 - (5 Seconds)
+#
+#    Warden.LogFile
+#        Log file of Warden Fail
+#        Default: "warden.log"
+#                 "" - Empty name for disable
+#
+###############################################################################
+
+Warden.Enabled = 1
+Warden.Action = 1
+Warden.BanDuration = 86400
+Warden.NumChecks = 3
+Warden.ClientResponseDelay = 600
+Warden.ClientCheckHoldOff = 5
+Warden.LogFile = "warden.log"
+
