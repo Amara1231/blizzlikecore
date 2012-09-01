@@ -279,7 +279,7 @@ void WorldSession::HandleBattleGroundPVPlogdataOpcode(WorldPacket & /*recv_data*
     DEBUG_LOG("WORLD: Sent MSG_PVP_LOG_DATA Message");
 }
 
-void WorldSession::HandleBattleGroundListOpcode(WorldPacket &recv_data)
+void WorldSession::HandleBattleGroundListOpcode(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: Recvd CMSG_BATTLEFIELD_LIST Message");
 
@@ -302,7 +302,7 @@ void WorldSession::HandleBattleGroundListOpcode(WorldPacket &recv_data)
     SendPacket(&data);
 }
 
-void WorldSession::HandleBattleGroundPlayerPortOpcode(WorldPacket &recv_data)
+void WorldSession::HandleBattleGroundPlayerPortOpcode(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: Recvd CMSG_BATTLEFIELD_PORT Message");
 

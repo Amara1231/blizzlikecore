@@ -341,7 +341,7 @@ void WorldSession::HandlePetActionHelper(Unit *pet, uint64 guid1, uint16 spellid
     }
 }
 
-void WorldSession::HandlePetNameQuery(WorldPacket& recv_data)
+void WorldSession::HandlePetNameQuery(WorldPacket & recv_data)
 {
     sLog.outDetail("HandlePetNameQuery. CMSG_PET_NAME_QUERY");
 

@@ -229,7 +229,7 @@ void WorldSession::HandleLfgSetCommentOpcode(WorldPacket & recv_data)
     _player->m_lookingForGroup.comment = comment;
 }
 
-void WorldSession::HandleLookingForGroup(WorldPacket& recv_data)
+void WorldSession::HandleLookingForGroup(WorldPacket & recv_data)
 {
     sLog.outDebug("MSG_LOOKING_FOR_GROUP");
     //recv_data.hexlike();

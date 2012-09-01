@@ -180,7 +180,7 @@ void WorldSession::HandleActivateTaxiFarOpcode (WorldPacket & recv_data)
     GetPlayer()->ActivateTaxiPathTo(nodes, 0, npc);
 }
 
-void WorldSession::HandleTaxiNextDestinationOpcode(WorldPacket& recv_data)
+void WorldSession::HandleTaxiNextDestinationOpcode(WorldPacket & recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_MOVE_SPLINE_DONE");
 

@@ -183,7 +183,7 @@ void WorldSession::HandleGMTicketGetTicketOpcode(WorldPacket & /*recv_data*/)
 
 }
 
-void WorldSession::HandleGMSurveySubmit(WorldPacket& recv_data)
+void WorldSession::HandleGMSurveySubmit(WorldPacket & recv_data)
 {
     uint64 nextSurveyID = ticketmgr.GetNextSurveyID();
     uint32 x;

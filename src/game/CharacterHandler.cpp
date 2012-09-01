@@ -845,7 +845,7 @@ void WorldSession::HandleToggleCloakOpcode(WorldPacket & /*recv_data*/)
     _player->ToggleFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK);
 }
 
-void WorldSession::HandleChangePlayerNameOpcode(WorldPacket& recv_data)
+void WorldSession::HandleChangePlayerNameOpcode(WorldPacket & recv_data)
 {
     uint64 guid;
     std::string newname;
@@ -921,7 +921,7 @@ void WorldSession::HandleChangePlayerNameOpcodeCallBack(QueryResult_AutoPtr resu
     session->SendPacket(&data);
 }
 
-void WorldSession::HandleDeclinedPlayerNameOpcode(WorldPacket& recv_data)
+void WorldSession::HandleDeclinedPlayerNameOpcode(WorldPacket & recv_data)
 {
     uint64 guid;
 

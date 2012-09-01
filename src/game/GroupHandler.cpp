@@ -375,7 +375,7 @@ void WorldSession::HandleLootMethodOpcode(WorldPacket & recv_data)
     group->SendUpdate();
 }
 
-void WorldSession::HandleLootRoll(WorldPacket &recv_data)
+void WorldSession::HandleLootRoll(WorldPacket & recv_data)
 {
     if (!GetPlayer()->GetGroup())
         return;
@@ -397,7 +397,7 @@ void WorldSession::HandleLootRoll(WorldPacket &recv_data)
     group->CountRollVote(GetPlayer()->GetGUID(), Guid, NumberOfPlayers, Choise);
 }
 
-void WorldSession::HandleMinimapPingOpcode(WorldPacket& recv_data)
+void WorldSession::HandleMinimapPingOpcode(WorldPacket & recv_data)
 {
     if (!GetPlayer()->GetGroup())
         return;
@@ -419,7 +419,7 @@ void WorldSession::HandleMinimapPingOpcode(WorldPacket& recv_data)
     GetPlayer()->GetGroup()->BroadcastPacket(&data, true, -1, GetPlayer()->GetGUID());
 }
 
-void WorldSession::HandleRandomRollOpcode(WorldPacket& recv_data)
+void WorldSession::HandleRandomRollOpcode(WorldPacket & recv_data)
 {
     uint32 minimum, maximum, roll;
     recv_data >> minimum;
@@ -774,7 +774,7 @@ void WorldSession::BuildPartyMemberStatsChangedPacket(Player *player, WorldPacke
 }
 
 /*this procedure handles clients CMSG_REQUEST_PARTY_MEMBER_STATS request*/
-void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket &recv_data)
+void WorldSession::HandleRequestPartyMemberStatsOpcode(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: Received CMSG_REQUEST_PARTY_MEMBER_STATS");
     uint64 Guid;

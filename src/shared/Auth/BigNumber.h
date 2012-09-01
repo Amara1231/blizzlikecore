@@ -81,7 +81,7 @@ class BigNumber
         struct bignum_st *BN() { return _bn; }
 
         uint32 AsDword();
-        uint8* AsByteArray(int minSize = 0, bool reverse = true);
+        uint8* AsByteArray(int minSize = 0);
         ByteBuffer AsByteBuffer();
         std::vector<uint8> AsByteVector();
 

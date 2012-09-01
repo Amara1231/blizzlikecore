@@ -647,7 +647,7 @@ void WorldSession::HandleTextEmoteOpcode(WorldPacket & recv_data)
         unit->ToCreature()->AI()->ReceiveEmote(GetPlayer(), text_emote);
 }
 
-void WorldSession::HandleChatIgnoredOpcode(WorldPacket& recv_data)
+void WorldSession::HandleChatIgnoredOpcode(WorldPacket & recv_data)
 {
     uint64 iguid;
     uint8 unk;

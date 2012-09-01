@@ -692,7 +692,7 @@ void WorldSession::HandleBugOpcode(WorldPacket & recv_data)
     CharacterDatabase.PExecute("INSERT INTO bugreport (type,content) VALUES('%s', '%s')", type.c_str(), content.c_str());
 }
 
-void WorldSession::HandleCorpseReclaimOpcode(WorldPacket &recv_data)
+void WorldSession::HandleCorpseReclaimOpcode(WorldPacket & recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_RECLAIM_CORPSE");
 
@@ -873,21 +873,21 @@ void WorldSession::HandleAreaTriggerOpcode(WorldPacket & recv_data)
     GetPlayer()->TeleportTo(at->target_mapId,at->target_X,at->target_Y,at->target_Z,at->target_Orientation,TELE_TO_NOT_LEAVE_TRANSPORT);
 }
 
-void WorldSession::HandleUpdateAccountData(WorldPacket &recv_data)
+void WorldSession::HandleUpdateAccountData(WorldPacket & recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_UPDATE_ACCOUNT_DATA");
     // not yet implemented. Needs to be backported from TC2
     recv_data.rpos(recv_data.wpos());                       // prevent warnings spam
 }
 
-void WorldSession::HandleRequestAccountData(WorldPacket& recv_data)
+void WorldSession::HandleRequestAccountData(WorldPacket & recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_REQUEST_ACCOUNT_DATA");
     // not yet implemented. Needs to be backported from TC2
     recv_data.rpos(recv_data.wpos());                       // prevent warnings spam
 }
 
-void WorldSession::HandleSetActionButtonOpcode(WorldPacket& recv_data)
+void WorldSession::HandleSetActionButtonOpcode(WorldPacket & recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_SET_ACTION_BUTTON");
     uint8 button, misc, type;
@@ -953,7 +953,7 @@ void WorldSession::HandleMoveTimeSkippedOpcode(WorldPacket & recv_data)
     */
 }
 
-void WorldSession::HandleFeatherFallAck(WorldPacket &recv_data)
+void WorldSession::HandleFeatherFallAck(WorldPacket & recv_data)
 {
     DEBUG_LOG("WORLD: CMSG_MOVE_FEATHER_FALL_ACK");
 
@@ -961,7 +961,7 @@ void WorldSession::HandleFeatherFallAck(WorldPacket &recv_data)
     recv_data.rpos(recv_data.wpos());                       // prevent warnings spam
 }
 
-void WorldSession::HandleMoveUnRootAck(WorldPacket& recv_data)
+void WorldSession::HandleMoveUnRootAck(WorldPacket & recv_data)
 {
     // no used
     recv_data.rpos(recv_data.wpos());                       // prevent warnings spam
@@ -979,7 +979,7 @@ void WorldSession::HandleMoveUnRootAck(WorldPacket& recv_data)
     */
 }
 
-void WorldSession::HandleMoveRootAck(WorldPacket& recv_data)
+void WorldSession::HandleMoveRootAck(WorldPacket & recv_data)
 {
     // no used
     recv_data.rpos(recv_data.wpos());                       // prevent warnings spam
@@ -997,7 +997,7 @@ void WorldSession::HandleMoveRootAck(WorldPacket& recv_data)
     */
 }
 
-void WorldSession::HandleSetActionBar(WorldPacket& recv_data)
+void WorldSession::HandleSetActionBar(WorldPacket & recv_data)
 {
     uint8 ActionBar;
     recv_data >> ActionBar;
@@ -1012,6 +1012,17 @@ void WorldSession::HandleSetActionBar(WorldPacket& recv_data)
     GetPlayer()->SetByteValue(PLAYER_FIELD_BYTES, 2, ActionBar);
 }
 
+void WorldSession::HandleWardenDataOpcode(WorldPacket& recv_data) 
+{ 
+    sLog.outDebug("WORLD: Recvd HandleWardenDataOpcode"); 
+    recv_data.read_skip<uint8>(); 
+    /* 
+        uint8 tmp; 
+        recv_data >> tmp; 
+        sLog.outDebug("Received opcode CMSG_WARDEN_DATA, not resolve.uint8 = %u", tmp); 
+    */ 
+} 
+
 void WorldSession::HandlePlayedTime(WorldPacket& /*recv_data*/)
 {
     WorldPacket data(SMSG_PLAYED_TIME, 4 + 4);
@@ -1020,7 +1031,7 @@ void WorldSession::HandlePlayedTime(WorldPacket& /*recv_data*/)
     SendPacket(&data);
 }
 
-void WorldSession::HandleInspectOpcode(WorldPacket& recv_data)
+void WorldSession::HandleInspectOpcode(WorldPacket & recv_data)
 {
     uint64 guid;
     recv_data >> guid;
@@ -1107,7 +1118,7 @@ void WorldSession::HandleInspectOpcode(WorldPacket& recv_data)
     SendPacket(&data);
 }
 
-void WorldSession::HandleInspectHonorStatsOpcode(WorldPacket& recv_data)
+void WorldSession::HandleInspectHonorStatsOpcode(WorldPacket & recv_data)
 {
     uint64 guid;
     recv_data >> guid;
@@ -1130,7 +1141,7 @@ void WorldSession::HandleInspectHonorStatsOpcode(WorldPacket& recv_data)
     SendPacket(&data);
 }
 
-void WorldSession::HandleWorldTeleportOpcode(WorldPacket& recv_data)
+void WorldSession::HandleWorldTeleportOpcode(WorldPacket & recv_data)
 {
     // write in client console: worldport 469 452 6454 2536 180 or /console worldport 469 452 6454 2536 180
     // Received opcode CMSG_WORLD_TELEPORT
@@ -1168,7 +1179,7 @@ void WorldSession::HandleWorldTeleportOpcode(WorldPacket& recv_data)
     DEBUG_LOG("Received worldport command from player %s", GetPlayer()->GetName());
 }
 
-void WorldSession::HandleWhoisOpcode(WorldPacket& recv_data)
+void WorldSession::HandleWhoisOpcode(WorldPacket & recv_data)
 {
     DEBUG_LOG("Received opcode CMSG_WHOIS");
     std::string charname;

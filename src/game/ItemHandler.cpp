@@ -1022,7 +1022,7 @@ void WorldSession::HandleItemNameQueryOpcode(WorldPacket & recv_data)
     } */
 }
 
-void WorldSession::HandleWrapItemOpcode(WorldPacket& recv_data)
+void WorldSession::HandleWrapItemOpcode(WorldPacket & recv_data)
 {
     sLog.outDebug("Received opcode CMSG_WRAP_ITEM");
 
@@ -1127,7 +1127,7 @@ void WorldSession::HandleWrapItemOpcode(WorldPacket& recv_data)
     _player->DestroyItemCount(gift, count, true);
 }
 
-void WorldSession::HandleSocketOpcode(WorldPacket& recv_data)
+void WorldSession::HandleSocketOpcode(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: CMSG_SOCKET_GEMS");
 
@@ -1251,7 +1251,7 @@ void WorldSession::HandleSocketOpcode(WorldPacket& recv_data)
     _player->ToggleMetaGemsActive(slot, true);              //turn on all metagems (except for target item)
 }
 
-void WorldSession::HandleCancelTempItemEnchantmentOpcode(WorldPacket& recv_data)
+void WorldSession::HandleCancelTempItemEnchantmentOpcode(WorldPacket & recv_data)
 {
     sLog.outDebug("WORLD: CMSG_CANCEL_TEMP_ENCHANTMENT");
 

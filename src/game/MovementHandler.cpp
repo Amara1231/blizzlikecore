@@ -182,7 +182,7 @@ void WorldSession::HandleMoveWorldportAckOpcode()
     GetPlayer()->ProcessDelayedOperations();
 }
 
-void WorldSession::HandleMoveTeleportAck(WorldPacket& recv_data)
+void WorldSession::HandleMoveTeleportAck(WorldPacket & recv_data)
 {
     uint64 guid;
     uint32 flags, time;
@@ -345,7 +345,7 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
     }
 }
 
-void WorldSession::HandleForceSpeedChangeAck(WorldPacket &recv_data)
+void WorldSession::HandleForceSpeedChangeAck(WorldPacket & recv_data)
 {
     DEBUG_LOG("WORLD: Recvd CMSG_SPEED_CHANGE_ACK");
     /* extract packet */
@@ -399,7 +399,7 @@ void WorldSession::HandleForceSpeedChangeAck(WorldPacket &recv_data)
     }
 }
 
-void WorldSession::HandleSetActiveMoverOpcode(WorldPacket &recv_data)
+void WorldSession::HandleSetActiveMoverOpcode(WorldPacket & recv_data)
 {
     DEBUG_LOG("WORLD: Recvd CMSG_SET_ACTIVE_MOVER");
 
@@ -416,7 +416,7 @@ void WorldSession::HandleSetActiveMoverOpcode(WorldPacket &recv_data)
     }
 }
 
-void WorldSession::HandleMoveNotActiveMoverOpcode(WorldPacket &recv_data)
+void WorldSession::HandleMoveNotActiveMoverOpcode(WorldPacket & recv_data)
 {
     DEBUG_LOG("WORLD: Recvd CMSG_MOVE_NOT_ACTIVE_MOVER");
     recv_data.hexlike();
@@ -479,7 +479,7 @@ void WorldSession::HandleMoveFlyModeChangeAckOpcode(WorldPacket & recv_data)
     GetPlayer()->SetUnitMovementFlags(movementInfo.GetMovementFlags());
 }
 
-void WorldSession::HandleMoveHoverAck(WorldPacket& recv_data)
+void WorldSession::HandleMoveHoverAck(WorldPacket & recv_data)
 {
     DEBUG_LOG("CMSG_MOVE_HOVER_ACK");
 
@@ -491,7 +491,7 @@ void WorldSession::HandleMoveHoverAck(WorldPacket& recv_data)
     recv_data >> Unused<uint32>();                          // unk2
 }
 
-void WorldSession::HandleMoveWaterWalkAck(WorldPacket& recv_data)
+void WorldSession::HandleMoveWaterWalkAck(WorldPacket & recv_data)
 {
     DEBUG_LOG("CMSG_MOVE_WATER_WALK_ACK");
 
@@ -503,7 +503,7 @@ void WorldSession::HandleMoveWaterWalkAck(WorldPacket& recv_data)
     recv_data >> Unused<uint32>();                          // unk2
 }
 
-void WorldSession::HandleSummonResponseOpcode(WorldPacket& recv_data)
+void WorldSession::HandleSummonResponseOpcode(WorldPacket & recv_data)
 {
     if (!GetPlayer()->isAlive() || GetPlayer()->isInCombat())
         return;

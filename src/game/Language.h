@@ -847,9 +847,6 @@ enum BlizzLikeStrings
     LANG_GM_ANNOUNCE_COLOR               = 6615,
 
     LANG_GM_SILENCE                      = 6616,              // GM Silenced Spell 1852
-    LANG_GM_WARDEN_BAN_ANNOUNCE          = 6617,              // WAC Ban Announce
-    LANG_GM_WARDEN_KICK_ANNOUNCE         = 6618,              // WAC Kick Announce
-    LANG_GM_WARDEN_ANNOUNCE              = 6619,              // WAC Announce
 
     // Use for not-in-offcial-sources patches
     //                                    10000-10999
