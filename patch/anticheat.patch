@@ -1,5 +1,21 @@
+diff --git a/sql/anticheat/world_anticheat.sql b/sql/anticheat/world_anticheat.sql
+new file mode 100644
+index 0000000..eb1aaca
+--- /dev/null
++++ b/sql/anticheat/world_anticheat.sql
+@@ -0,0 +1,10 @@
++-- Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
++--
++-- Dumping data for table `blizzlike_string`
++--
++
++LOCK TABLES `blizzlike_string` WRITE;
++/*!40000 ALTER TABLE `blizzlike_string` DISABLE KEYS */;
++INSERT INTO `blizzlike_string` VALUES (6620,'|cfff00000%s is kicked for use to plane exception.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6621,'|cfff00000%s produces a anticheat alarm for %s.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
++/*!40000 ALTER TABLE `blizzlike_string` ENABLE KEYS */;
++UNLOCK TABLES;
 diff --git a/src/BlizzLikeCore/blizzlikecore.conf.dist b/src/BlizzLikeCore/blizzlikecore.conf.dist
-index a732cca..4eead35 100644
+index a732cca..d26e5d9 100644
 --- a/src/BlizzLikeCore/blizzlikecore.conf.dist
 +++ b/src/BlizzLikeCore/blizzlikecore.conf.dist
 @@ -2029,3 +2029,21 @@ DuelMod.Cooldowns = 0
@@ -8,7 +24,7 @@ index a732cca..4eead35 100644
  AutoBroadcast.Timer = 60000
 +
 +###############################################################################
-+# Movement Anticheat
++# MOVEMENT ANTICHEAT
 +#
 +#    Anticheat.Movement.Enable
 +#        Enable Movement Anticheat
@@ -24,8 +40,21 @@ index a732cca..4eead35 100644
 +
 +Anticheat.Movement.Enable = 1
 +Anticheat.Movement.GmLevel = 0
+diff --git a/src/game/Language.h b/src/game/Language.h
+index 2727ac8..40fe0b1 100644
+--- a/src/game/Language.h
++++ b/src/game/Language.h
+@@ -847,6 +847,8 @@ enum BlizzLikeStrings
+     LANG_GM_ANNOUNCE_COLOR               = 6615,
+ 
+     LANG_GM_SILENCE                      = 6616,              // GM Silenced Spell 1852
++    LANG_GM_AC_KICK_ANNOUNCE             = 6620,              // GM AC Kick Announce
++    LANG_GM_AC_ANNOUNCE                  = 6621,              // GM AC Announce
+ 
+     // Use for not-in-offcial-sources patches
+     //                                    10000-10999
 diff --git a/src/game/MovementHandler.cpp b/src/game/MovementHandler.cpp
-index ae3035e..9bc3e6d 100644
+index ae3035e..c17787e 100644
 --- a/src/game/MovementHandler.cpp
 +++ b/src/game/MovementHandler.cpp
 @@ -20,6 +20,7 @@
@@ -36,17 +65,18 @@ index ae3035e..9bc3e6d 100644
  #include "Corpse.h"
  #include "Player.h"
  #include "MapManager.h"
-@@ -28,6 +29,9 @@
+@@ -27,6 +28,10 @@
+ #include "BattleGround.h"
  #include "WaypointMovementGenerator.h"
  #include "InstanceSaveMgr.h"
- 
++#include "Language.h"
++
 +//Uncomment to see anti cheat debug messages in console
 +//#define MOVEMENT_ANTICHEAT_DEBUG
-+
+ 
  void WorldSession::HandleMoveWorldportAckOpcode(WorldPacket & /*recv_data*/)
  {
-     DEBUG_LOG("WORLD: got MSG_MOVE_WORLDPORT_ACK.");
-@@ -36,6 +40,7 @@ void WorldSession::HandleMoveWorldportAckOpcode(WorldPacket & /*recv_data*/)
+@@ -36,6 +41,7 @@ void WorldSession::HandleMoveWorldportAckOpcode(WorldPacket & /*recv_data*/)
  
  void WorldSession::HandleMoveWorldportAckOpcode()
  {
@@ -54,7 +84,7 @@ index ae3035e..9bc3e6d 100644
      // ignore unexpected far teleports
      if (!GetPlayer()->IsBeingTeleportedFar())
          return;
-@@ -55,6 +60,9 @@ void WorldSession::HandleMoveWorldportAckOpcode()
+@@ -55,6 +61,9 @@ void WorldSession::HandleMoveWorldportAckOpcode()
          return;
      }
  
@@ -64,7 +94,7 @@ index ae3035e..9bc3e6d 100644
      // get the destination map entry, not the current one, this will fix homebind and reset greeting
      MapEntry const* mEntry = sMapStore.LookupEntry(loc.GetMapId());
      InstanceTemplate const* mInstance = objmgr.GetInstanceTemplate(loc.GetMapId());
-@@ -201,6 +209,9 @@ void WorldSession::HandleMoveTeleportAck(WorldPacket & recv_data)
+@@ -201,6 +210,9 @@ void WorldSession::HandleMoveTeleportAck(WorldPacket & recv_data)
      if (guid != plMover->GetGUID())
          return;
  
@@ -74,7 +104,7 @@ index ae3035e..9bc3e6d 100644
      plMover->SetSemaphoreTeleportNear(false);
  
      uint32 old_zone = plMover->GetZoneId();
-@@ -237,6 +248,8 @@ void WorldSession::HandleMoveTeleportAck(WorldPacket & recv_data)
+@@ -237,6 +249,8 @@ void WorldSession::HandleMoveTeleportAck(WorldPacket & recv_data)
  
  void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
  {
@@ -83,7 +113,7 @@ index ae3035e..9bc3e6d 100644
      Unit *mover = _player->m_mover;
  
      ASSERT(mover != NULL);                                  // there must always be a mover
-@@ -246,6 +259,7 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
+@@ -246,6 +260,7 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
      // ignore, waiting processing in WorldSession::HandleMoveWorldportAckOpcode and WorldSession::HandleMoveTeleportAck
      if (plMover && plMover->IsBeingTeleported())
      {
@@ -91,7 +121,7 @@ index ae3035e..9bc3e6d 100644
          recv_data.rpos(recv_data.wpos());                   // prevent warnings spam
          return;
      }
-@@ -268,6 +282,21 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
+@@ -268,6 +283,21 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
      if (!blizzlike::IsValidMapCoord(movementInfo.GetPos()->GetPositionX(), movementInfo.GetPos()->GetPositionY(), movementInfo.GetPos()->GetPositionZ(), movementInfo.GetPos()->GetOrientation()))
          return;
  
@@ -113,7 +143,7 @@ index ae3035e..9bc3e6d 100644
      //Save movement flags
      mover->SetUnitMovementFlags(movementInfo.GetMovementFlags());
  
-@@ -276,73 +305,424 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
+@@ -276,73 +306,424 @@ void WorldSession::HandleMovementOpcodes(WorldPacket & recv_data)
      {
          // transports size limited
          // (also received at zeppelin/lift leave by some reason with t_* as absolute in continent coordinates, can be safely skipped)
@@ -254,7 +284,7 @@ index ae3035e..9bc3e6d 100644
 +                (abs(plMover->GetPositionZ() - movementInfo.GetPos()->GetPositionZ()) > 0.1f))
 +            {
 +                #ifdef MOVEMENT_ANTICHEAT_DEBUG
-+                sLog.outError("Passiv Movement: dx=%f, dy=%f, dz=%f",
++                sLog.outDebug("Passiv Movement: dx=%f, dy=%f, dz=%f",
 +                    abs(plMover->GetPositionX() - movementInfo.GetPos()->GetPositionX()),
 +                    abs(plMover->GetPositionY() - movementInfo.GetPos()->GetPositionY()),
 +                    abs(plMover->GetPositionZ() - movementInfo.GetPos()->GetPositionZ()));
@@ -321,7 +351,7 @@ index ae3035e..9bc3e6d 100644
 +                        && (JumpHeight < -1.7f)) //max jumpheight is constant for each movementtype
 +            {
 +                #ifdef MOVEMENT_ANTICHEAT_DEBUG
-+                sLog.outError("Movement Anticheat: %s is GraviJump exception. anti_jumpbase=%f, anti_justjumped=%u, JumpHeight=%f, last_vspeed=%f",
++                sLog.outDebug("Movement Anticheat: %s is GraviJump exception. anti_jumpbase=%f, anti_justjumped=%u, JumpHeight=%f, last_vspeed=%f",
 +                    plMover->GetName(), plMover->m_anti_jumpbase, plMover->m_anti_justjumped, JumpHeight, plMover->m_anti_last_vspeed);
 +                #endif
 +                plMover->m_anti_lastcheat = "GraviJump Hack";
@@ -339,7 +369,7 @@ index ae3035e..9bc3e6d 100644
 +                else
 +                {
 +                    #ifdef MOVEMENT_ANTICHEAT_DEBUG
-+                    sLog.outError("Movement Anticheat: %s is Jumphack exception. count=%u",plMover->GetName(), plMover->m_anti_justjumped);
++                    sLog.outDebug("Movement Anticheat: %s is Jumphack exception. count=%u",plMover->GetName(), plMover->m_anti_justjumped);
 +                    #endif
 +                    plMover->m_anti_justjumped = 0;
 +                    plMover->m_anti_lastcheat = "Jump Hack";
@@ -354,7 +384,7 @@ index ae3035e..9bc3e6d 100644
 +            if ((real_delta > allowed_delta) && (delta_z < 1))
 +            {
 +                #ifdef MOVEMENT_ANTICHEAT_DEBUG
-+                sLog.outError("Movement Anticheat: %s is speed exception. real_delta=%f, allowed_delta=%f, delta_z=%f, last_vspeed=%f", plMover->GetName(), real_delta, allowed_delta, delta_z, plMover->m_anti_last_vspeed * time_delta);
++                sLog.outDebug("Movement Anticheat: %s is speed exception. real_delta=%f, allowed_delta=%f, delta_z=%f, last_vspeed=%f", plMover->GetName(), real_delta, allowed_delta, delta_z, plMover->m_anti_last_vspeed * time_delta);
 +                #endif
 +                plMover->m_anti_lastcheat = "Speed Hack";
 +                check_passed = false;
@@ -365,7 +395,7 @@ index ae3035e..9bc3e6d 100644
 +            if ((real_delta > 4900.0f) && !(real_delta < allowed_delta))
 +            {
 +                #ifdef MOVEMENT_ANTICHEAT_DEBUG
-+                sLog.outError("Movement Anticheat: %s is teleport exception. real_delta=%f, allowed_delta=%f, min_delta=%f ", plMover->GetName(), real_delta, allowed_delta, time_delta * 100);
++                sLog.outDebug("Movement Anticheat: %s is teleport exception. real_delta=%f, allowed_delta=%f, min_delta=%f ", plMover->GetName(), real_delta, allowed_delta, time_delta * 100);
 +                #endif
 +                plMover->m_anti_lastcheat = "Teleport Hack";
 +                check_passed = false;
@@ -384,7 +414,7 @@ index ae3035e..9bc3e6d 100644
 +            if (!plMover->m_anti_isjumping && (tg_z > 1.56f) && (delta_z < plMover->m_anti_last_vspeed))
 +            {
 +                #ifdef MOVEMENT_ANTICHEAT_DEBUG
-+                sLog.outError("Movement Anticheat: %s is a wall-climb cheater. tg_z=%f, delta_z=%f, last_vspeed=%f", plMover->GetName(), tg_z, delta_z, plMover->m_anti_last_vspeed * time_delta);
++                sLog.outDebug("Movement Anticheat: %s is a wall-climb cheater. tg_z=%f, delta_z=%f, last_vspeed=%f", plMover->GetName(), tg_z, delta_z, plMover->m_anti_last_vspeed * time_delta);
 +                #endif
 +                plMover->m_anti_lastcheat = "Wall-climbing Hack";
 +                check_passed = false;
@@ -394,7 +424,7 @@ index ae3035e..9bc3e6d 100644
 +            if (((movementInfo.GetMovementFlags() & (MOVEFLAG_CAN_FLY | MOVEFLAG_FLYING | MOVEFLAG_FLYING2)) != 0) && !(plMover->HasAuraType(SPELL_AURA_FLY) || plMover->HasAuraType(SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED)))
 +            {
 +                #ifdef MOVEMENT_ANTICHEAT_DEBUG
-+                sLog.outError("Movement Anticheat: %s is a fly cheater. {SPELL_AURA_FLY=[%X]} {SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED=[%X]} {SPELL_AURA_MOD_FLIGHT_SPEED_STACKING=[%X]} {SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED_STACKING=[%X]} {SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED_NOT_STACKING=[%X]}",
++                sLog.outDebug("Movement Anticheat: %s is a fly cheater. {SPELL_AURA_FLY=[%X]} {SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED=[%X]} {SPELL_AURA_MOD_FLIGHT_SPEED_STACKING=[%X]} {SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED_STACKING=[%X]} {SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED_NOT_STACKING=[%X]}",
 +                   plMover->GetName(),
 +                   plMover->HasAuraType(SPELL_AURA_FLY), plMover->HasAuraType(SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED),
 +                   plMover->HasAuraType(SPELL_AURA_MOD_FLIGHT_SPEED_STACKING), plMover->HasAuraType(SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED_STACKING),
@@ -409,7 +439,7 @@ index ae3035e..9bc3e6d 100644
 +            if (movementInfo.HasMovementFlag(MOVEFLAG_WATERWALKING) && !(plMover->HasAuraType(SPELL_AURA_WATER_WALK) | plMover->HasAuraType(SPELL_AURA_GHOST)))
 +            {
 +                #ifdef MOVEMENT_ANTICHEAT_DEBUG
-+                sLog.outError("Movement Anticheat: %s is a water-walk cheater. MovementFlags=[%X], SPELL_AURA_WATER_WALK=[%X]", plMover->GetName(), movementInfo.GetMovementFlags(), plMover->HasAuraType(SPELL_AURA_WATER_WALK));
++                sLog.outDebug("Movement Anticheat: %s is a water-walk cheater. MovementFlags=[%X], SPELL_AURA_WATER_WALK=[%X]", plMover->GetName(), movementInfo.GetMovementFlags(), plMover->HasAuraType(SPELL_AURA_WATER_WALK));
 +                #endif
 +                plMover->m_anti_lastcheat = "Water Walk Hack";
 +                check_passed = false;
@@ -428,7 +458,7 @@ index ae3035e..9bc3e6d 100644
 +            if (movementInfo.HasMovementFlag(MOVEFLAG_SAFE_FALL) && !(plMover->HasAuraType(SPELL_AURA_FEATHER_FALL)))
 +            {
 +                #ifdef MOVEMENT_ANTICHEAT_DEBUG
-+                sLog.outError("Movement Anticheat: %s is a featherfall-fall cheater. MovementFlags=[%X], SPELL_AURA_FEATHER_FALL=[%X]", plMover->GetName(), movementInfo.GetMovementFlags(), plMover->HasAuraType(SPELL_AURA_FEATHER_FALL));
++                sLog.outDebug("Movement Anticheat: %s is a featherfall-fall cheater. MovementFlags=[%X], SPELL_AURA_FEATHER_FALL=[%X]", plMover->GetName(), movementInfo.GetMovementFlags(), plMover->HasAuraType(SPELL_AURA_FEATHER_FALL));
 +                #endif
 +                plMover->m_anti_lastcheat = "Feather Fall Hack";
 +                check_passed = false;
@@ -449,11 +479,11 @@ index ae3035e..9bc3e6d 100644
 +                    {
 +                        check_passed = false;
 +                        #ifdef MOVEMENT_ANTICHEAT_DEBUG
-+                        sLog.outError("Movement Anticheat: %s uses teleport to plane. plane_z: %f ", plMover->GetName(), plane_z);
++                        sLog.outDebug("Movement Anticheat: %s uses teleport to plane. plane_z: %f ", plMover->GetName(), plane_z);
 +                        #endif
 +                        plMover->m_anti_lastcheat = "Teleport to Plane Hack";
 +                        plMover->GetSession()->KickPlayer();
-+                        sLog.outError("Movement Anticheat: %s is kicked for use to plane exception.", plMover->GetName());
++                        sWorld.SendGMText(LANG_GM_AC_KICK_ANNOUNCE, plMover->GetName());
 +                    }
 +                }
 +            }
@@ -472,7 +502,7 @@ index ae3035e..9bc3e6d 100644
 +                if (GameObjectData const* go_data = objmgr.GetGOData(plMover->m_anti_transportGUID))
 +                {
 +                    #ifdef MOVEMENT_ANTICHEAT_DEBUG
-+                    sLog.outError("Movement Anticheat: %s on some transport. xyz: %f, %f, %f", plMover->GetName(), go_data->posX, go_data->posY, go_data->posZ);
++                    sLog.outDebug("Movement Anticheat: %s on some transport. xyz: %f, %f, %f", plMover->GetName(), go_data->posX, go_data->posY, go_data->posZ);
 +                    #endif
 +
 +                    int mapid = go_data->mapid;
@@ -492,7 +522,7 @@ index ae3035e..9bc3e6d 100644
 +                else
 +                {
 +                    #ifdef MOVEMENT_ANTICHEAT_DEBUG
-+                    sLog.outError("Movement Anticheat: %s on undefined transport.", plMover->GetName());
++                    sLog.outDebug("Movement Anticheat: %s on undefined transport.", plMover->GetName());
 +                    #endif
 +                    check_passed = false;
 +                }
@@ -546,7 +576,7 @@ index ae3035e..9bc3e6d 100644
 +
 +            if (plMover->m_anti_alarmcount > 0 && !plMover->IsInWater())
 +            {
-+                sLog.outError("Movement Anticheat: %s produces a anticheat alarm for %s.", plMover->GetName(), plMover->m_anti_lastcheat.c_str());
++                sWorld.SendGMText(LANG_GM_AC_ANNOUNCE, plMover->GetName(), plMover->m_anti_lastcheat.c_str());
 +            }
  
 -        if (movementInfo.GetPos()->GetPositionZ() < -500.0f)
@@ -572,11 +602,11 @@ index ae3035e..9bc3e6d 100644
      }
 +    else
 +    if (getMSTimeDiff(timediff, getMSTime()) > 20)
-+        sLog.outError("Anticheat Process Time: %ums : %s [%x]", getMSTimeDiff(timediff, getMSTime()), LookupOpcodeName(opcode), movementInfo.GetMovementFlags());
++        sLog.outDebug("Anticheat Process Time: %ums : %s [%x]", getMSTimeDiff(timediff, getMSTime()), LookupOpcodeName(opcode), movementInfo.GetMovementFlags());
  }
  
  void WorldSession::HandleForceSpeedChangeAck(WorldPacket & recv_data)
-@@ -366,6 +746,17 @@ void WorldSession::HandleForceSpeedChangeAck(WorldPacket & recv_data)
+@@ -366,6 +747,17 @@ void WorldSession::HandleForceSpeedChangeAck(WorldPacket & recv_data)
      // Save movement flags
      GetPlayer()->SetUnitMovementFlags(movementInfo.GetMovementFlags());
  
@@ -594,7 +624,7 @@ index ae3035e..9bc3e6d 100644
      // client ACK send one packet for mounted/run case and need skip all except last from its
      // in other cases anti-cheat check can be fail in false case
      UnitMoveType move_type;
-@@ -397,6 +788,25 @@ void WorldSession::HandleForceSpeedChangeAck(WorldPacket & recv_data)
+@@ -397,6 +789,25 @@ void WorldSession::HandleForceSpeedChangeAck(WorldPacket & recv_data)
          if (GetPlayer()->m_forced_speed_changes[force_move_type] > 0)
              return;
      }
@@ -620,7 +650,7 @@ index ae3035e..9bc3e6d 100644
  }
  
  void WorldSession::HandleSetActiveMoverOpcode(WorldPacket & recv_data)
-@@ -461,6 +871,19 @@ void WorldSession::HandleMoveKnockBackAck(WorldPacket & recv_data)
+@@ -461,6 +872,19 @@ void WorldSession::HandleMoveKnockBackAck(WorldPacket & recv_data)
  
      // Save movement flags
      GetPlayer()->SetUnitMovementFlags(movementInfo.GetMovementFlags());
@@ -640,7 +670,7 @@ index ae3035e..9bc3e6d 100644
  }
  
  void WorldSession::HandleMoveFlyModeChangeAckOpcode(WorldPacket & recv_data)
-@@ -476,6 +899,18 @@ void WorldSession::HandleMoveFlyModeChangeAckOpcode(WorldPacket & recv_data)
+@@ -476,6 +900,18 @@ void WorldSession::HandleMoveFlyModeChangeAckOpcode(WorldPacket & recv_data)
      recv_data >> movementInfo;
      recv_data.read_skip<uint32>();                          // unk2
  
@@ -814,7 +844,7 @@ index c4c3f6f..70623ef 100644
  
      m_configs[CONFIG_COMPRESSION] = sConfig.GetIntDefault("Compression", 1);
 diff --git a/src/game/World.h b/src/game/World.h
-index a23430a..18b3316 100644
+index a23430a..b28319c 100644
 --- a/src/game/World.h
 +++ b/src/game/World.h
 @@ -574,6 +574,10 @@ class World
@@ -832,7 +862,7 @@ index a23430a..18b3316 100644
          static int32 m_visibility_notify_periodInInstances;
          static int32 m_visibility_notify_periodInBGArenas;
  
-+        // Movement Anticheat enable flag
++        // Movement Anticheat Enable Flag
 +        static bool m_EnableMvAnticheat;
 +        static uint32 m_MvAnticheatGmLevel;
 +
