@@ -162,7 +162,7 @@ void WorldSession::HandleBattleGroundJoinOpcode(WorldPacket & recv_data)
 
             // store entry point coords (same as leader entry point)
             if (!sWorld.getConfig(CONFIG_BATTLEGROUND_WRATH_LEAVE_MODE))
-                member->SetBattleGroundEntryPoint(_player->GetMapId(),_player->GetPositionX(),_player->GetPositionY(),_player->GetPositionZ(),_player->GetOrientation());
+                member->SetBattleGroundEntryPoint(member->GetMapId(), member->GetPositionX(), member->GetPositionY(), member->GetPositionZ(), member->GetOrientation());
 
             WorldPacket data;
                                                             // send status packet (in queue)
@@ -182,7 +182,7 @@ void WorldSession::HandleBattleGroundJoinOpcode(WorldPacket & recv_data)
         uint32 queueSlot = _player->AddBattleGroundQueueId(bgQueueTypeId);
         // store entry point coords
         if (!sWorld.getConfig(CONFIG_BATTLEGROUND_WRATH_LEAVE_MODE))
-            _player->SetBattleGroundEntryPoint(_player->GetMapId(),_player->GetPositionX(),_player->GetPositionY(),_player->GetPositionZ(),_player->GetOrientation());
+            _player->SetBattleGroundEntryPoint(_player->GetMapId(), _player->GetPositionX(), _player->GetPositionY(), _player->GetPositionZ(), _player->GetOrientation());
 
         WorldPacket data;
                                                             // send status packet (in queue)
@@ -787,7 +787,7 @@ void WorldSession::HandleBattleGroundArenaJoin(WorldPacket & recv_data)
 
             // store entry point coords (same as leader entry point)
             if (!sWorld.getConfig(CONFIG_BATTLEGROUND_WRATH_LEAVE_MODE))
-                member->SetBattleGroundEntryPoint(_player->GetMapId(),_player->GetPositionX(),_player->GetPositionY(),_player->GetPositionZ(),_player->GetOrientation());
+                member->SetBattleGroundEntryPoint(_player->GetMapId(), _player->GetPositionX(), _player->GetPositionY(), _player->GetPositionZ(), _player->GetOrientation());
 
             WorldPacket data;
             // send status packet (in queue)
@@ -807,7 +807,7 @@ void WorldSession::HandleBattleGroundArenaJoin(WorldPacket & recv_data)
 
         // store entry point coords
         if (!sWorld.getConfig(CONFIG_BATTLEGROUND_WRATH_LEAVE_MODE))
-            _player->SetBattleGroundEntryPoint(_player->GetMapId(),_player->GetPositionX(),_player->GetPositionY(),_player->GetPositionZ(),_player->GetOrientation());
+            _player->SetBattleGroundEntryPoint(_player->GetMapId(), _player->GetPositionX(), _player->GetPositionY(), _player->GetPositionZ(), _player->GetOrientation());
 
         WorldPacket data;
         // send status packet (in queue)
