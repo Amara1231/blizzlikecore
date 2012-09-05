@@ -1,19 +1,11 @@
 diff --git a/sql/anticheat/world_anticheat.sql b/sql/anticheat/world_anticheat.sql
 new file mode 100644
-index 0000000..eb1aaca
+index 0000000..4dc2128
 --- /dev/null
 +++ b/sql/anticheat/world_anticheat.sql
-@@ -0,0 +1,10 @@
+@@ -0,0 +1,2 @@
 +-- Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
-+--
-+-- Dumping data for table `blizzlike_string`
-+--
-+
-+LOCK TABLES `blizzlike_string` WRITE;
-+/*!40000 ALTER TABLE `blizzlike_string` DISABLE KEYS */;
-+INSERT INTO `blizzlike_string` VALUES (6620,'|cfff00000%s is kicked for use to plane exception.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6621,'|cfff00000%s produces a anticheat alarm for %s.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-+/*!40000 ALTER TABLE `blizzlike_string` ENABLE KEYS */;
-+UNLOCK TABLES;
++INSERT INTO `blizzlike_string` VALUES (6620,'|cfff00000%s is kicked for use teleport to plane. plane_z: %f.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6621,'|cfff00000%s produces a anticheat alarm for %s.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 diff --git a/src/BlizzLikeCore/blizzlikecore.conf.dist b/src/BlizzLikeCore/blizzlikecore.conf.dist
 index a732cca..d26e5d9 100644
 --- a/src/BlizzLikeCore/blizzlikecore.conf.dist
@@ -483,14 +475,14 @@ index ae3035e..c17787e 100644
 +                        #endif
 +                        plMover->m_anti_lastcheat = "Teleport to Plane Hack";
 +                        plMover->GetSession()->KickPlayer();
-+                        sWorld.SendGMText(LANG_GM_AC_KICK_ANNOUNCE, plMover->GetName());
++                        sWorld.SendGMText(LANG_GM_AC_KICK_ANNOUNCE, plMover->GetName(), plane_z);
 +                    }
 +                }
 +            }
 +        }
 +        else if (movementInfo.HasMovementFlag(MOVEFLAG_ONTRANSPORT))
 +        {
-+            // antiwrap
++            // Anti-Wrap
 +            if (plMover->m_transport)
 +            {
 +                float trans_rad = movementInfo.GetTransportPos()->GetPositionX() * movementInfo.GetTransportPos()->GetPositionX() + movementInfo.GetTransportPos()->GetPositionY() * movementInfo.GetTransportPos()->GetPositionY() + movementInfo.GetTransportPos()->GetPositionZ() * movementInfo.GetTransportPos()->GetPositionZ();
@@ -674,7 +666,7 @@ index ae3035e..c17787e 100644
      recv_data >> movementInfo;
      recv_data.read_skip<uint32>();                          // unk2
  
-+    // Movement Anticheat code
++    // Movement Anticheat
 +    if (movementInfo.HasMovementFlag(MOVEFLAG_FLYING))
 +    {
 +        GetPlayer()->m_anti_flymounted = true;
@@ -777,7 +769,7 @@ index 0462873..c3ad384 100644
      if (GetPlayer()->hasUnitState(UNIT_STAT_DIED))
          GetPlayer()->RemoveSpellsCausingAura(SPELL_AURA_FEIGN_DEATH);
  
-+    // anti-cheat
++    // Movement Anticheat
 +    GetPlayer()->m_anti_ontaxipath = true;
 +
      while (GetPlayer()->GetMotionMaster()->GetCurrentMovementGeneratorType() == FLIGHT_MOTION_TYPE)
@@ -791,7 +783,7 @@ index 0462873..c3ad384 100644
      uint32 curDest = GetPlayer()->m_taxi.GetTaxiDestination();
      if (!curDest)
 +    {
-+        // Movement Anticheat code
++        // Movement Anticheat
 +        GetPlayer()->Relocate(movementInfo.GetPos());
 +        GetPlayer()->m_movementInfo = movementInfo;
 +        GetPlayer()->m_anti_lastmovetime = movementInfo.time;
@@ -808,7 +800,7 @@ index 0462873..c3ad384 100644
 +            GetPlayer()->GetMotionMaster()->MovementExpired(false);
 +    }
 +
-+    //Movement Anticheat code
++    //Movement Anticheat
 +    GetPlayer()->SetPosition(movementInfo.GetPos()->GetPositionX(), movementInfo.GetPos()->GetPositionY(), movementInfo.GetPos()->GetPositionZ(), movementInfo.GetPos()->GetOrientation());
 +    GetPlayer()->m_movementInfo = movementInfo;
 +    GetPlayer()->m_anti_lastmovetime = movementInfo.time;
@@ -862,7 +854,7 @@ index a23430a..b28319c 100644
          static int32 m_visibility_notify_periodInInstances;
          static int32 m_visibility_notify_periodInBGArenas;
  
-+        // Movement Anticheat Enable Flag
++        // Movement Anticheat (Enable Flag)
 +        static bool m_EnableMvAnticheat;
 +        static uint32 m_MvAnticheatGmLevel;
 +
