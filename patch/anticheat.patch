@@ -5,7 +5,7 @@ index 0000000..4dc2128
 +++ b/sql/anticheat/world_anticheat.sql
 @@ -0,0 +1,2 @@
 +-- Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
-+INSERT INTO `blizzlike_string` VALUES (6620,'|cfff00000%s is kicked for use teleport to plane. plane_z: %f.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6621,'|cfff00000%s produces a anticheat alarm for %s.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
++INSERT INTO `blizzlike_string` VALUES (6620,'|cfff00000%s is kicked for use Teleport to Plane Hack.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6621,'|cfff00000%s produces a anticheat alarm for %s.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 diff --git a/src/BlizzLikeCore/blizzlikecore.conf.dist b/src/BlizzLikeCore/blizzlikecore.conf.dist
 index a732cca..d26e5d9 100644
 --- a/src/BlizzLikeCore/blizzlikecore.conf.dist
@@ -340,7 +340,7 @@ index ae3035e..c17787e 100644
 +                        && (!plMover->m_anti_justteleported)
 +                        && !(movementInfo.HasMovementFlag(MOVEFLAG_SWIMMING) || movementInfo.HasMovementFlag(MOVEFLAG_FLYING)
 +                            || movementInfo.HasMovementFlag(MOVEFLAG_FLYING2))
-+                        && (JumpHeight < -1.7f)) //max jumpheight is constant for each movementtype
++                        && (JumpHeight < GetPlayer()->m_anti_last_vspeed))
 +            {
 +                #ifdef MOVEMENT_ANTICHEAT_DEBUG
 +                sLog.outDebug("Movement Anticheat: %s is GraviJump exception. anti_jumpbase=%f, anti_justjumped=%u, JumpHeight=%f, last_vspeed=%f",
@@ -469,13 +469,13 @@ index ae3035e..c17787e 100644
 +                    plane_z = (plane_z < -500.0f) ? 0 : plane_z; // check holes in height map
 +                    if (plane_z > 0.1f || plane_z < -0.1f)
 +                    {
-+                        check_passed = false;
 +                        #ifdef MOVEMENT_ANTICHEAT_DEBUG
 +                        sLog.outDebug("Movement Anticheat: %s uses teleport to plane. plane_z: %f ", plMover->GetName(), plane_z);
 +                        #endif
 +                        plMover->m_anti_lastcheat = "Teleport to Plane Hack";
++                        check_passed = false;
 +                        plMover->GetSession()->KickPlayer();
-+                        sWorld.SendGMText(LANG_GM_AC_KICK_ANNOUNCE, plMover->GetName(), plane_z);
++                        sWorld.SendGMText(LANG_GM_AC_KICK_ANNOUNCE, plMover->GetName());
 +                    }
 +                }
 +            }
@@ -566,7 +566,7 @@ index ae3035e..c17787e 100644
 +            if (movementInfo.GetPos()->GetPositionZ() < -500.0f)
 +                plMover->HandleFallUnderMap();
 +
-+            if (plMover->m_anti_alarmcount > 0 && !plMover->IsInWater())
++            if (plMover->m_anti_alarmcount > 0 && !GetPlayer()->IsInWater())
 +            {
 +                sWorld.SendGMText(LANG_GM_AC_ANNOUNCE, plMover->GetName(), plMover->m_anti_lastcheat.c_str());
 +            }
