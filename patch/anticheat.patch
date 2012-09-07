@@ -221,7 +221,7 @@ index ae3035e..c17787e 100644
 +        plMover->m_anti_transportGUID = 0;
      }
  
-+    if (plMover)
++    if (plMover && World::GetEnableMvAnticheat() && GetPlayer()->GetSession()->GetSecurity() <= World::GetMvAnticheatGmLevel())
 +    {
 +        // fall damage generation (ignore in flight case that can be triggered also at lags in moment teleportation to another map).
 +        if (opcode == MSG_MOVE_FALL_LAND && !plMover->isInFlight())
@@ -269,7 +269,7 @@ index ae3035e..c17787e 100644
 +        #endif
 +
 +        //---- anti-cheat features -->>>
-+        if (World::GetEnableMvAnticheat() && GetPlayer()->GetSession()->GetSecurity() <= World::GetMvAnticheatGmLevel() && !plMover->IsInWater() && updateOrientationOnly && plMover->m_anti_transportGUID == 0)
++        if (!plMover->IsInWater() && updateOrientationOnly && plMover->m_anti_transportGUID == 0)
 +        {
 +            if ((abs(plMover->GetPositionX() - movementInfo.GetPos()->GetPositionX()) > 0.1f) ||
 +                (abs(plMover->GetPositionY() - movementInfo.GetPos()->GetPositionY()) > 0.1f) ||
@@ -287,8 +287,8 @@ index ae3035e..c17787e 100644
 +        }
 +
 +        //uint32 curDest = plMover->m_taxi.GetTaxiDestination(); // check taxi flight
-+        //if ((plMover->m_anti_transportGUID == 0) && World::GetEnableMvAnticheat() && GetPlayer()->GetSession()->GetSecurity() <= World::GetMvAnticheatGmLevel() && !curDest)
-+        if (World::GetEnableMvAnticheat() && GetPlayer()->GetSession()->GetSecurity() <= World::GetMvAnticheatGmLevel() && (plMover->m_anti_transportGUID == 0) && !plMover->m_anti_ontaxipath && !skipAnticheat)
++        //if ((plMover->m_anti_transportGUID == 0) && !curDest)
++        if ((plMover->m_anti_transportGUID == 0) && !plMover->m_anti_ontaxipath && !skipAnticheat)
 +        {
 +            UnitMoveType move_type;
 +
@@ -413,7 +413,7 @@ index ae3035e..c17787e 100644
 +            }
 +
 +            // Anti-Flyhack
-+            if (((movementInfo.GetMovementFlags() & (MOVEFLAG_CAN_FLY | MOVEFLAG_FLYING | MOVEFLAG_FLYING2)) != 0) && !(plMover->HasAuraType(SPELL_AURA_FLY) || plMover->HasAuraType(SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED)))
++            if (((movementInfo.GetMovementFlags() & (MOVEFLAG_CAN_FLY | MOVEFLAG_FLYING | MOVEFLAG_FLYING2)) != 0) && !plMover->IsInWater() && !(plMover->HasAuraType(SPELL_AURA_FLY) || plMover->HasAuraType(SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED)))
 +            {
 +                #ifdef MOVEMENT_ANTICHEAT_DEBUG
 +                sLog.outDebug("Movement Anticheat: %s is a fly cheater. {SPELL_AURA_FLY=[%X]} {SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED=[%X]} {SPELL_AURA_MOD_FLIGHT_SPEED_STACKING=[%X]} {SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED_STACKING=[%X]} {SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED_NOT_STACKING=[%X]}",
@@ -542,7 +542,7 @@ index ae3035e..c17787e 100644
 -        // we should add the check only for class hunter
 -        if (plMover->isMovingOrTurning())
 -            plMover->RemoveSpellsCausingAura(SPELL_AURA_FEIGN_DEATH);
-+        if (check_passed || GetPlayer()->GetSession()->GetSecurity() > World::GetMvAnticheatGmLevel() || forcemovement)
++        if (check_passed || forcemovement)
 +        {
 +            /* process position-change */
 +            recv_data.put<uint32>(5, getMSTime());                  // offset flags(4) + unk(1)
@@ -566,7 +566,7 @@ index ae3035e..c17787e 100644
 +            if (movementInfo.GetPos()->GetPositionZ() < -500.0f)
 +                plMover->HandleFallUnderMap();
 +
-+            if (plMover->m_anti_alarmcount > 0 && !GetPlayer()->IsInWater())
++            if (plMover->m_anti_alarmcount > 0)
 +            {
 +                sWorld.SendGMText(LANG_GM_AC_ANNOUNCE, plMover->GetName(), plMover->m_anti_lastcheat.c_str());
 +            }

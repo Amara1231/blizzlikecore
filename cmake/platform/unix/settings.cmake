@@ -1,8 +1,6 @@
 # Package overloads - Linux
 if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-  if (NOT NOJEM)
-    set(JEMALLOC_LIBRARY "jemalloc")
-  endif()
+  set(JEMALLOC_LIBRARY "jemalloc")
 endif()
 
 # set default configuration directory
