@@ -455,7 +455,7 @@ class World
         //player Queue
         typedef std::list<WorldSession*> Queue;
         void AddQueuedPlayer(WorldSession*);
-        bool RemoveQueuedSession(WorldSession* session);
+        bool RemoveQueuedPlayer(WorldSession* session);
         int32 GetQueuePos(WorldSession*);
         bool HasRecentlyDisconnected(WorldSession*);
         uint32 GetQueueSize() const { return m_QueuedPlayer.size(); }

@@ -196,18 +196,18 @@ index 4bfd286..d2ba2e3 100644
  {
      WorldPacket data(SMSG_PLAYED_TIME, 4 + 4);
 diff --git a/src/game/Opcodes.cpp b/src/game/Opcodes.cpp
-index 03d320e..4e99467 100644
+index 8bade56..4380df9 100644
 --- a/src/game/Opcodes.cpp
 +++ b/src/game/Opcodes.cpp
-@@ -762,7 +762,7 @@ OpcodeHandler opcodeTable[NUM_MSG_TYPES] =
-     /*0x2E4*/ { "SMSG_AREA_SPIRIT_HEALER_TIME",                 STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_ServerSide               },
-     /*0x2E5*/ { "CMSG_GM_UNTEACH",                              STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_NULL                     },
-     /*0x2E6*/ { "SMSG_WARDEN_DATA",                             STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_ServerSide               },
--    /*0x2E7*/ { "CMSG_WARDEN_DATA",                             STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleWardenDataOpcode          },
-+    /*0x2E7*/ { "CMSG_WARDEN_DATA",                             STATUS_AUTHED,   PROCESS_THREADUNSAFE, &WorldSession::HandleWardenDataOpcode          },
-     /*0x2E8*/ { "SMSG_GROUP_JOINED_BATTLEGROUND",               STATUS_NEVER,    PROCESS_INPLACE,      &WorldSession::Handle_ServerSide               },
-     /*0x2E9*/ { "MSG_BATTLEGROUND_PLAYER_POSITIONS",            STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::HandleBattleGroundPlayerPositionsOpcode},
-     /*0x2EA*/ { "CMSG_PET_STOP_ATTACK",                         STATUS_LOGGEDIN, PROCESS_THREADUNSAFE, &WorldSession::Handle_NULL                     },
+@@ -764,7 +764,7 @@ OpcodeHandler opcodeTable[NUM_MSG_TYPES] =
+     /*0x2E4*/ { "SMSG_AREA_SPIRIT_HEALER_TIME",     STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
+     /*0x2E5*/ { "CMSG_GM_UNTEACH",                  STATUS_NEVER,    &WorldSession::Handle_NULL                     },
+     /*0x2E6*/ { "SMSG_WARDEN_DATA",                 STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
+-    /*0x2E7*/ { "CMSG_WARDEN_DATA",                 STATUS_LOGGEDIN, &WorldSession::HandleWardenDataOpcode          },
++    /*0x2E7*/ { "CMSG_WARDEN_DATA",                 STATUS_AUTHED,   &WorldSession::HandleWardenDataOpcode          },
+     /*0x2E8*/ { "SMSG_GROUP_JOINED_BATTLEGROUND",   STATUS_NEVER,    &WorldSession::Handle_ServerSide               },
+     /*0x2E9*/ { "MSG_BATTLEGROUND_PLAYER_POSITIONS",STATUS_LOGGEDIN, &WorldSession::HandleBattleGroundPlayerPositionsOpcode},
+     /*0x2EA*/ { "CMSG_PET_STOP_ATTACK",             STATUS_NEVER,    &WorldSession::Handle_NULL                     },
 diff --git a/src/game/WardenBase.cpp b/src/game/WardenBase.cpp
 new file mode 100644
 index 0000000..bc78986
@@ -3649,7 +3649,7 @@ index a23430a..eec78f3 100644
  };
  
 diff --git a/src/game/WorldSession.cpp b/src/game/WorldSession.cpp
-index 300dc33..a0b6d9c 100644
+index bf7df10..f6ee1bb 100644
 --- a/src/game/WorldSession.cpp
 +++ b/src/game/WorldSession.cpp
 @@ -34,6 +34,8 @@
@@ -3659,9 +3659,9 @@ index 300dc33..a0b6d9c 100644
 +#include "WardenWin.h"
 +#include "WardenMac.h"
  
- // select opcodes appropriate for processing in Map::Update context for current session state 
- static bool MapSessionFilterHelper(WorldSession* session, OpcodeHandler const& opHandle) 
-@@ -81,7 +83,7 @@ LookingForGroup_auto_join(false), LookingForGroup_auto_add(false), m_muteTime(mu
+ // WorldSession constructor
+ WorldSession::WorldSession(uint32 id, WorldSocket *sock, uint32 sec, uint8 expansion, time_t mute_time, LocaleConstant locale) :
+@@ -41,7 +43,7 @@ LookingForGroup_auto_join(false), LookingForGroup_auto_add(false), m_muteTime(mu
  _player(NULL), m_Socket(sock),_security(sec), _accountId(id), m_expansion(expansion),
  m_sessionDbcLocale(sWorld.GetAvailableDbcLocale(locale)), m_sessionDbLocaleIndex(objmgr.GetIndexForLocale(locale)),
  _logoutTime(0), m_inQueue(false), m_playerLoading(false), m_playerLogout(false), m_playerRecentlyLogout(false), m_playerSave(false),
@@ -3670,7 +3670,7 @@ index 300dc33..a0b6d9c 100644
  {
      if (sock)
      {
-@@ -107,6 +109,9 @@ WorldSession::~WorldSession()
+@@ -67,6 +69,9 @@ WorldSession::~WorldSession()
          m_Socket = NULL;
      }
  
@@ -3680,17 +3680,17 @@ index 300dc33..a0b6d9c 100644
      // empty incoming packet queue
      WorldPacket* packet;
      while (_recvQueue.next(packet))
-@@ -286,6 +291,9 @@ bool WorldSession::Update(PacketFilter& updater)
+@@ -247,6 +252,9 @@ bool WorldSession::Update(uint32 diff)
          delete packet;
      }
- 
+     
 +    if (m_Socket && !m_Socket->IsClosed() && m_Warden)
 +        m_Warden->Update();
 +
-     // Cleanup socket pointer if need
-     if (m_Socket && m_Socket->IsClosed())
-     {
-@@ -591,6 +599,16 @@ void WorldSession::SendAuthWaitQue(uint32 position)
+     ///- If necessary, log the player out
+     time_t currTime = time(NULL);
+     if (ShouldLogOut(currTime) && !m_playerLoading)
+@@ -547,6 +555,16 @@ void WorldSession::SendAuthWaitQue(uint32 position)
      }
  }
  
@@ -3708,7 +3708,7 @@ index 300dc33..a0b6d9c 100644
  {
      // need prevent do internal far teleports in handlers because some handlers do lot steps
 diff --git a/src/game/WorldSession.h b/src/game/WorldSession.h
-index 91d51a9..e403b08 100644
+index 96fe750..90b680d 100644
 --- a/src/game/WorldSession.h
 +++ b/src/game/WorldSession.h
 @@ -21,6 +21,7 @@
@@ -3719,7 +3719,7 @@ index 91d51a9..e403b08 100644
  
  struct ItemPrototype;
  struct AuctionEntry;
-@@ -130,6 +131,8 @@ class WorldSession
+@@ -91,6 +92,8 @@ class WorldSession
          void SetPlayer(Player *plr) { _player = plr; }
          uint8 Expansion() const { return m_expansion; }
  
@@ -3728,7 +3728,7 @@ index 91d51a9..e403b08 100644
          // Session in auth.queue currently
          void SetInQueue(bool state) { m_inQueue = state; }
  
-@@ -698,6 +701,9 @@ class WorldSession
+@@ -659,6 +662,9 @@ class WorldSession
          uint32 _accountId;
          uint8 m_expansion;
  
@@ -3738,16 +3738,11 @@ index 91d51a9..e403b08 100644
          time_t _logoutTime;
          bool m_inQueue;                                     // session wait in auth.queue
          bool m_playerLoading;                               // code processed in LoginPlayer
-@@ -711,4 +717,3 @@ class WorldSession
-         ACE_Based::LockedQueue<WorldPacket*,ACE_Thread_Mutex> _recvQueue;
- };
- #endif
--
 diff --git a/src/game/WorldSocket.cpp b/src/game/WorldSocket.cpp
-index f1e5e95..ee90eac 100644
+index c1e5eaf..04ceddd 100644
 --- a/src/game/WorldSocket.cpp
 +++ b/src/game/WorldSocket.cpp
-@@ -750,7 +750,8 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
+@@ -744,7 +744,8 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
                                  "s, "                       //5
                                  "expansion, "               //6
                                  "mutetime, "                //7
@@ -3757,7 +3752,7 @@ index f1e5e95..ee90eac 100644
                                  "FROM account "
                                  "WHERE username = '%s'",
                                  safe_account.c_str ());
-@@ -809,6 +810,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
+@@ -803,6 +804,7 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
      K.SetHexStr (fields[1].GetString ());
  
      time_t mutetime = time_t (fields[7].GetUInt64 ());
@@ -3765,7 +3760,7 @@ index f1e5e95..ee90eac 100644
  
      locale = LocaleConstant (fields[8].GetUInt8 ());
      if (locale >= MAX_LOCALE)
-@@ -912,6 +914,10 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
+@@ -906,6 +908,10 @@ int WorldSocket::HandleAuthSession (WorldPacket& recvPacket)
      m_Crypt.SetKey(&K);
      m_Crypt.Init();
  

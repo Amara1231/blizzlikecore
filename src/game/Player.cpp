@@ -1422,9 +1422,7 @@ bool Player::BuildEnumData(QueryResult_AutoPtr result, WorldPacket * p_data)
 
     *p_data << uint32(char_flags);                          // character flags
 
-    // First login
-    *p_data << uint8(atLoginFlags & AT_LOGIN_FIRST ? 1 : 0);
-
+    *p_data << uint8(1);                                    // unknown
 
     // Pets info
     {
@@ -20693,14 +20691,6 @@ void Player::_SaveBGData()
             GetGUIDLow(), m_bgData.bgInstanceID, m_bgData.bgTeam, m_bgData.joinPos.GetPositionX(), m_bgData.joinPos.GetPositionY(), m_bgData.joinPos.GetPositionZ(),
             m_bgData.joinPos.GetOrientation(), m_bgData.joinPos.GetMapId(), m_bgData.taxiPath[0], m_bgData.taxiPath[1], m_bgData.mountSpell);
     }
-}
-
-void Player::RemoveAtLoginFlag(AtLoginFlags f, bool in_db_also /*= false*/)
-{
-    m_atLoginFlags &= ~f;
-
-    if (in_db_also)
-        CharacterDatabase.PExecute("UPDATE characters set at_login = at_login & ~ %u WHERE guid ='%u'", uint32(f), GetGUIDLow());
 }
 
 void Player::ResetMap()

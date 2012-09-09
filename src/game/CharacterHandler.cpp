@@ -360,8 +360,6 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket& recv_data)
     if ((have_same_race && skipCinematics == 1) || skipCinematics == 2)
         pNewChar->setCinematic(1);                          // not show intro
 
-    pNewChar->SetAtLoginFlag(AT_LOGIN_FIRST);               // first login
-
     // Player created, save it now
     pNewChar->SaveToDB();
     charcount+=1;
@@ -680,9 +678,6 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
         pCurrChar->resetTalents(true);
         SendNotification(LANG_RESET_TALENTS);
     }
-
-    if (pCurrChar->HasAtLoginFlag(AT_LOGIN_FIRST))
-        pCurrChar->RemoveAtLoginFlag(AT_LOGIN_FIRST);
 
     // show time before shutdown if shutdown planned.
     if (sWorld.IsShutdowning())

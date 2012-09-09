@@ -859,9 +859,9 @@ enum Opcodes
     SMSG_INSTANCE_DIFFICULTY                        = 0x33B,
     MSG_GM_RESETINSTANCELIMIT                       = 0x33C,
     SMSG_MOTD                                       = 0x33D,
-    SMSG_MOVE_SET_FLIGHT                            = 0x33E,
-    SMSG_MOVE_UNSET_FLIGHT                          = 0x33F,
-    CMSG_MOVE_FLIGHT_ACK                            = 0x340,
+    SMSG_MOVE_SET_FLIGHT_OBSOLETE                   = 0x33E,
+    SMSG_MOVE_UNSET_FLIGHT_OBSOLETE                 = 0x33F,
+    CMSG_MOVE_FLIGHT_ACK_OBSOLETE                   = 0x340,
     MSG_MOVE_START_SWIM_CHEAT                       = 0x341,
     MSG_MOVE_STOP_SWIM_CHEAT                        = 0x342,
     SMSG_MOVE_SET_CAN_FLY                           = 0x343,
@@ -1097,19 +1097,10 @@ enum Opcodes
 // Player state
 enum SessionStatus
 {
-    STATUS_AUTHED = 0,                                      ///< Player authenticated (_player==NULL, m_playerRecentlyLogout = false or will be reset before handler call)
-    STATUS_LOGGEDIN,                                        ///< Player in game (_player!=NULL, inWorld())
-    STATUS_TRANSFER_PENDING,                                ///< Player transferring to another map (_player!=NULL, !inWorld())
-    STATUS_LOGGEDIN_OR_RECENTLY_LOGGEDOUT,                  ///< _player!= NULL or _player==NULL && m_playerRecentlyLogout)
-    STATUS_NEVER,                                           ///< Opcode not accepted from client (deprecated or server side only)
-    STATUS_UNHANDLED                                        ///< We don't handle this opcode yet
-};
-
-enum PacketProcessing 
-{ 
-    PROCESS_INPLACE = 0,                                    ///< process packet whenever we receive it - mostly for non-handled or non-implemented packets 
-    PROCESS_THREADUNSAFE,                                   ///< packet is not thread-safe - process it in World::UpdateSessions() 
-    PROCESS_THREADSAFE                                      ///< packet is thread-safe - process it in Map::Update() 
+    STATUS_AUTHED = 0,                                      // Player authenticated
+    STATUS_LOGGEDIN,                                        // Player in game
+    STATUS_TRANSFER_PENDING,                                // Player transferring to another map
+    STATUS_NEVER                                            // Opcode not accepted from client (deprecated or server side only)
 };
 
 class WorldPacket;
@@ -1118,7 +1109,6 @@ struct OpcodeHandler
 {
     char const* name;
     SessionStatus status;
-    PacketProcessing packetProcessing;
     void (WorldSession::*handler)(WorldPacket& recvPacket);
 };
 
