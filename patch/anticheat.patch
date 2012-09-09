@@ -682,7 +682,7 @@ index ae3035e..c17787e 100644
  }
  
 diff --git a/src/game/Player.cpp b/src/game/Player.cpp
-index 5c84fc6..fcd3b77 100644
+index 079ea11..427b7d5 100644
 --- a/src/game/Player.cpp
 +++ b/src/game/Player.cpp
 @@ -382,6 +382,27 @@ Player::Player (WorldSession *session): Unit()
@@ -713,7 +713,7 @@ index 5c84fc6..fcd3b77 100644
      m_mailsLoaded = false;
      m_mailsUpdated = false;
      unReadMails = 0;
-@@ -20357,12 +20378,16 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
+@@ -20477,12 +20498,16 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
  
  void Player::HandleFallDamage(MovementInfo& movementInfo)
  {
@@ -733,10 +733,10 @@ index 5c84fc6..fcd3b77 100644
      //Players with low fall distance, Feather Fall or physical immunity (charges used) are ignored
      // 14.57 can be calculated by resolving damageperc formular below to 0
 diff --git a/src/game/Player.h b/src/game/Player.h
-index 4689f2c..39536cc 100644
+index 266f54d..d98e55b 100644
 --- a/src/game/Player.h
 +++ b/src/game/Player.h
-@@ -2307,6 +2307,24 @@ class Player : public Unit, public GridObject<Player>
+@@ -2311,6 +2311,24 @@ class Player : public Unit, public GridObject<Player>
          RestType rest_type;
          ////////////////////Rest System/////////////////////
  
