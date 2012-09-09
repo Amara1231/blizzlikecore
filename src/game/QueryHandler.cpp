@@ -114,7 +114,7 @@ void WorldSession::SendNameQueryOpcodeFromDBCallBack(QueryResult_AutoPtr result,
     session->SendPacket(&data);
 }
 
-void WorldSession::HandleNameQueryOpcode(WorldPacket & recv_data)
+void WorldSession::HandleNameQueryOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
 
@@ -137,7 +137,7 @@ void WorldSession::HandleQueryTimeOpcode(WorldPacket & /*recv_data*/)
 }
 
 // Only _static_ data send in this packet !!!
-void WorldSession::HandleCreatureQueryOpcode(WorldPacket & recv_data)
+void WorldSession::HandleCreatureQueryOpcode(WorldPacket& recv_data)
 {
     uint32 entry;
     recv_data >> entry;
@@ -200,7 +200,7 @@ void WorldSession::HandleCreatureQueryOpcode(WorldPacket & recv_data)
 }
 
 // Only _static_ data send in this packet !!!
-void WorldSession::HandleGameObjectQueryOpcode(WorldPacket & recv_data)
+void WorldSession::HandleGameObjectQueryOpcode(WorldPacket& recv_data)
 {
     uint32 entryID;
     recv_data >> entryID;
@@ -304,7 +304,7 @@ void WorldSession::HandleCorpseQueryOpcode(WorldPacket & /*recv_data*/)
     SendPacket(&data);
 }
 
-void WorldSession::HandleNpcTextQueryOpcode(WorldPacket & recv_data)
+void WorldSession::HandleNpcTextQueryOpcode(WorldPacket& recv_data)
 {
     uint32 textID;
     uint64 guid;
@@ -390,7 +390,7 @@ void WorldSession::HandleNpcTextQueryOpcode(WorldPacket & recv_data)
     sLog.outDebug("WORLD: Sent SMSG_NPC_TEXT_UPDATE");
 }
 
-void WorldSession::HandlePageQueryOpcode(WorldPacket & recv_data)
+void WorldSession::HandlePageQueryOpcode(WorldPacket& recv_data)
 {
     sLog.outDetail("WORLD: Received CMSG_PAGE_TEXT_QUERY");
     recv_data.hexlike();

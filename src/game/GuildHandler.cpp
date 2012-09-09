@@ -861,7 +861,7 @@ void WorldSession::HandleGuildBankGetRights(WorldPacket& /* recv_data */)
 }
 
 /* Called when clicking on Guild bank gameobject */
-void WorldSession::HandleGuildBankQuery(WorldPacket & recv_data)
+void WorldSession::HandleGuildBankQuery(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANKER_ACTIVATE)");
 
@@ -885,7 +885,7 @@ void WorldSession::HandleGuildBankQuery(WorldPacket & recv_data)
 }
 
 /* Called when opening guild bank tab only (first one) */
-void WorldSession::HandleGuildBankTabColon(WorldPacket & recv_data)
+void WorldSession::HandleGuildBankTabColon(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANK_QUERY_TAB)");
 
@@ -911,7 +911,7 @@ void WorldSession::HandleGuildBankTabColon(WorldPacket & recv_data)
     pGuild->DisplayGuildBankContent(this, TabId);
 }
 
-void WorldSession::HandleGuildBankDeposit(WorldPacket & recv_data)
+void WorldSession::HandleGuildBankDeposit(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANK_DEPOSIT_MONEY)");
 
@@ -959,7 +959,7 @@ void WorldSession::HandleGuildBankDeposit(WorldPacket & recv_data)
     pGuild->DisplayGuildBankMoneyUpdate();
 }
 
-void WorldSession::HandleGuildBankWithdraw(WorldPacket & recv_data)
+void WorldSession::HandleGuildBankWithdraw(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANK_WITHDRAW_MONEY)");
 
@@ -1009,7 +1009,7 @@ void WorldSession::HandleGuildBankWithdraw(WorldPacket & recv_data)
     pGuild->DisplayGuildBankMoneyUpdate();
 }
 
-void WorldSession::HandleGuildBankDepositItem(WorldPacket & recv_data)
+void WorldSession::HandleGuildBankDepositItem(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANK_SWAP_ITEMS)");
     //recv_data.hexlike();
@@ -1505,7 +1505,7 @@ void WorldSession::HandleGuildBankDepositItem(WorldPacket & recv_data)
     }
 }
 
-void WorldSession::HandleGuildBankBuyTab(WorldPacket & recv_data)
+void WorldSession::HandleGuildBankBuyTab(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANK_BUY_TAB)");
 
@@ -1551,7 +1551,7 @@ void WorldSession::HandleGuildBankBuyTab(WorldPacket & recv_data)
     pGuild->DisplayGuildBankTabsInfo(this);
 }
 
-void WorldSession::HandleGuildBankModifyTab(WorldPacket & recv_data)
+void WorldSession::HandleGuildBankModifyTab(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Received (CMSG_GUILD_BANK_UPDATE_TAB)");
 
@@ -1587,7 +1587,7 @@ void WorldSession::HandleGuildBankModifyTab(WorldPacket & recv_data)
     pGuild->DisplayGuildBankContent(this, TabId);
 }
 
-void WorldSession::HandleGuildBankLog(WorldPacket & recv_data)
+void WorldSession::HandleGuildBankLog(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Received (MSG_GUILD_BANK_LOG_QUERY)");
 
@@ -1605,7 +1605,7 @@ void WorldSession::HandleGuildBankLog(WorldPacket & recv_data)
     pGuild->DisplayGuildBankLogs(this, TabId);
 }
 
-void WorldSession::HandleGuildBankTabText(WorldPacket & recv_data)
+void WorldSession::HandleGuildBankTabText(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Received MSG_QUERY_GUILD_BANK_TEXT");
 
@@ -1623,7 +1623,7 @@ void WorldSession::HandleGuildBankTabText(WorldPacket & recv_data)
     pGuild->SendGuildBankTabText(this, TabId);
 }
 
-void WorldSession::HandleGuildBankSetTabText(WorldPacket & recv_data)
+void WorldSession::HandleGuildBankSetTabText(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Received CMSG_SET_GUILD_BANK_TEXT");
 

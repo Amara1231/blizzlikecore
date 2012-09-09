@@ -1422,7 +1422,9 @@ bool Player::BuildEnumData(QueryResult_AutoPtr result, WorldPacket * p_data)
 
     *p_data << uint32(char_flags);                          // character flags
 
-    *p_data << uint8(1);                                    // unknown
+    // First login
+    *p_data << uint8(atLoginFlags & AT_LOGIN_FIRST ? 1 : 0);
+
 
     // Pets info
     {
@@ -18546,7 +18548,7 @@ void Player::ToggleMetaGemsActive(uint8 exceptslot, bool apply)
     //cycle all equipped items
     for (int slot = EQUIPMENT_SLOT_START; slot < EQUIPMENT_SLOT_END; ++slot)
     {
-        //enchants for the slot being socketed are handled by WorldSession::HandleSocketOpcode(WorldPacket & recv_data)
+        //enchants for the slot being socketed are handled by WorldSession::HandleSocketOpcode(WorldPacket& recv_data)
         if (slot == exceptslot)
             continue;
 
@@ -20691,6 +20693,14 @@ void Player::_SaveBGData()
             GetGUIDLow(), m_bgData.bgInstanceID, m_bgData.bgTeam, m_bgData.joinPos.GetPositionX(), m_bgData.joinPos.GetPositionY(), m_bgData.joinPos.GetPositionZ(),
             m_bgData.joinPos.GetOrientation(), m_bgData.joinPos.GetMapId(), m_bgData.taxiPath[0], m_bgData.taxiPath[1], m_bgData.mountSpell);
     }
+}
+
+void Player::RemoveAtLoginFlag(AtLoginFlags f, bool in_db_also /*= false*/)
+{
+    m_atLoginFlags &= ~f;
+
+    if (in_db_also)
+        CharacterDatabase.PExecute("UPDATE characters set at_login = at_login & ~ %u WHERE guid ='%u'", uint32(f), GetGUIDLow());
 }
 
 void Player::ResetMap()

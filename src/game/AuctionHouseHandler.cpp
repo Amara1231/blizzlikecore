@@ -32,7 +32,7 @@
 // post-incrementation is always slower than pre-incrementation !
 
 // void called when player click on auctioneer npc
-void WorldSession::HandleAuctionHelloOpcode(WorldPacket & recv_data)
+void WorldSession::HandleAuctionHelloOpcode(WorldPacket& recv_data)
 {
     uint64 guid;                                            // NPC guid
     recv_data >> guid;
@@ -155,7 +155,7 @@ void WorldSession::SendAuctionCancelledToBidderMail(AuctionEntry* auction)
 }
 
 // this void creates new auction and adds auction to some auctionhouse
-void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
+void WorldSession::HandleAuctionSellItem(WorldPacket& recv_data)
 {
     uint64 auctioneer, item;
     uint32 etime, bid, buyout;
@@ -286,7 +286,7 @@ void WorldSession::HandleAuctionSellItem(WorldPacket & recv_data)
 }
 
 // this function is called when client bids or buys out auction
-void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
+void WorldSession::HandleAuctionPlaceBid(WorldPacket& recv_data)
 {
     uint64 auctioneer;
     uint32 auctionId;
@@ -404,7 +404,7 @@ void WorldSession::HandleAuctionPlaceBid(WorldPacket & recv_data)
 }
 
 // this void is called when auction_owner cancels his auction
-void WorldSession::HandleAuctionRemoveItem(WorldPacket & recv_data)
+void WorldSession::HandleAuctionRemoveItem(WorldPacket& recv_data)
 {
     uint64 auctioneer;
     uint32 auctionId;
@@ -480,7 +480,7 @@ void WorldSession::HandleAuctionRemoveItem(WorldPacket & recv_data)
 }
 
 // called when player lists his bids
-void WorldSession::HandleAuctionListBidderItems(WorldPacket & recv_data)
+void WorldSession::HandleAuctionListBidderItems(WorldPacket& recv_data)
 {
     uint64 guid;                                            //NPC guid
     uint32 listfrom;                                        //page of auctions
@@ -534,7 +534,7 @@ void WorldSession::HandleAuctionListBidderItems(WorldPacket & recv_data)
 }
 
 // this void sends player info about his auctions
-void WorldSession::HandleAuctionListOwnerItems(WorldPacket & recv_data)
+void WorldSession::HandleAuctionListOwnerItems(WorldPacket& recv_data)
 {
     uint32 listfrom;
     uint64 guid;
@@ -569,7 +569,7 @@ void WorldSession::HandleAuctionListOwnerItems(WorldPacket & recv_data)
 }
 
 //this void is called when player clicks on search button
-void WorldSession::HandleAuctionListItems(WorldPacket & recv_data)
+void WorldSession::HandleAuctionListItems(WorldPacket& recv_data)
 {
     std::string searchedname;
     uint8 levelmin, levelmax, usable;

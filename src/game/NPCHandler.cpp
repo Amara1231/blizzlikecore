@@ -38,7 +38,7 @@
 #include "Guild.h"
 #include "ScriptMgr.h"
 
-void WorldSession::HandleTabardVendorActivateOpcode(WorldPacket & recv_data)
+void WorldSession::HandleTabardVendorActivateOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
     recv_data >> guid;
@@ -64,7 +64,7 @@ void WorldSession::SendTabardVendorActivate(uint64 guid)
     SendPacket(&data);
 }
 
-void WorldSession::HandleBankerActivateOpcode(WorldPacket & recv_data)
+void WorldSession::HandleBankerActivateOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug( "WORLD: Received CMSG_BANKER_ACTIVATE");
 
@@ -92,7 +92,7 @@ void WorldSession::SendShowBank(uint64 guid)
     SendPacket(&data);
 }
 
-void WorldSession::HandleTrainerListOpcode(WorldPacket & recv_data)
+void WorldSession::HandleTrainerListOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
 
@@ -142,7 +142,7 @@ void WorldSession::SendTrainerList(uint64 guid, const std::string& strTitle)
     }
 
     WorldPacket data(SMSG_TRAINER_LIST, 8+4+4+trainer_spells->spellList.size()*38 + strTitle.size()+1);
-    data << guid;
+    data << uint64(guid);
     data << uint32(trainer_spells->trainerType);
 
     size_t count_pos = data.wpos();
@@ -186,7 +186,7 @@ void WorldSession::SendTrainerList(uint64 guid, const std::string& strTitle)
     SendPacket(&data);
 }
 
-void WorldSession::HandleTrainerBuySpellOpcode(WorldPacket & recv_data)
+void WorldSession::HandleTrainerBuySpellOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
     uint32 spellId = 0;
@@ -229,25 +229,28 @@ void WorldSession::HandleTrainerBuySpellOpcode(WorldPacket & recv_data)
     if (_player->GetMoney() < nSpellCost)
         return;
 
+    _player->ModifyMoney( -int32(nSpellCost) );
+
     WorldPacket data(SMSG_PLAY_SPELL_VISUAL, 12);           // visual effect on trainer
-    data << uint64(guid) << uint32(0xB3);
+    data << uint64(guid);
+    data << uint32(0xB3);                                   // index from SpellVisualKit.dbc
     SendPacket(&data);
 
     data.Initialize(SMSG_PLAY_SPELL_IMPACT, 12);            // visual effect on player
-    data << uint64(_player->GetGUID()) << uint32(0x016A);
+    data << uint64(_player->GetGUID());
+    data << uint32(0x016A);                                 // index from SpellVisualKit.dbc
     SendPacket(&data);
-
-    _player->ModifyMoney(-int32(nSpellCost));
 
     // learn explicitly to prevent lost money at lags, learning spell will be only show spell animation
     _player->learnSpell(trainer_spell->spell);
 
     data.Initialize(SMSG_TRAINER_BUY_SUCCEEDED, 12);
-    data << uint64(guid) << uint32(spellId);
+    data << uint64(guid);
+    data << uint32(trainer_spell->spell);
     SendPacket(&data);
 }
 
-void WorldSession::HandleGossipHelloOpcode(WorldPacket & recv_data)
+void WorldSession::HandleGossipHelloOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Received CMSG_GOSSIP_HELLO");
 
@@ -291,7 +294,7 @@ void WorldSession::HandleGossipHelloOpcode(WorldPacket & recv_data)
     }
 }
 
-/*void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket & recv_data)
+/*void WorldSession::HandleGossipSelectOptionOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: CMSG_GOSSIP_SELECT_OPTION");
 
@@ -332,7 +335,7 @@ void WorldSession::HandleGossipHelloOpcode(WorldPacket & recv_data)
     }
 }*/
 
-void WorldSession::HandleSpiritHealerActivateOpcode(WorldPacket & recv_data)
+void WorldSession::HandleSpiritHealerActivateOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: CMSG_SPIRIT_HEALER_ACTIVATE");
 
@@ -387,7 +390,7 @@ void WorldSession::SendSpiritResurrect()
         _player->UpdateObjectVisibility();
 }
 
-void WorldSession::HandleBinderActivateOpcode(WorldPacket & recv_data)
+void WorldSession::HandleBinderActivateOpcode(WorldPacket& recv_data)
 {
     uint64 npcGUID;
     recv_data >> npcGUID;
@@ -427,7 +430,7 @@ void WorldSession::SendBindPoint(Creature *npc)
 }
 
 //Need fix
-void WorldSession::HandleListStabledPetsOpcode(WorldPacket & recv_data)
+void WorldSession::HandleListStabledPetsOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Recv MSG_LIST_STABLED_PETS");
     uint64 npcGUID;
@@ -502,7 +505,7 @@ void WorldSession::SendStablePet(uint64 guid)
     SendPacket(&data);
 }
 
-void WorldSession::HandleStablePet(WorldPacket & recv_data)
+void WorldSession::HandleStablePet(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Recv CMSG_STABLE_PET");
     uint64 npcGUID;
@@ -562,7 +565,7 @@ void WorldSession::HandleStablePet(WorldPacket & recv_data)
     SendPacket(&data);
 }
 
-void WorldSession::HandleUnstablePet(WorldPacket & recv_data)
+void WorldSession::HandleUnstablePet(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Recv CMSG_UNSTABLE_PET.");
     uint64 npcGUID;
@@ -619,7 +622,7 @@ void WorldSession::HandleUnstablePet(WorldPacket & recv_data)
     SendPacket(&data);
 }
 
-void WorldSession::HandleBuyStableSlot(WorldPacket & recv_data)
+void WorldSession::HandleBuyStableSlot(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Recv CMSG_BUY_STABLE_SLOT.");
     uint64 npcGUID;
@@ -662,7 +665,7 @@ void WorldSession::HandleStableRevivePet(WorldPacket &/* recv_data */)
     sLog.outDebug("HandleStableRevivePet: Not implemented");
 }
 
-void WorldSession::HandleStableSwapPet(WorldPacket & recv_data)
+void WorldSession::HandleStableSwapPet(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Recv CMSG_STABLE_SWAP_PET.");
     uint64 npcGUID;
@@ -714,7 +717,7 @@ void WorldSession::HandleStableSwapPet(WorldPacket & recv_data)
     SendPacket(&data);
 }
 
-void WorldSession::HandleRepairItemOpcode(WorldPacket & recv_data)
+void WorldSession::HandleRepairItemOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: CMSG_REPAIR_ITEM");
 

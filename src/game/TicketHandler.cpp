@@ -28,7 +28,7 @@
 #include "Chat.h"
 
 
-void WorldSession::HandleGMTicketCreateOpcode(WorldPacket & recv_data)
+void WorldSession::HandleGMTicketCreateOpcode(WorldPacket& recv_data)
 {
     uint32 map;
     float x, y, z;
@@ -82,7 +82,7 @@ void WorldSession::HandleGMTicketCreateOpcode(WorldPacket & recv_data)
 
 }
 
-void WorldSession::HandleGMTicketUpdateOpcode(WorldPacket & recv_data)
+void WorldSession::HandleGMTicketUpdateOpcode(WorldPacket& recv_data)
 {
     std::string message = "";
     time_t t = time(NULL);
@@ -183,7 +183,7 @@ void WorldSession::HandleGMTicketGetTicketOpcode(WorldPacket & /*recv_data*/)
 
 }
 
-void WorldSession::HandleGMSurveySubmit(WorldPacket & recv_data)
+void WorldSession::HandleGMSurveySubmit(WorldPacket& recv_data)
 {
     uint64 nextSurveyID = ticketmgr.GetNextSurveyID();
     uint32 x;

@@ -405,7 +405,7 @@ index 0000000..bc78986
 +    return checkSum;
 +}
 +
-+void WorldSession::HandleWardenDataOpcode(WorldPacket & recv_data)
++void WorldSession::HandleWardenDataOpcode(WorldPacket& recv_data)
 +{
 +    m_Warden->DecryptData(const_cast<uint8*>(recv_data.contents()), recv_data.size());
 +    uint8 Opcode;

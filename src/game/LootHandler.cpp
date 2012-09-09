@@ -29,7 +29,7 @@
 #include "World.h"
 #include "Util.h"
 
-void WorldSession::HandleAutostoreLootItemOpcode(WorldPacket & recv_data)
+void WorldSession::HandleAutostoreLootItemOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: CMSG_AUTOSTORE_LOOT_ITEM");
     Player  *player =   GetPlayer();
@@ -239,7 +239,7 @@ void WorldSession::HandleLootMoneyOpcode(WorldPacket & /*recv_data*/)
     }
 }
 
-void WorldSession::HandleLootOpcode(WorldPacket & recv_data)
+void WorldSession::HandleLootOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: CMSG_LOOT");
 
@@ -253,7 +253,7 @@ void WorldSession::HandleLootOpcode(WorldPacket & recv_data)
     GetPlayer()->SendLoot(guid, LOOT_CORPSE);
 }
 
-void WorldSession::HandleLootReleaseOpcode(WorldPacket & recv_data)
+void WorldSession::HandleLootReleaseOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: CMSG_LOOT_RELEASE");
 
@@ -424,7 +424,7 @@ void WorldSession::DoLootRelease(uint64 lguid)
     loot->RemoveLooter(player->GetGUID());
 }
 
-void WorldSession::HandleLootMasterGiveOpcode(WorldPacket & recv_data)
+void WorldSession::HandleLootMasterGiveOpcode(WorldPacket& recv_data)
 {
     uint8 slotid;
     uint64 lootguid, target_playerguid;

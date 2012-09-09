@@ -33,7 +33,7 @@
 #include "Language.h"
 #include "World.h"
 
-void WorldSession::HandleBattleGroundHelloOpcode(WorldPacket & recv_data)
+void WorldSession::HandleBattleGroundHelloOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
     recv_data >> guid;
@@ -68,7 +68,7 @@ void WorldSession::SendBattlegGroundList(uint64 guid, uint32 bgTypeId)
     SendPacket(&data);
 }
 
-void WorldSession::HandleBattleGroundJoinOpcode(WorldPacket & recv_data)
+void WorldSession::HandleBattleGroundJoinOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
     uint32 bgTypeId;
@@ -279,7 +279,7 @@ void WorldSession::HandleBattleGroundPVPlogdataOpcode(WorldPacket & /*recv_data*
     DEBUG_LOG("WORLD: Sent MSG_PVP_LOG_DATA Message");
 }
 
-void WorldSession::HandleBattleGroundListOpcode(WorldPacket & recv_data)
+void WorldSession::HandleBattleGroundListOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Recvd CMSG_BATTLEFIELD_LIST Message");
 
@@ -302,7 +302,7 @@ void WorldSession::HandleBattleGroundListOpcode(WorldPacket & recv_data)
     SendPacket(&data);
 }
 
-void WorldSession::HandleBattleGroundPlayerPortOpcode(WorldPacket & recv_data)
+void WorldSession::HandleBattleGroundPlayerPortOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Recvd CMSG_BATTLEFIELD_PORT Message");
 
@@ -513,7 +513,7 @@ void WorldSession::HandleBattleGroundPlayerPortOpcode(WorldPacket & recv_data)
     }
 }
 
-void WorldSession::HandleBattleGroundLeaveOpcode(WorldPacket & recv_data)
+void WorldSession::HandleBattleGroundLeaveOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: Recvd CMSG_LEAVE_BATTLEFIELD Message");
 
@@ -618,7 +618,7 @@ void WorldSession::HandleBattlefieldStatusOpcode(WorldPacket & /*recv_data*/)
     }*/
 }
 
-void WorldSession::HandleAreaSpiritHealerQueryOpcode(WorldPacket & recv_data)
+void WorldSession::HandleAreaSpiritHealerQueryOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: CMSG_AREA_SPIRIT_HEALER_QUERY");
 
@@ -639,7 +639,7 @@ void WorldSession::HandleAreaSpiritHealerQueryOpcode(WorldPacket & recv_data)
     sBattleGroundMgr.SendAreaSpiritHealerQueryOpcode(_player, bg, guid);
 }
 
-void WorldSession::HandleAreaSpiritHealerQueueOpcode(WorldPacket & recv_data)
+void WorldSession::HandleAreaSpiritHealerQueueOpcode(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: CMSG_AREA_SPIRIT_HEALER_QUEUE");
 
@@ -660,7 +660,7 @@ void WorldSession::HandleAreaSpiritHealerQueueOpcode(WorldPacket & recv_data)
     bg->AddPlayerToResurrectQueue(guid, _player->GetGUID());
 }
 
-void WorldSession::HandleBattleGroundArenaJoin(WorldPacket & recv_data)
+void WorldSession::HandleBattleGroundArenaJoin(WorldPacket& recv_data)
 {
     sLog.outDebug("WORLD: CMSG_BATTLEMASTER_JOIN_ARENA");
     //recv_data.hexlike();
@@ -820,7 +820,7 @@ void WorldSession::HandleBattleGroundArenaJoin(WorldPacket & recv_data)
     }
 }
 
-void WorldSession::HandleBattleGroundReportAFK(WorldPacket & recv_data)
+void WorldSession::HandleBattleGroundReportAFK(WorldPacket& recv_data)
 {
     uint64 playerGuid;
     recv_data >> playerGuid;

@@ -31,7 +31,7 @@
 #include "BattleGroundAV.h"
 #include "ScriptMgr.h"
 
-void WorldSession::HandleQuestgiverStatusQueryOpcode(WorldPacket & recv_data)
+void WorldSession::HandleQuestgiverStatusQueryOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
     recv_data >> guid;
@@ -77,7 +77,7 @@ void WorldSession::HandleQuestgiverStatusQueryOpcode(WorldPacket & recv_data)
     _player->PlayerTalkClass->SendQuestGiverStatus(questStatus, guid);
 }
 
-void WorldSession::HandleQuestgiverHelloOpcode(WorldPacket & recv_data)
+void WorldSession::HandleQuestgiverHelloOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
     recv_data >> guid;
@@ -104,7 +104,7 @@ void WorldSession::HandleQuestgiverHelloOpcode(WorldPacket & recv_data)
     _player->SendPreparedGossip(pCreature);
 }
 
-void WorldSession::HandleQuestgiverAcceptQuestOpcode(WorldPacket & recv_data)
+void WorldSession::HandleQuestgiverAcceptQuestOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
     uint32 quest;
@@ -222,7 +222,7 @@ void WorldSession::HandleQuestgiverAcceptQuestOpcode(WorldPacket & recv_data)
     _player->PlayerTalkClass->CloseGossip();
 }
 
-void WorldSession::HandleQuestgiverQuestQueryOpcode(WorldPacket & recv_data)
+void WorldSession::HandleQuestgiverQuestQueryOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
     uint32 quest;
@@ -244,7 +244,7 @@ void WorldSession::HandleQuestgiverQuestQueryOpcode(WorldPacket & recv_data)
     }
 }
 
-void WorldSession::HandleQuestQueryOpcode(WorldPacket & recv_data)
+void WorldSession::HandleQuestQueryOpcode(WorldPacket& recv_data)
 {
     uint32 quest;
     recv_data >> quest;
@@ -255,7 +255,7 @@ void WorldSession::HandleQuestQueryOpcode(WorldPacket & recv_data)
         _player->PlayerTalkClass->SendQuestQueryResponse(pQuest);
 }
 
-void WorldSession::HandleQuestgiverChooseRewardOpcode(WorldPacket & recv_data)
+void WorldSession::HandleQuestgiverChooseRewardOpcode(WorldPacket& recv_data)
 {
     uint32 quest, reward;
     uint64 guid;
@@ -311,7 +311,7 @@ void WorldSession::HandleQuestgiverChooseRewardOpcode(WorldPacket & recv_data)
     }
 }
 
-void WorldSession::HandleQuestgiverRequestRewardOpcode(WorldPacket & recv_data)
+void WorldSession::HandleQuestgiverRequestRewardOpcode(WorldPacket& recv_data)
 {
     uint32 quest;
     uint64 guid;
@@ -343,7 +343,7 @@ void WorldSession::HandleQuestgiverCancel(WorldPacket& /*recv_data*/)
     _player->PlayerTalkClass->CloseGossip();
 }
 
-void WorldSession::HandleQuestLogSwapQuest(WorldPacket & recv_data)
+void WorldSession::HandleQuestLogSwapQuest(WorldPacket& recv_data)
 {
     uint8 slot1, slot2;
     recv_data >> slot1 >> slot2;
@@ -356,7 +356,7 @@ void WorldSession::HandleQuestLogSwapQuest(WorldPacket & recv_data)
     GetPlayer()->SwapQuestSlot(slot1,slot2);
 }
 
-void WorldSession::HandleQuestLogRemoveQuest(WorldPacket & recv_data)
+void WorldSession::HandleQuestLogRemoveQuest(WorldPacket& recv_data)
 {
     uint8 slot;
     recv_data >> slot;
@@ -383,7 +383,7 @@ void WorldSession::HandleQuestLogRemoveQuest(WorldPacket & recv_data)
     }
 }
 
-void WorldSession::HandleQuestConfirmAccept(WorldPacket & recv_data)
+void WorldSession::HandleQuestConfirmAccept(WorldPacket& recv_data)
 {
     uint32 quest;
     recv_data >> quest;
@@ -418,7 +418,7 @@ void WorldSession::HandleQuestConfirmAccept(WorldPacket & recv_data)
     }
 }
 
-void WorldSession::HandleQuestComplete(WorldPacket & recv_data)
+void WorldSession::HandleQuestComplete(WorldPacket& recv_data)
 {
     uint32 quest;
     uint64 guid;

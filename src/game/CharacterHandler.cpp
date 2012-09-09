@@ -183,7 +183,7 @@ void WorldSession::HandleCharEnumOpcode(WorldPacket & /*recv_data*/)
         GetAccountId());
 }
 
-void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
+void WorldSession::HandleCharCreateOpcode(WorldPacket& recv_data)
 {
     std::string name;
     uint8 race_,class_;
@@ -360,6 +360,8 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
     if ((have_same_race && skipCinematics == 1) || skipCinematics == 2)
         pNewChar->setCinematic(1);                          // not show intro
 
+    pNewChar->SetAtLoginFlag(AT_LOGIN_FIRST);               // first login
+
     // Player created, save it now
     pNewChar->SaveToDB();
     charcount+=1;
@@ -377,7 +379,7 @@ void WorldSession::HandleCharCreateOpcode(WorldPacket & recv_data)
 
 }
 
-void WorldSession::HandleCharDeleteOpcode(WorldPacket & recv_data)
+void WorldSession::HandleCharDeleteOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
     recv_data >> guid;
@@ -436,7 +438,7 @@ void WorldSession::HandleCharDeleteOpcode(WorldPacket & recv_data)
     SendPacket(&data);
 }
 
-void WorldSession::HandlePlayerLoginOpcode(WorldPacket & recv_data)
+void WorldSession::HandlePlayerLoginOpcode(WorldPacket& recv_data)
 {
     if (PlayerLoading() || GetPlayer() != NULL)
     {
@@ -679,6 +681,9 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
         SendNotification(LANG_RESET_TALENTS);
     }
 
+    if (pCurrChar->HasAtLoginFlag(AT_LOGIN_FIRST))
+        pCurrChar->RemoveAtLoginFlag(AT_LOGIN_FIRST);
+
     // show time before shutdown if shutdown planned.
     if (sWorld.IsShutdowning())
         sWorld.ShutdownMsg(true,pCurrChar);
@@ -749,7 +754,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder * holder)
     delete holder;
 }
 
-void WorldSession::HandleSetFactionAtWar(WorldPacket & recv_data)
+void WorldSession::HandleSetFactionAtWar(WorldPacket& recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_SET_FACTION_ATWAR");
 
@@ -779,7 +784,7 @@ void WorldSession::HandleMeetingStoneInfo(WorldPacket & /*recv_data*/)
     SendPacket(&data);
 }
 
-void WorldSession::HandleTutorialFlag(WorldPacket & recv_data)
+void WorldSession::HandleTutorialFlag(WorldPacket& recv_data)
 {
     uint32 iFlag;
     recv_data >> iFlag;
@@ -811,7 +816,7 @@ void WorldSession::HandleTutorialReset(WorldPacket & /*recv_data*/)
         GetPlayer()->SetTutorialInt(i, 0x00000000);
 }
 
-void WorldSession::HandleSetWatchedFactionIndexOpcode(WorldPacket & recv_data)
+void WorldSession::HandleSetWatchedFactionIndexOpcode(WorldPacket& recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_SET_WATCHED_FACTION");
     int32 repId;
@@ -819,7 +824,7 @@ void WorldSession::HandleSetWatchedFactionIndexOpcode(WorldPacket & recv_data)
     GetPlayer()->SetInt32Value(PLAYER_FIELD_WATCHED_FACTION_INDEX, repId);
 }
 
-void WorldSession::HandleSetWatchedFactionInactiveOpcode(WorldPacket & recv_data)
+void WorldSession::HandleSetWatchedFactionInactiveOpcode(WorldPacket& recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_SET_FACTION_INACTIVE");
     uint32 replistid;
@@ -845,7 +850,7 @@ void WorldSession::HandleToggleCloakOpcode(WorldPacket & /*recv_data*/)
     _player->ToggleFlag(PLAYER_FLAGS, PLAYER_FLAGS_HIDE_CLOAK);
 }
 
-void WorldSession::HandleChangePlayerNameOpcode(WorldPacket & recv_data)
+void WorldSession::HandleChangePlayerNameOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
     std::string newname;
@@ -921,7 +926,7 @@ void WorldSession::HandleChangePlayerNameOpcodeCallBack(QueryResult_AutoPtr resu
     session->SendPacket(&data);
 }
 
-void WorldSession::HandleDeclinedPlayerNameOpcode(WorldPacket & recv_data)
+void WorldSession::HandleDeclinedPlayerNameOpcode(WorldPacket& recv_data)
 {
     uint64 guid;
 

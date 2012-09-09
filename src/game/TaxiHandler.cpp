@@ -29,7 +29,7 @@
 #include "WaypointMovementGenerator.h"
 #include "DestinationHolderImp.h"
 
-void WorldSession::HandleTaxiNodeStatusQueryOpcode(WorldPacket & recv_data)
+void WorldSession::HandleTaxiNodeStatusQueryOpcode(WorldPacket& recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_TAXINODE_STATUS_QUERY");
 
@@ -64,7 +64,7 @@ void WorldSession::SendTaxiStatus(uint64 guid)
     DEBUG_LOG("WORLD: Sent SMSG_TAXINODE_STATUS");
 }
 
-void WorldSession::HandleTaxiQueryAvailableNodesOpcode(WorldPacket & recv_data)
+void WorldSession::HandleTaxiQueryAvailableNodesOpcode(WorldPacket& recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_TAXIQUERYAVAILABLENODES");
 
@@ -148,7 +148,7 @@ bool WorldSession::SendLearnNewTaxiNode(Creature* unit)
         return false;
 }
 
-void WorldSession::HandleActivateTaxiFarOpcode (WorldPacket & recv_data)
+void WorldSession::HandleActivateTaxiFarOpcode (WorldPacket& recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_ACTIVATETAXIEXPRESS");
 
@@ -180,7 +180,7 @@ void WorldSession::HandleActivateTaxiFarOpcode (WorldPacket & recv_data)
     GetPlayer()->ActivateTaxiPathTo(nodes, 0, npc);
 }
 
-void WorldSession::HandleTaxiNextDestinationOpcode(WorldPacket & recv_data)
+void WorldSession::HandleTaxiNextDestinationOpcode(WorldPacket& recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_MOVE_SPLINE_DONE");
 
@@ -249,7 +249,7 @@ void WorldSession::HandleTaxiNextDestinationOpcode(WorldPacket & recv_data)
         GetPlayer()->CleanupAfterTaxiFlight();        // not destinations, clear source node
 }
 
-void WorldSession::HandleActivateTaxiOpcode(WorldPacket & recv_data)
+void WorldSession::HandleActivateTaxiOpcode(WorldPacket& recv_data)
 {
     DEBUG_LOG("WORLD: Received CMSG_ACTIVATETAXI");
 
