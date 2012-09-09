@@ -64,16 +64,17 @@ ScriptMgr::~ScriptMgr()
 
 void ScriptMgr::ScriptsInit()
 {
-    outstring_log("   00000    00   0                  0000                 00               ");
-    outstring_log("  00   00   00                    00                                  00  ");
-    outstring_log("  0    00   0   00  00000  00000  00        000   0  00  0   0 000   00000");
-    outstring_log("  0   00    0   0      0      0    00     00   0  00    00  000  00   0   ");
-    outstring_log("  000000   00   0     0      0      000  00       0     0   00    0   0   ");
-    outstring_log(" 00    00  0   00   00     00         00 00      00     0   0    00  00   ");
-    outstring_log(" 0     0   0   0   00     00          0  00      0     00   0    0   0    ");
-    outstring_log(" 000000    0   0  00000  000000 0000000  000000  0     0   000000    0000 ");
-    outstring_log("                                                           0              ");
-    outstring_log(" BlizzScript  http://blizzlike.servegame.com              00              ");
+    outstring_log(" ");
+    outstring_log("   BBBBB    BB    B                 BBBB                  B               ");
+    outstring_log("  BB   BB   BB                    BB                                  BB  ");
+    outstring_log("  B    BB   B   BB  BBBBB  BBBBB  BB        BBB   B  BB BB   B BBB   BBBBB");
+    outstring_log("  BBBBBB   BB   B     B      B      BBB  BB       B     B   BB    B   B   ");
+    outstring_log(" BB    BB  B   BB   BB     BB         BB BB      BB    BB   B    BB  BB   ");
+    outstring_log(" B     B   B   B   BB     BB          B  BB      B     B    B    B   B    ");
+    outstring_log(" BBBBBB    B   B  BBBBB  BBBBBB BBBBBBB  BBBBBB  B     B   BBBBBB   BBBB  ");
+    outstring_log("                                                           B              ");
+    outstring_log("                                                          BB              ");
+    outstring_log(" ");
 
     //Load database (must be called after BSCRConfig.SetSource).
     LoadDatabase();

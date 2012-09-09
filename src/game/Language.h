@@ -920,9 +920,19 @@ enum BlizzLikeStrings
     LANG_AUTO_BROADCAST                 = 11000,
     LANG_INVALID_REALMID                = 11001,
 
+    // ChatSpy
+    LANG_CHATSPY_APENDED                = 11600,
+    LANG_CHATSPY_CANCELLEDMASSIVE       = 11601,
+    LANG_CHATSPY_ALLRESET               = 11602,
+    LANG_CHATSPY_NOCHATSPY              = 11603,
+    LANG_CHATSPY_YOURCANCELLED          = 11604,
+    LANG_CHATSPY_SMBCANCELLED           = 11605,
+    LANG_CHATSPY_LISTOFSPYS             = 11606,
+    LANG_CHATSPY_TOTAL                  = 11607,
+    LANG_CHATSPY_ONESPYSANOTHER         = 11608,
+
     // NOT RESERVED IDS                   12000-1999999999
     // `db_script_string` table index     2000000000-2000009999 (MIN_DB_SCRIPT_STRING_ID-MAX_DB_SCRIPT_STRING_ID)
     // For other tables maybe             2000010000-2147483647 (max index)
 };
 #endif
-

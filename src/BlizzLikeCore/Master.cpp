@@ -96,16 +96,18 @@ int Master::Run()
     sLog.outString("%s (core-daemon)", _FULLVERSION);
     sLog.outString("<Ctrl-C> to stop.\n");
 
-    sLog.outString("   00000    00   0                 00      0   0            ");
-    sLog.outString("  00   00   00                     0          00            ");
-    sLog.outString("  0    00   0   00  00000  00000   0      00  00   0    000 ");
-    sLog.outString("  0   00    0   0      0      0   00      0   0  00   00   0");
-    sLog.outString("  000000   00   0    00      0    00      0   000    00   00");
-    sLog.outString(" 00    00  0   00   00     00     0      00  00 0    0000   ");
-    sLog.outString(" 0     0   0   0   00     00      0      0   0  00   0      ");
-    sLog.outString(" 000000    0   0  00000  000000  000000  0   0   00  000000 ");
+    sLog.outString(" ");
+    sLog.outString("   BBBBB    BB   B                 BB      B   B            ");
+    sLog.outString("  BB   BB   BB                     B          BB            ");
+    sLog.outString("  B    BB   B   BB  BBBBB  BBBBB   B      BB  BB  B    BBB  ");
+    sLog.outString("  BBBBBB   BB   B    BB      B    BB      B   BBB    BB   BB");
+    sLog.outString(" BB    BB  B   BB   BB     BB     B      BB  BB B    BBBB   ");
+    sLog.outString(" B     B   B   B   BB     BB      B      B   B  BB   B      ");
+    sLog.outString(" BBBBBB    B   B  BBBBB  BBBBBB  BBBBBB  B   B   BB  BBBBBB ");
     sLog.outString("                                                            ");
-    sLog.outString(" BlizzLikeCore  http://blizzlike.servegame.com            \n");
+    sLog.outString("     BlizzLikeCore 2012(c) Open-Sourced Game Emulation      ");
+    sLog.outString("           <http://blizzlike.servegame.com>                 ");
+    sLog.outString("\n");
 
     // worldd PID file creation
     std::string pidfile = sConfig.GetStringDefault("PidFile", "");

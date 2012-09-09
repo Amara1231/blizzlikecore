@@ -37,6 +37,15 @@ bool ChatHandler::load_command_table = true;
 
 ChatCommand * ChatHandler::getCommandTable()
 {
+    static ChatCommand chatspyCommandTable[] =
+    {
+        { "reset",          SEC_ADMINISTRATOR,  false, &ChatHandler::HandleChatSpyResetCommand,        "", NULL },
+        { "cancel",         SEC_ADMINISTRATOR,  false, &ChatHandler::HandleChatSpyCancelCommand,       "", NULL },
+        { "status",         SEC_ADMINISTRATOR,  false, &ChatHandler::HandleChatSpyStatusCommand,       "", NULL },
+        { "",               SEC_ADMINISTRATOR,  false, &ChatHandler::HandleChatSpySetCommand,          "", NULL },
+        { NULL,             0,                  false, NULL,                                           "", NULL }
+    };
+
     static ChatCommand accountSetCommandTable[] =
     {
         { "addon",          SEC_ADMINISTRATOR,  true,  &ChatHandler::HandleAccountSetAddonCommand,     "", NULL },
@@ -610,6 +619,8 @@ ChatCommand * ChatHandler::getCommandTable()
         { "instance",       SEC_ADMINISTRATOR,  true,  NULL,                                           "", instanceCommandTable },
         { "server",         SEC_ADMINISTRATOR,  true,  NULL,                                           "", serverCommandTable   },
         { "pet",            SEC_GAMEMASTER,     false, NULL,                                           "", petCommandTable      },
+
+        { "chatspy",        SEC_ADMINISTRATOR,  false, NULL,                                           "", chatspyCommandTable  }, 
 
         { "aura",           SEC_ADMINISTRATOR,  false, &ChatHandler::HandleAuraCommand,                "", NULL },
         { "unaura",         SEC_ADMINISTRATOR,  false, &ChatHandler::HandleUnAuraCommand,              "", NULL },

@@ -96,7 +96,7 @@ void utf8print(void* arg, const char* str)
 
 void commandFinished(void*, bool sucess)
 {
-    printf("blizzlike>");
+    printf("BC>");
     fflush(stdout);
 }
 
@@ -685,7 +685,7 @@ void CliRunnable::run()
 
     // print this here the first time
     // later it will be printed after command queue updates
-    printf("blizzlike>");
+    printf("BC>");
 
     // As long as the World is running (no World::m_stopEvent), get the command line and handle it
     while (!World::IsStopped())
@@ -697,7 +697,7 @@ void CliRunnable::run()
         #if PLATFORM == WINDOWS
         command_str = fgets(commandbuf,sizeof(commandbuf),stdin);
         #else
-        command_str = readline("blizzlike>");
+        command_str = readline("BC>");
         rl_bind_key('\t',rl_complete);
         #endif
         if (command_str != NULL)
@@ -712,7 +712,7 @@ void CliRunnable::run()
             if (!*command_str)
             {
                 #if PLATFORM == WINDOWS
-                printf("blizzlike>");
+                printf("BC>");
                 #endif
                 continue;
             }
@@ -721,7 +721,7 @@ void CliRunnable::run()
             if (!consoleToUtf8(command_str,command))         // convert from console encoding to utf8
             {
                 #if PLATFORM == WINDOWS
-                printf("blizzlike>");
+                printf("BC>");
                 #endif
                 continue;
             }

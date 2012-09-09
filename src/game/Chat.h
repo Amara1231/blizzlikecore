@@ -506,6 +506,12 @@ class ChatHandler
         bool HandleTempGameObjectCommand(const char* args);
         bool HandleTempAddSpwCommand(const char* args);
 
+        // ChatSpy
+        bool HandleChatSpyResetCommand(const char * args);
+        bool HandleChatSpyCancelCommand(const char * args);
+        bool HandleChatSpySetCommand(const char * args);
+        bool HandleChatSpyStatusCommand(const char * args);
+
         //! Development Commands
         bool HandleSetValue(const char* args);
         bool HandleGetValue(const char* args);
@@ -594,4 +600,3 @@ class CliHandler : public ChatHandler
 char const *fmtstring(char const *format, ...);
 
 #endif
-

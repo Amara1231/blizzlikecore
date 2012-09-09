@@ -565,6 +565,11 @@ void Channel::Say(uint64 p, const char *what, uint32 lang)
     }
     else
     {
+        // ChatSpy
+        for(PlayerList::iterator itr = players.begin(); itr != players.end(); ++itr)
+            if(Player* pl = objmgr.GetPlayer(itr->first))
+                pl->HandleChatSpyMessage(what, CHAT_MSG_CHANNEL, lang, plr, GetName());
+
         uint32 messageLength = strlen(what) + 1;
 
         WorldPacket data(SMSG_MESSAGECHAT, 1+4+8+4+m_name.size()+1+8+4+messageLength+1);
