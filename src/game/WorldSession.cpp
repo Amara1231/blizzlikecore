@@ -170,7 +170,7 @@ bool WorldSession::Update(uint32 diff)
         m_Socket->CloseSocket();
 
     // Retrieve packets from the receive queue and call the appropriate handlers
-    // not proccess packets if socket already closed
+    // not process packets if socket already closed
     WorldPacket* packet;
     while (m_Socket && !m_Socket->IsClosed() && _recvQueue.next(packet))
     {
