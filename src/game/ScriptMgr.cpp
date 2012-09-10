@@ -65,15 +65,22 @@ ScriptMgr::~ScriptMgr()
 void ScriptMgr::ScriptsInit()
 {
     outstring_log(" ");
-    outstring_log("   BBBBB    BB    B                 BBBB                  B               ");
-    outstring_log("  BB   BB   BB                    BB                                  BB  ");
-    outstring_log("  B    BB   B   BB  BBBBB  BBBBB  BB        BBB   B  BB BB   B BBB   BBBBB");
-    outstring_log("  BBBBBB   BB   B     B      B      BBB  BB       B     B   BB    B   B   ");
-    outstring_log(" BB    BB  B   BB   BB     BB         BB BB      BB    BB   B    BB  BB   ");
-    outstring_log(" B     B   B   B   BB     BB          B  BB      B     B    B    B   B    ");
-    outstring_log(" BBBBBB    B   B  BBBBB  BBBBBB BBBBBBB  BBBBBB  B     B   BBBBBB   BBBB  ");
-    outstring_log("                                                           B              ");
-    outstring_log("                                                          BB              ");
+    outstring_log("              :+:+:+:+             :+                                      ");
+    outstring_log("          :+:+:..::.+++       :+:+:++:                                     ");
+    outstring_log("         ++::::::++:::+:     ++:.:::.:                                     ");
+    outstring_log("            +::::  +::::    +::+:+:.:+           :                         ");
+    outstring_log("            +:::: +:.::+    :..::+:+:+     :+:+:+::+:+:+:+:+:              ");
+    outstring_log("            +::::+:.:.::+:  +::::.::+:+   :+....+.:+.:.:....+:+            ");
+    outstring_log("            :.::++:+:+:..+: ++:.:.:.:.: +:..+:+:+.:+:+::+ :.:.+            ");
+    outstring_log("            :..::   +:+:.+:  +:+:...:.::+:.::    +:+ :.:+ ::..+            ");
+    outstring_log("            :..:+    :+..:  +::.:+:+:..+:..+        :+...:..:+             ");
+    outstring_log("            :..:+   :+ .:  +..:+:..++:.::..+         +.:+..::+             ");
+    outstring_log("            : .:+ :+:..:  + .:+::+ .+: ++..:+        : :+:...+:            ");
+    outstring_log("           ++ ..+:.:+:+  :+ .:+:  .+:.++:+ .+     :++ . .+:+ ..:+          ");
+    outstring_log("          ::  .++:+:      +:..:+:+:+.:+ :+...:+   :: +:++:+ +:. :+:+       ");
+    outstring_log("                            :+.. . ++:    ++. :+:+:+++        :+.. ..:+:+  ");
+    outstring_log("                              :+:+:+       :+:  ..  .+          :+:+:+:+:  ");
+    outstring_log("                                             +:+:++:+                      ");
     outstring_log(" ");
 
     //Load database (must be called after BSCRConfig.SetSource).
