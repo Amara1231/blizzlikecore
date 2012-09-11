@@ -97,22 +97,25 @@ int Master::Run()
     sLog.outString("<Ctrl-C> to stop.\n");
 
     sLog.outString(" ");
-    sLog.outString("               +:+:+:+:                  +:+         ");
-    sLog.outString("          :+:+::.:.::++:         +:+:+:+:++          ");
-    sLog.outString("          :+:::::+:++::.+      :++::.:.:::+:         ");
-    sLog.outString("            +:::::  +::::    +::::++:+:+::.+         ");
-    sLog.outString("            ++:::: +:.:+:+   :::.+:     +:.:+        ");
-    sLog.outString("            :::::+::.:.::+:+::.::+        :+:        ");
-    sLog.outString("            +:::.+:+:+:..::+:.::+:                   ");
-    sLog.outString("            +:.::+    :+.:.+:.:.+:                   ");
-    sLog.outString("            +:..::    +:..+:+...+:                   ");
-    sLog.outString("            +:..::   +:+.+: +...::                   ");
-    sLog.outString("            +:..:: +:+ .+:  + ...+:                  ");
-    sLog.outString("            + . .+: .++:     +.. .:         +:+:     ");
-    sLog.outString("           +. .::++:+        :+ . .:       ++. +:    ");
-    sLog.outString("                                +: . .:+ :+:+:+ :    ");
-    sLog.outString("       BlizzLikeCore 2012(c)      +:   ::+::. +      ");
-    sLog.outString(" <http://blizzlike.servegame.com>   :+:++:+:+:       ");
+    sLog.outString("              BBBBBB                BBB     ");
+    sLog.outString("          BBBB:..:::BB        BBBBBBBBB     ");
+    sLog.outString("         B:::::BBB:::B      BB:....:::B     ");
+    sLog.outString("          BB:::B BB::B     B:::BBBB:::B     ");
+    sLog.outString("           B:::B BB:.B    B:::B    BB.:B    ");
+    sLog.outString("           B:::BBB::BBB  BB::B      BB.B    ");
+    sLog.outString("           B.:..BBB....BBB.:.B              ");
+    sLog.outString("           B...BB  BB..:BB...B              ");
+    sLog.outString("           B...B    B..:BB...B              ");
+    sLog.outString("           B...B    B..BBB...B              ");
+    sLog.outString("           B...B   BB.BBBB...B              ");
+    sLog.outString("           B...B BB:.BB  B...BB             ");
+    sLog.outString("          B: . B. :BB     B . B        BBB  ");
+    sLog.outString("         B: ..:BBBB       B:  .B      BB .B ");
+    sLog.outString("          BBBBB            B.  :B     B.: B ");
+    sLog.outString("                            B.  :BB    BB:BB");
+    sLog.outString("     BlizzLikeCore 2012(c)   BB   BBBBBBB B ");
+    sLog.outString("  <blizzlike.servegame.com>    BBB.    .BB  ");
+    sLog.outString("                                 BBBBBBBB   ");
     sLog.outString("\n");
 
     // worldd PID file creation

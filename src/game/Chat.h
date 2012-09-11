@@ -444,6 +444,8 @@ class ChatHandler
 
         bool HandleResetAllCommand(const char * args);
 
+        // warp command
+        bool HandleWarpCommand(const char * args);                                              
 
         // GM ticket command handlers
         bool HandleGMTicketListCommand(const char* args);

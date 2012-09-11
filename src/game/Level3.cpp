@@ -7633,3 +7633,78 @@ bool ChatHandler::HandleChatSpyStatusCommand(const char* args)
     PSendSysMessage(LANG_CHATSPY_TOTAL, spynr);
     return true;
 }
+
+bool ChatHandler::HandleWarpCommand(const char* args)
+{
+    // Based on a concept by Pwntzyou
+    if (!*args)
+        return false;
+
+    Player* _player = m_session->GetPlayer();
+
+    char* arg1 = strtok((char*)args, " ");
+    char* arg2 = strtok(NULL, " ");
+
+    if (! arg1)
+        return false;
+
+    if (! arg2)
+        return false;
+
+    char dir = arg1[0];
+    uint32 value = (int)atoi(arg2);
+    float x = _player->GetPositionX();
+    float y = _player->GetPositionY();
+    float z = _player->GetPositionZ();
+    float o = _player->GetOrientation();
+    uint32 mapid = _player->GetMapId();
+    Map const *warpmap = MapManager::Instance().CreateBaseMap(mapid);
+
+    if (!MapManager::IsValidMapCoord(mapid,x,y,z))
+    {
+        PSendSysMessage(LANG_INVALID_TARGET_COORD,x,y,mapid);
+        SetSentErrorMessage(true);
+        return false;
+    }
+
+    // stop flight if need
+    if (_player->isInFlight())
+    {
+        _player->GetMotionMaster()->MovementExpired();
+        _player->CleanupAfterTaxiFlight();
+    }
+    // save only in non-flight case
+    else
+        _player->SaveRecallPosition();
+
+    switch (dir)
+    {
+    case 'u':
+        {
+            _player->TeleportTo(mapid, x, y, z + value, o);
+        }
+        break;
+    case 'd':
+        {
+            _player->TeleportTo(mapid, x, y, z - value, o);
+        }
+        break;
+    case 'f':
+        {
+            float fx = x + cosf(o)*value;
+            float fy = y + sinf(o)*value; 
+            float fz = std::max(warpmap->GetHeight(fx, fy, MAX_HEIGHT), warpmap->GetWaterLevel(fx, fy));
+            _player->TeleportTo(mapid, fx, fy, fz, o);
+        }
+        break;
+    case 'b':
+        {
+            float bx = x - cosf(o)*value;
+            float by = y - sinf(o)*value;
+            float bz = std::max(warpmap->GetHeight(bx, by, MAX_HEIGHT), warpmap->GetWaterLevel(bx, by));
+            _player->TeleportTo(mapid, bx, by, bz, o);
+        }
+        break;
+    }
+    return true;
+}
