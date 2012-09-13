@@ -46,7 +46,7 @@ index 2727ac8..40fe0b1 100644
      // Use for not-in-offcial-sources patches
      //                                    10000-10999
 diff --git a/src/game/MovementHandler.cpp b/src/game/MovementHandler.cpp
-index ae3035e..c17787e 100644
+index 44c1d55..a299ba8 100644
 --- a/src/game/MovementHandler.cpp
 +++ b/src/game/MovementHandler.cpp
 @@ -20,6 +20,7 @@
@@ -598,7 +598,7 @@ index ae3035e..c17787e 100644
  }
  
  void WorldSession::HandleForceSpeedChangeAck(WorldPacket& recv_data)
-@@ -366,6 +747,17 @@ void WorldSession::HandleForceSpeedChangeAck(WorldPacket& recv_data)
+@@ -367,6 +748,17 @@ void WorldSession::HandleForceSpeedChangeAck(WorldPacket& recv_data)
      // Save movement flags
      GetPlayer()->SetUnitMovementFlags(movementInfo.GetMovementFlags());
  
@@ -616,7 +616,7 @@ index ae3035e..c17787e 100644
      // client ACK send one packet for mounted/run case and need skip all except last from its
      // in other cases anti-cheat check can be fail in false case
      UnitMoveType move_type;
-@@ -397,6 +789,25 @@ void WorldSession::HandleForceSpeedChangeAck(WorldPacket& recv_data)
+@@ -398,6 +790,25 @@ void WorldSession::HandleForceSpeedChangeAck(WorldPacket& recv_data)
          if (GetPlayer()->m_forced_speed_changes[force_move_type] > 0)
              return;
      }
@@ -642,7 +642,7 @@ index ae3035e..c17787e 100644
  }
  
  void WorldSession::HandleSetActiveMoverOpcode(WorldPacket& recv_data)
-@@ -461,6 +872,19 @@ void WorldSession::HandleMoveKnockBackAck(WorldPacket& recv_data)
+@@ -463,6 +874,19 @@ void WorldSession::HandleMoveKnockBackAck(WorldPacket& recv_data)
  
      // Save movement flags
      GetPlayer()->SetUnitMovementFlags(movementInfo.GetMovementFlags());
@@ -662,7 +662,7 @@ index ae3035e..c17787e 100644
  }
  
  void WorldSession::HandleMoveFlyModeChangeAckOpcode(WorldPacket& recv_data)
-@@ -476,6 +900,18 @@ void WorldSession::HandleMoveFlyModeChangeAckOpcode(WorldPacket& recv_data)
+@@ -478,6 +902,18 @@ void WorldSession::HandleMoveFlyModeChangeAckOpcode(WorldPacket& recv_data)
      recv_data >> movementInfo;
      recv_data.read_skip<uint32>();                          // unk2
  
