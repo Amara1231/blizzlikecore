@@ -682,7 +682,7 @@ index 44c1d55..a299ba8 100644
  }
  
 diff --git a/src/game/Player.cpp b/src/game/Player.cpp
-index 079ea11..427b7d5 100644
+index 2619fdb..6f0c7aa 100644
 --- a/src/game/Player.cpp
 +++ b/src/game/Player.cpp
 @@ -382,6 +382,27 @@ Player::Player (WorldSession *session): Unit()
@@ -713,7 +713,7 @@ index 079ea11..427b7d5 100644
      m_mailsLoaded = false;
      m_mailsUpdated = false;
      unReadMails = 0;
-@@ -20477,12 +20498,16 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
+@@ -20458,12 +20479,16 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
  
  void Player::HandleFallDamage(MovementInfo& movementInfo)
  {
@@ -733,10 +733,10 @@ index 079ea11..427b7d5 100644
      //Players with low fall distance, Feather Fall or physical immunity (charges used) are ignored
      // 14.57 can be calculated by resolving damageperc formular below to 0
 diff --git a/src/game/Player.h b/src/game/Player.h
-index 266f54d..d98e55b 100644
+index 4f02362..f6d4018 100644
 --- a/src/game/Player.h
 +++ b/src/game/Player.h
-@@ -2311,6 +2311,24 @@ class Player : public Unit, public GridObject<Player>
+@@ -2294,6 +2294,24 @@ class Player : public Unit, public GridObject<Player>
          RestType rest_type;
          ////////////////////Rest System/////////////////////
  
@@ -762,7 +762,7 @@ index 266f54d..d98e55b 100644
          Transport * m_transport;
  
 diff --git a/src/game/TaxiHandler.cpp b/src/game/TaxiHandler.cpp
-index 0462873..c3ad384 100644
+index 988976e..96bc453 100644
 --- a/src/game/TaxiHandler.cpp
 +++ b/src/game/TaxiHandler.cpp
 @@ -117,6 +117,9 @@ void WorldSession::SendDoFlight(uint16 MountId, uint32 path, uint32 pathNode)
@@ -775,7 +775,7 @@ index 0462873..c3ad384 100644
      while (GetPlayer()->GetMotionMaster()->GetCurrentMovementGeneratorType() == FLIGHT_MOTION_TYPE)
          GetPlayer()->GetMotionMaster()->MovementExpired(false);
  
-@@ -193,13 +196,32 @@ void WorldSession::HandleTaxiNextDestinationOpcode(WorldPacket& recv_data)
+@@ -202,13 +205,32 @@ void WorldSession::HandleTaxiNextDestinationOpcode(WorldPacket& recv_data)
      // 1) end taxi path in far (multi-node) flight
      // 2) switch from one map to other in case multim-map taxi path
      // we need process only (1)
