@@ -94,8 +94,7 @@ Master::~Master()
 int Master::Run()
 {
     sLog.outString("%s (core-daemon)", _FULLVERSION);
-    sLog.outString("<Ctrl-C> to stop.\n");
-
+    sLog.outString("<Ctrl-C> to stop.");
     sLog.outString(" ");
     sLog.outString("              BBBBBB                BBB     ");
     sLog.outString("          BBBB:..:::BB        BBBBBBBBB     ");
@@ -116,7 +115,7 @@ int Master::Run()
     sLog.outString("     BlizzLikeCore 2012(c)   BB   BBBBBBB B ");
     sLog.outString("  <blizzlike.servegame.com>    BBB.    .BB  ");
     sLog.outString("                                 BBBBBBBB   ");
-    sLog.outString("\n");
+    sLog.outString(" ");
 
     // worldd PID file creation
     std::string pidfile = sConfig.GetStringDefault("PidFile", "");
