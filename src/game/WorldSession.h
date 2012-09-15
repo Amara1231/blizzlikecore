@@ -168,6 +168,7 @@ class WorldSession
         void SendTaxiMenu(Creature* unit);
         void SendDoFlight(uint16 MountId, uint32 path, uint32 pathNode = 0);
         bool SendLearnNewTaxiNode(Creature* unit);
+        void SendActivateTaxiReply(ActivateTaxiReply reply);
 
         // Guild/Arena Team
         void SendGuildCommandResult(uint32 typecmd, const std::string& str, uint32 cmdresult);
