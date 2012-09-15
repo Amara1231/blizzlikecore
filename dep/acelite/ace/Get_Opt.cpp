@@ -724,7 +724,7 @@ ACE_Get_Opt::ACE_Get_Opt_Long_Option::ACE_Get_Opt_Long_Option (
 
 ACE_Get_Opt::ACE_Get_Opt_Long_Option::~ACE_Get_Opt_Long_Option (void)
 {
-  delete [] this->name_;
+  delete[] this->name_;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

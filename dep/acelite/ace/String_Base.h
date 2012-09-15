@@ -381,7 +381,7 @@ public:
    *
    * This method allocates memory for a copy of the string and returns
    * a pointer to the new area. The caller is responsible for freeing
-   * the memory when finished; use delete []
+   * the memory when finished; use delete[]
    *
    * @return Pointer reference to the string data. Returned string is
    *    zero terminated.

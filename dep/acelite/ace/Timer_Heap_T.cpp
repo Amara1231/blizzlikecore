@@ -222,8 +222,8 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Heap_T (void)
       this->upcall_functor ().deletion (*this, eh, act);
     }
 
-  delete [] this->heap_;
-  delete [] this->timer_ids_;
+  delete[] this->heap_;
+  delete[] this->timer_ids_;
 
   // clean up any preallocated timer nodes
   if (preallocated_nodes_ != 0)
@@ -234,7 +234,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::~ACE_Timer_Heap_T (void)
       for (ACE_Timer_Node_T<TYPE> **entry = 0;
            set_iterator.next (entry) !=0;
            set_iterator.advance ())
-        delete [] *entry;
+        delete[] *entry;
     }
 }
 
@@ -531,7 +531,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
   ACE_OS::memcpy (new_heap,
                   this->heap_,
                   this->max_size_ * sizeof *new_heap);
-  delete [] this->heap_;
+  delete[] this->heap_;
   this->heap_ = new_heap;
 
   // Grow the array of timer ids.
@@ -545,7 +545,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK>::grow_heap (void)
                   this->timer_ids_,
                   this->max_size_ * sizeof (ssize_t));
 
-  delete [] timer_ids_;
+  delete[] timer_ids_;
   this->timer_ids_ = new_timer_ids;
 
   // And add the new elements to the end of the "freelist".

@@ -16,7 +16,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 inline
 ACE_Wide_To_Ascii::~ACE_Wide_To_Ascii (void)
 {
-  delete [] this->s_;
+  delete[] this->s_;
 }
 
 inline char *
@@ -106,7 +106,7 @@ ACE_Wide_To_Ascii::ACE_Wide_To_Ascii (const wchar_t *s)
 inline
 ACE_Ascii_To_Wide::~ACE_Ascii_To_Wide (void)
 {
-  delete [] this->s_;
+  delete[] this->s_;
 }
 
 inline wchar_t *

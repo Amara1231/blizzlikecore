@@ -128,7 +128,7 @@ public:
  * @brief Implements an extension to the draft C++ standard auto_ptr
  * abstraction.  This class allows one to work on non-object
  * (basic) types that must be treated as an array, e.g.,
- * deallocated via "delete [] foo".
+ * deallocated via "delete[] foo".
  */
 template<typename X>
 class ACE_Auto_Basic_Array_Ptr

@@ -54,7 +54,7 @@ void SQLStorage::Free ()
         {
             for (uint32 y=0; y<MaxEntry; y++)
                 if (pIndex[y])
-                    delete [] *(char**)((char*)(pIndex[y])+offset);
+                    delete[] *(char**)((char*)(pIndex[y])+offset);
 
             offset += sizeof(char*);
         }
@@ -65,8 +65,8 @@ void SQLStorage::Free ()
         else
             offset += 4;
 
-    delete [] pIndex;
-    delete [] data;
+    delete[] pIndex;
+    delete[] data;
 }
 
 void SQLStorage::Load()

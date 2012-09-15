@@ -139,7 +139,7 @@ ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast (void)
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast");
 
   // Free memory and optionally unsubscribe from currently subscribed group(s).
-  delete [] this->send_net_if_;
+  delete[] this->send_net_if_;
   this->clear_subs_list ();
 }
 
@@ -368,7 +368,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                 }
             }
 
-          delete [] if_addrs;
+          delete[] if_addrs;
 
           if (nr_subscribed == 0)
             {
@@ -420,7 +420,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
             }
         }
 
-      delete [] if_addrs;
+      delete[] if_addrs;
 
       if (nr_subscribed == 0)
         {
@@ -728,7 +728,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
                 }
             }
 
-          delete [] if_addrs;
+          delete[] if_addrs;
 
           if (nr_unsubscribed == 0)
             {
@@ -778,7 +778,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
             }
         }
 
-      delete [] if_addrs;
+      delete[] if_addrs;
 
       if (nr_unsubscribed == 0)
         {

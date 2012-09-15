@@ -76,7 +76,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
                                           &addr_len);
       if (rcv_len < 0)
         {
-          delete [] (char *)io_vec->iov_base;
+          delete[] (char *)io_vec->iov_base;
           io_vec->iov_base = 0;
         }
       else
@@ -349,7 +349,7 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
   ssize_t result = ACE_SOCK_Dgram::send (buf, length, addr, flags);
 #if !defined (ACE_HAS_ALLOCA)
-  delete [] buf;
+  delete[] buf;
 #endif /* !defined (ACE_HAS_ALLOCA) */
   return result;
 }
@@ -410,7 +410,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
     }
 
 #if !defined (ACE_HAS_ALLOCA)
-  delete [] buf;
+  delete[] buf;
 #endif /* !defined (ACE_HAS_ALLOCA) */
   return length;
 }

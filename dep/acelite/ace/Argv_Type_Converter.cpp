@@ -62,7 +62,7 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter (void)
       for (int i = 0; i < this->before_pass_argc_; ++i)
         ACE_OS::free (this->char_argv_[i]);
 
-      delete [] this->char_argv_;
+      delete[] this->char_argv_;
     }
   else
     {
@@ -73,7 +73,7 @@ ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter (void)
       for (int i = 0; i < this->before_pass_argc_; ++i)
         ACE_OS::free (this->wchar_argv_[i]);
 
-      delete [] this->wchar_argv_;
+      delete[] this->wchar_argv_;
     }
 #endif  // ACE_USES_WCHAR
 }

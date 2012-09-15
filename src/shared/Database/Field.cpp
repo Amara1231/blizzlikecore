@@ -48,13 +48,13 @@ mType(type)
 Field::~Field()
 {
     if (mValue)
-        delete [] mValue;
+        delete[] mValue;
 }
 
 void Field::SetValue(const char *value)
 {
     if (mValue)
-        delete [] mValue;
+        delete[] mValue;
 
     if (value)
     {

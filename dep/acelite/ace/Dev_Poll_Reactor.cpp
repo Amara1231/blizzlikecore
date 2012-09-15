@@ -493,7 +493,7 @@ ACE_Dev_Poll_Reactor::Handler_Repository::close (void)
     {
       this->unbind_all ();
 
-      delete [] this->handlers_;
+      delete[] this->handlers_;
       this->handlers_ = 0;
     }
 
@@ -836,7 +836,7 @@ ACE_Dev_Poll_Reactor::close (void)
 
 #else
 
-  delete [] this->dp_fds_;
+  delete[] this->dp_fds_;
   this->dp_fds_ = 0;
   this->start_pfds_ = 0;
   this->end_pfds_ = 0;

@@ -61,7 +61,7 @@ ACE_Notification_Queue::reset()
        alloc_iter.next (b) != 0;
        alloc_iter.advance ())
     {
-      delete [] *b;
+      delete[] *b;
       *b = 0;
     }
 
@@ -86,7 +86,7 @@ ACE_Notification_Queue::allocate_more_buffers()
 
   if (this->alloc_queue_.enqueue_head (temp) == -1)
     {
-      delete [] temp;
+      delete[] temp;
       return -1;
     }
 

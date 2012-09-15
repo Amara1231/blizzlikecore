@@ -77,7 +77,7 @@ ACE_Service_Type::~ACE_Service_Type (void)
   ACE_TRACE ("ACE_Service_Type::~ACE_Service_Type");
   this->fini ();
 
-  delete [] const_cast <ACE_TCHAR *> (this->name_);
+  delete[] const_cast <ACE_TCHAR *> (this->name_);
 }
 
 int
@@ -163,7 +163,7 @@ ACE_Service_Type::name (const ACE_TCHAR *n)
 {
   ACE_TRACE ("ACE_Service_Type::name");
 
-  delete [] const_cast <ACE_TCHAR *> (this->name_);
+  delete[] const_cast <ACE_TCHAR *> (this->name_);
   this->name_ = ACE::strnew (n);
 }
 

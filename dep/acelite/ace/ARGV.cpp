@@ -203,8 +203,8 @@ ACE_ARGV_T<CHAR_TYPE>::ACE_ARGV_T (CHAR_TYPE *first_argv[],
   ACE_OS::strcat (this->buf_, second_buf);
 
   //   Delete the first and second buffers
-  delete [] first_buf;
-  delete [] second_buf;
+  delete[] first_buf;
+  delete[] second_buf;
 }
 
 template <typename CHAR_TYPE>
@@ -262,11 +262,11 @@ ACE_ARGV_T<CHAR_TYPE>::add (const CHAR_TYPE *next_arg, bool quote_arg)
       for (int i = 0; this->argv_[i] != 0; i++)
         ACE_OS::free ((void *) this->argv_[i]);
 
-      delete [] this->argv_;
+      delete[] this->argv_;
       this->argv_ = 0;
     }
 
-  delete [] this->buf_;
+  delete[] this->buf_;
   this->buf_ = 0;
 
   return 0;
@@ -294,8 +294,8 @@ ACE_ARGV_T<CHAR_TYPE>::~ACE_ARGV_T (void)
     for (int i = 0; this->argv_[i] != 0; i++)
       ACE_OS::free ((void *) this->argv_[i]);
 
-  delete [] this->argv_;
-  delete [] this->buf_;
+  delete[] this->argv_;
+  delete[] this->buf_;
 }
 
 // Create buf_ out of the queue_.  This is only used in the
@@ -311,7 +311,7 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue (void)
   if (this->argc_ <= 0)
     return -1;
 
-  delete [] this->buf_;
+  delete[] this->buf_;
 
   ACE_NEW_RETURN (this->buf_,
                   CHAR_TYPE[this->length_ + this->argc_],

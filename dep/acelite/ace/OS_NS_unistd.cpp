@@ -870,7 +870,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
           if (argv[i] == 0)
             {
               if (argp != arg)
-                delete [] argp;
+                delete[] argp;
               errno = ENOMEM;
               return -1;
             }
@@ -884,7 +884,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
             {
               if (argp != arg)
                 {
-                  delete [] argp;
+                  delete[] argp;
                 }
 
               errno = ENOMEM;
@@ -895,7 +895,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
 
   if (argp != arg)
     {
-      delete [] argp;
+      delete[] argp;
     }
 
   argv[argc] = 0;

@@ -212,7 +212,7 @@ ACE_Process_Manager::resize (size_t size)
 
   this->max_process_table_size_ = size;
 
-  delete [] this->process_table_;
+  delete[] this->process_table_;
 
   this->process_table_ = temp;
   return 0;
@@ -287,7 +287,7 @@ ACE_Process_Manager::close (void)
       while (this->current_count_ > 0)
         this->remove_proc (0);
 
-      delete [] this->process_table_;
+      delete[] this->process_table_;
       this->process_table_ = 0;
       this->max_process_table_size_ = 0;
       this->current_count_ = 0;
@@ -868,7 +868,7 @@ ACE_Process_Manager::wait (pid_t pid,
             {
               // uh oh...handle removed from process_table_, even though
               // we're holding a lock!
-              delete [] handles;
+              delete[] handles;
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("Process removed")
                                  ACE_TEXT (" -- somebody's ignoring the lock!\n")),
@@ -876,7 +876,7 @@ ACE_Process_Manager::wait (pid_t pid,
             }
         }
 
-      delete [] handles;
+      delete[] handles;
 #else /* !defined(ACE_WIN32) */
       if (timeout == ACE_Time_Value::max_time)
         pid = ACE_OS::waitpid (-1, status, 0);

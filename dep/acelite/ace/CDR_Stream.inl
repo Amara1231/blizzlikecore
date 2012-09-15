@@ -1455,7 +1455,7 @@ ACE_OutputCDR::append_string (ACE_InputCDR &stream)
   ACE_CDR::Char *x = 0;
   ACE_CDR::Boolean const flag =
     (stream.read_string (x) ? this->write_string (x) : false);
-  delete [] x;
+  delete[] x;
   return flag;
 }
 
@@ -1465,7 +1465,7 @@ ACE_OutputCDR::append_wstring (ACE_InputCDR &stream)
   ACE_CDR::WChar *x = 0;
   ACE_CDR::Boolean const flag =
     (stream.read_wstring (x) ? this->write_wstring (x) : false);
-  delete [] x;
+  delete[] x;
   return flag;
 }
 

@@ -58,7 +58,7 @@ ACE_SPIPE_Stream::send (size_t n, ...) const
 
   ssize_t result = ACE_OS::writev (this->get_handle (), iovp, total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
-  delete [] iovp;
+  delete[] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
   va_end (argp);
   return result;
@@ -95,7 +95,7 @@ ACE_SPIPE_Stream::recv (size_t n, ...) const
 
   ssize_t result = ACE_OS::readv (this->get_handle (), iovp, total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
-  delete [] iovp;
+  delete[] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
   va_end (argp);
   return result;

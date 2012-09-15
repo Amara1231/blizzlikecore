@@ -214,7 +214,7 @@ ACE_SSL_Context::ssl_library_fini (void)
       ::CRYPTO_set_locking_callback (0);
       ssl_locks = 0;
 
-      delete [] this->locks_;
+      delete[] this->locks_;
       this->locks_ = 0;
 
 #endif  /* ACE_HAS_THREADS */

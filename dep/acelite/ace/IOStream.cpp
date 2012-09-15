@@ -167,7 +167,7 @@ ACE_Streambuf::underflow (void)
 
           if( ! pbase() )
             {
-              delete [] pbase_saved_;
+              delete[] pbase_saved_;
               (void) reset_put_buffer();
             }
           else
@@ -269,7 +269,7 @@ ACE_Streambuf::overflow (int c)
                  this method is sure to cleanup the bits and
                  pieces.
               */
-              delete [] eback_saved_;
+              delete[] eback_saved_;
               (void) reset_get_buffer();
             }
           else
@@ -648,8 +648,8 @@ ACE_Streambuf::reset_base (void)
 
 ACE_Streambuf::~ACE_Streambuf (void)
 {
-  delete [] this->eback_saved_;
-  delete [] this->pbase_saved_;
+  delete[] this->eback_saved_;
+  delete[] this->pbase_saved_;
 }
 
 u_char ACE_Streambuf::timeout (void)

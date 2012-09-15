@@ -75,7 +75,7 @@ bool Map::ExistMap(uint32 mapid,int gx,int gy)
         }
        fclose(pf);
     }
-    delete [] tmp;
+    delete[] tmp;
     return ret;
 }
 
@@ -155,7 +155,7 @@ void Map::LoadMap(int gx,int gy, bool reload)
     {
         sLog.outError("Error loading map file: \n %s\n", tmp);
     }
-    delete [] tmp;
+    delete[] tmp;
 }
 
 void Map::LoadMapAndVMap(int gx,int gy)

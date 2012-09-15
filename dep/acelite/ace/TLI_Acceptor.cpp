@@ -187,7 +187,7 @@ ACE_TLI_Request_Queue::close (void)
         res = -1;
     }
 
-  delete [] this->base_;
+  delete[] this->base_;
   this->base_ = 0;
   return res;
 }

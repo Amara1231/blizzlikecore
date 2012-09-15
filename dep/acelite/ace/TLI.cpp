@@ -49,7 +49,7 @@ ACE_TLI::ACE_TLI (void)
 
   if (this->so_opt_ret.opt.buf == 0)
     {
-      delete [] this->so_opt_req.opt.buf;
+      delete[] this->so_opt_req.opt.buf;
       this->so_opt_req.opt.buf = 0;
       return;
     }
@@ -73,8 +73,8 @@ ACE_TLI::~ACE_TLI (void)
 #if defined (ACE_HAS_SVR4_TLI)
   if (this->so_opt_req.opt.buf)
     {
-      delete [] this->so_opt_req.opt.buf;
-      delete [] this->so_opt_ret.opt.buf;
+      delete[] this->so_opt_req.opt.buf;
+      delete[] this->so_opt_ret.opt.buf;
       this->so_opt_req.opt.buf = 0;
       this->so_opt_ret.opt.buf = 0;
     }

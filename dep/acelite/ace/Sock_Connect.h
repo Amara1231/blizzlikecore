@@ -61,7 +61,7 @@ namespace ACE
   /**
    * Return count and array of all configured IP interfaces on this
    * host, rc = 0 on success (count == number of interfaces else -1).
-   * Caller is responsible for calling delete [] on @a addr_array.
+   * Caller is responsible for calling delete[] on @a addr_array.
    */
   extern ACE_Export int get_ip_interfaces (size_t &count,
                                            ACE_INET_Addr *&addr_array);

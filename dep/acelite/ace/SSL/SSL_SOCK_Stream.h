@@ -121,7 +121,7 @@ public:
    * socket, allocates a buffer of this size, reads in the data, and
    * returns the number of bytes read.  The caller is responsible for
    * deleting the member in the iov_base field of io_vec using
-   * delete [] io_vec->iov_base.
+   * delete[] io_vec->iov_base.
    */
   ssize_t recvv (iovec *io_vec,
                  const ACE_Time_Value *timeout = 0) const;

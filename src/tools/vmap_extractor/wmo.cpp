@@ -253,7 +253,7 @@ int WMOGroup::ConvertToVMAPGroupWmo(FILE *output, WMORoot *rootWMO, bool pPrecis
         fwrite(&moba_size_grp,4,1,output);
         fwrite(&moba_batch,4,1,output);
         fwrite(MobaEx,4,k,output);
-        delete [] MobaEx;
+        delete[] MobaEx;
 
         uint32 nIdexes = nTriangles * 3;
 
@@ -325,7 +325,7 @@ int WMOGroup::ConvertToVMAPGroupWmo(FILE *output, WMORoot *rootWMO, bool pPrecis
         fwrite(&moba_size_grp,4,1,output);
         fwrite(&moba_batch,4,1,output);
         fwrite(MobaEx,4,k,output);
-        delete [] MobaEx;
+        delete[] MobaEx;
 
         // INDX
         // MOPY
@@ -380,8 +380,8 @@ int WMOGroup::ConvertToVMAPGroupWmo(FILE *output, WMORoot *rootWMO, bool pPrecis
 
         assert(check==0);
 
-        delete [] MoviEx;
-        delete [] IndexRenum;
+        delete[] MoviEx;
+        delete[] IndexRenum;
     }
 
     // LIQU
@@ -428,13 +428,13 @@ int WMOGroup::ConvertLiquidType(int hlqLiquid, std::string &filename)
 
 WMOGroup::~WMOGroup()
 {
-    delete [] MOPY;
-    delete [] MOVI;
-    delete [] MOVT;
-    delete [] MOBA;
+    delete[] MOPY;
+    delete[] MOVI;
+    delete[] MOVT;
+    delete[] MOBA;
     delete hlq;
-    delete [] LiquEx;
-    delete [] LiquBytes;
+    delete[] LiquEx;
+    delete[] LiquBytes;
 }
 
 WMOInstance::WMOInstance(MPQFile &f,const char* WmoInstName, uint32 mapID, uint32 tileX, uint32 tileY, FILE *pDirfile)

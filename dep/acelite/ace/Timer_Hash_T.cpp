@@ -351,7 +351,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::~ACE_Timer_Hash_T (void)
        ++i)
     delete this->table_[i];
 
-  delete [] this->table_;
+  delete[] this->table_;
 }
 
 // Checks if queue is empty.
@@ -651,7 +651,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET>::cancel (const TYPE &type,
       --this->size_;
     }
 
-  delete [] timer_ids;
+  delete[] timer_ids;
 
   this->find_new_earliest ();
 

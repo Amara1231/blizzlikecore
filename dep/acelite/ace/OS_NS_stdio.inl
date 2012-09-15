@@ -476,7 +476,7 @@ ACE_OS::cuserid (wchar_t *user, size_t maxlen)
       result = user;
     }
 
-  delete [] char_user;
+  delete[] char_user;
 
   return result;
 # endif /* ACE_WIN32 */

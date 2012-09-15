@@ -172,7 +172,7 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
       ACE_OS::memcpy (buf, ctl->buf, ctl->len);
       ACE_OS::memcpy (buf + ctl->len, data->buf, data->len);
       result = ACE_OS::write (handle, buf, ctl->len + data->len);
-      delete [] buf;
+      delete[] buf;
       return static_cast<int> (result);
     }
 #endif /* ACE_HAS_STREAM_PIPES */

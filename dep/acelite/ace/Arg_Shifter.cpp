@@ -72,7 +72,7 @@ template <typename CHAR_TYPE>
 ACE_Arg_Shifter_T<CHAR_TYPE>::~ACE_Arg_Shifter_T (void)
 {
   // Delete the temporary vector.
-  delete [] temp_;
+  delete[] temp_;
 }
 
 template <typename CHAR_TYPE>

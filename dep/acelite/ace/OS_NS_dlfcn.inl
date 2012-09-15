@@ -242,7 +242,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_OS::strcpy (asm_symbolname + 1, symbolname) ;
   void *ace_result;
   ACE_OSCALL (::dlsym (handle, asm_symbolname), void *, 0, ace_result);
-  delete [] asm_symbolname;
+  delete[] asm_symbolname;
   return ace_result;
 #   elif defined (_M_UNIX)
   ACE_OSCALL_RETURN (::_dlsym (handle, symbolname), void *, 0);

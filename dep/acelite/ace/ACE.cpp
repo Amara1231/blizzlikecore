@@ -939,7 +939,7 @@ ACE::recv (ACE_HANDLE handle, size_t n, ...)
 
   ssize_t const result = ACE_OS::recvv (handle, iovp, total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
-  delete [] iovp;
+  delete[] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
   va_end (argp);
   return result;
@@ -1712,7 +1712,7 @@ ACE::send (ACE_HANDLE handle, size_t n, ...)
 
   ssize_t result = ACE_OS::sendv (handle, iovp, total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
-  delete [] iovp;
+  delete[] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
   va_end (argp);
   return result;

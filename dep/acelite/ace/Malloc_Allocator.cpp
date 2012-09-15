@@ -138,7 +138,7 @@ ACE_New_Allocator::calloc (size_t n_elem, size_t elem_size, char initial_value)
 void
 ACE_New_Allocator::free (void *ptr)
 {
-  delete [] (char *) ptr;
+  delete[] (char *) ptr;
 }
 
 int

@@ -115,7 +115,7 @@ ACE_IBM1047_ISO8859::read_string (ACE_InputCDR& in,
       if (this->read_char_array (in, x, len))
         return 1;
 
-      delete [] x;
+      delete[] x;
     }
 
   x = 0;
@@ -232,7 +232,7 @@ ACE_ISO8859_IBM1047::read_string (ACE_InputCDR &in,
       if (this->read_char_array (in, x, len))
         return 1;
 
-      delete [] x;
+      delete[] x;
     }
 
   x = 0;

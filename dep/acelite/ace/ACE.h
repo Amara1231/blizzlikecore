@@ -441,7 +441,7 @@ namespace ACE
    * (not case sensitive). If on Windows and there is no ".exe" suffix,
    * a new ACE_TCHAR array is allocated and a copy of @c pathname with
    * the ".exe" suffix is copied into it. In this case, the caller is
-   * responsible for calling delete [] on the returned pointer.
+   * responsible for calling delete[] on the returned pointer.
    *
    * @param pathname  The name to check for a proper suffix.
    *
@@ -450,7 +450,7 @@ namespace ACE
    * @retval If a suffix needs to be added, returns a pointer to new[]
    *         allocated memory containing the original @c pathname plus
    *         a ".exe" suffix. The caller is responsible for freeing the
-   *         memory using delete [].
+   *         memory using delete[].
    */
   extern ACE_Export const ACE_TCHAR *execname (const ACE_TCHAR *pathname);
 

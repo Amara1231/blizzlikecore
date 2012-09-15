@@ -58,7 +58,7 @@ void QueryResult::EndQuery()
 {
     if (mCurrentRow)
     {
-        delete [] mCurrentRow;
+        delete[] mCurrentRow;
         mCurrentRow = 0;
     }
 

@@ -334,8 +334,8 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
                               rc = (* (thisCharData + count) == * (rhsCharData + count));
                             }
 
-                          delete [] thisCharData;
-                          delete [] rhsCharData;
+                          delete[] thisCharData;
+                          delete[] rhsCharData;
                         }// end if the length's match
                     }
                   // We should never have valueTypes of INVALID, therefore

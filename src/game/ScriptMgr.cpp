@@ -53,7 +53,7 @@ ScriptMgr::ScriptMgr()
 ScriptMgr::~ScriptMgr()
 {
     // Free Spell Summary
-    delete []SpellSummary;
+    delete[]SpellSummary;
 
     // Free resources before library unload
     for (uint16 i =0; i<MAX_SCRIPTS; ++i)

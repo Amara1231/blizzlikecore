@@ -103,7 +103,7 @@ public:
    * socket, allocates a buffer of this size, reads in the data, and
    * returns the number of bytes read.  The caller is responsible for
    * deleting the member in the <iov_base> field of <io_vec> using the
-   * ``delete []'' syntax.
+   * ``delete[]'' syntax.
    */
   ssize_t recv (iovec *io_vec,
                 ACE_Addr &addr,

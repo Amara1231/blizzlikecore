@@ -112,7 +112,7 @@ ACE_OS::ctime (const time_t *t)
   // that I know of. (Steve Huston, 12-Feb-2003).
   static wchar_t *wide_time = 0;
   if (wide_time != 0)
-    delete [] wide_time;
+    delete[] wide_time;
   wide_time = ACE_Ascii_To_Wide::convert (narrow_time);
   return wide_time;
 #  else

@@ -97,7 +97,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *p,
 {
   ACE_TRACE
     ("ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete(nothrow)");
-  ::delete [] static_cast <char *> (p);
+  ::delete[] static_cast <char *> (p);
 }
 #endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
@@ -125,7 +125,7 @@ ACE_Svc_Handler<PR_ST_2, ACE_SYNCH_USE>::operator delete (void *obj)
   // You cannot delete a 'void*' (X3J16/95-0087 5.3.5.3), but we know
   // the pointer was created using new char[] (see operator new code),
   // so we use a cast:
-  ::delete [] static_cast <char *> (obj);
+  ::delete[] static_cast <char *> (obj);
 }
 
 // Default constructor.

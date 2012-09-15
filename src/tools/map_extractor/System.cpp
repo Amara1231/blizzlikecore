@@ -878,8 +878,8 @@ void ExtractMapsFromMpq()
             printf("Processing........................%d%%\r", (100 * (y+1)) / WDT_MAP_SIZE);
         }
     }
-    delete [] areas;
-    delete [] map_ids;
+    delete[] areas;
+    delete[] map_ids;
 }
 
 bool ExtractFile( char const* mpq_name, std::string const& filename )

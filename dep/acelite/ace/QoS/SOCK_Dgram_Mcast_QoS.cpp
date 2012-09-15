@@ -138,7 +138,7 @@ ACE_SOCK_Dgram_Mcast_QoS::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
               ++nr_subscribed;
           }
 
-      delete [] if_addrs;
+      delete[] if_addrs;
 
       if (nr_subscribed == 0)
         {

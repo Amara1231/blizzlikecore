@@ -690,7 +690,7 @@ ACE_DLL_Manager::close (void)
             }
         }
 
-      delete [] this->handle_vector_;
+      delete[] this->handle_vector_;
       this->handle_vector_ = 0;
       this->current_size_ = 0;
     }

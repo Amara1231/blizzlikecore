@@ -309,7 +309,7 @@ ACE_Pipe::send (size_t n, ...) const
 #endif /* ACE_WIN32 */
 
 #if !defined (ACE_HAS_ALLOCA)
-  delete [] iovp;
+  delete[] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
   va_end (argp);
   return result;
@@ -355,7 +355,7 @@ ACE_Pipe::recv (size_t n, ...) const
 #endif /* ACE_WIN32 */
 
 #if !defined (ACE_HAS_ALLOCA)
-  delete [] iovp;
+  delete[] iovp;
 #endif /* !defined (ACE_HAS_ALLOCA) */
   va_end (argp);
   return result;

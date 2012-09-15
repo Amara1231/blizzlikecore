@@ -245,7 +245,7 @@ inline void LoadMapChunk(MPQFile &mf, chunk *_chunk)
                 }
                 k = k + 120;
             }
-            delete []ChunkLiqHeight;
+            delete[]ChunkLiqHeight;
             break;
         }
         mf.seek(nextpos);
@@ -287,8 +287,8 @@ bool ConvertADT(char *filename, char *filename2)
     if (!output)
     {
         printf("Can't create the output file '%s'\n", filename2);
-        delete [] MapLiqHeight;
-        delete [] MapLiqFlag;
+        delete[] MapLiqHeight;
+        delete[] MapLiqFlag;
         return false;
     }
 
@@ -315,10 +315,10 @@ bool ConvertADT(char *filename, char *filename2)
     }
 
     fwrite(MapLiqFlag, 1, 256, output);
-    delete [] MapLiqFlag;
+    delete[] MapLiqFlag;
 
     fwrite(MapLiqHeight, sizeof(float), 16384, output);
-    delete [] MapLiqHeight;
+    delete[] MapLiqHeight;
 
     TransformData();
 

@@ -103,7 +103,7 @@ ACE_DLL::~ACE_DLL (void)
   // occur if full ACE_DLL initialization is interrupted due to errors
   // (e.g. attempting to open a DSO/DLL that does not exist).  Make
   // sure this->dll_name_ is deallocated.
-  delete [] this->dll_name_;
+  delete[] this->dll_name_;
 }
 
 // This method opens the library based on the mode specified using the
@@ -209,7 +209,7 @@ ACE_DLL::close (void)
 
   // Even if close_dll() failed, go ahead and cleanup.
   this->dll_handle_ = 0;
-  delete [] this->dll_name_;
+  delete[] this->dll_name_;
   this->dll_name_ = 0;
   this->close_handle_on_destruction_ = false;
 

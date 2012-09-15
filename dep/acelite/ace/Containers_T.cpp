@@ -62,7 +62,7 @@ ACE_Bounded_Stack<T>::operator= (const ACE_Bounded_Stack<T> &s)
     {
       if (this->size_ < s.size_)
         {
-          delete [] this->stack_;
+          delete[] this->stack_;
           ACE_NEW (this->stack_,
                    T[s.size_]);
           this->size_ = s.size_;
@@ -78,7 +78,7 @@ template<class T>
 ACE_Bounded_Stack<T>::~ACE_Bounded_Stack (void)
 {
   ACE_TRACE ("ACE_Bounded_Stack<T>::~ACE_Bounded_Stack");
-  delete [] this->stack_;
+  delete[] this->stack_;
 }
 
 // ----------------------------------------
@@ -1201,7 +1201,7 @@ template <class T>
 ACE_Bounded_Set<T>::~ACE_Bounded_Set (void)
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::~ACE_Bounded_Set");
-  delete [] this->search_structure_;
+  delete[] this->search_structure_;
 }
 
 template <class T>
@@ -1248,7 +1248,7 @@ ACE_Bounded_Set<T>::operator= (const ACE_Bounded_Set<T> &bs)
     {
       if (this->max_size_ < bs.cur_size_)
         {
-          delete [] this->search_structure_;
+          delete[] this->search_structure_;
           ACE_NEW (this->search_structure_,
                    typename ACE_Bounded_Set<T>::Search_Structure[bs.cur_size_]);
           this->max_size_ = bs.cur_size_;

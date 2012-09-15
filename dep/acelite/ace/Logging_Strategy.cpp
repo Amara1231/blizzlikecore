@@ -175,7 +175,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
         case 'k':
           // Ensure that the LOGGER flag is set
           ACE_SET_BITS (this->flags_, ACE_Log_Msg::LOGGER);
-          delete [] this->logger_key_;
+          delete[] this->logger_key_;
           this->logger_key_ = ACE::strnew (get_opt.opt_arg ());
           break;
         case 'm':
@@ -184,7 +184,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
           this->max_size_ <<= 10;       // convert from KB to bytes.
           break;
         case 'n':
-          delete [] this->program_name_;
+          delete[] this->program_name_;
           this->program_name_ = ACE::strnew (get_opt.opt_arg ());
           break;
         case 'N':
@@ -204,7 +204,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
         case 's':
           // Ensure that the OSTREAM flag is set
           ACE_SET_BITS (this->flags_, ACE_Log_Msg::OSTREAM);
-          delete [] this->filename_;
+          delete[] this->filename_;
           this->filename_ = ACE::strnew (get_opt.opt_arg ());
           break;
         case 't':
@@ -267,17 +267,17 @@ ACE_Logging_Strategy::~ACE_Logging_Strategy (void)
 {
   // This is allocated in constructor, so it must be deallocated in
   // the destructor!
-  delete [] this->filename_;
+  delete[] this->filename_;
 }
 
 int
 ACE_Logging_Strategy::fini (void)
 {
-  delete [] this->filename_;
+  delete[] this->filename_;
   this->filename_ = 0; // Avoid double deletions.
 
-  delete [] this->logger_key_;
-  delete [] this->program_name_;
+  delete[] this->logger_key_;
+  delete[] this->program_name_;
 
   if (this->reactor ()
       && this->interval_ > 0 && this->max_size_ > 0)

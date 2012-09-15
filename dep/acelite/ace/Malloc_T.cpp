@@ -54,7 +54,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
 template <class T, class ACE_LOCK>
 ACE_Cached_Allocator<T, ACE_LOCK>::~ACE_Cached_Allocator (void)
 {
-  delete [] this->pool_;
+  delete[] this->pool_;
 }
 
 template <class T, class ACE_LOCK> void *
@@ -125,7 +125,7 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Dynamic_Cached_Allocator
 template <class ACE_LOCK>
 ACE_Dynamic_Cached_Allocator<ACE_LOCK>::~ACE_Dynamic_Cached_Allocator (void)
 {
-  delete [] this->pool_;
+  delete[] this->pool_;
   this->pool_ = 0;
   chunk_size_ = 0;
 }

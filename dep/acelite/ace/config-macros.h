@@ -267,7 +267,7 @@
   // may be be replaced by <ACE_Malloc>.
 #   define ACE_ALLOC_HOOK_DEFINE(CLASS) \
   void *CLASS::operator new (size_t bytes) { return ::new char[bytes]; } \
-  void CLASS::operator delete (void *ptr) { delete [] ((char *) ptr); }
+  void CLASS::operator delete (void *ptr) { delete[] ((char *) ptr); }
 # else
 #   define ACE_ALLOC_HOOK_DECLARE struct __Ace {} /* Just need a dummy... */
 #   define ACE_ALLOC_HOOK_DEFINE(CLASS)

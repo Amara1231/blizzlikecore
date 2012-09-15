@@ -200,7 +200,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
           return -1;
         }
 
-        delete [] local_sockaddr;
+        delete[] local_sockaddr;
       }
 #else
 
@@ -217,7 +217,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
         }
 #endif /* ACE_HAS_LKSCTP */
 
-      delete [] local_inet_addrs;
+      delete[] local_inet_addrs;
     }
 
   // Enable non-blocking, if required.

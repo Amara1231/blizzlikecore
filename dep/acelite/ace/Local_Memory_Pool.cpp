@@ -78,7 +78,7 @@ ACE_Local_Memory_Pool::release (int)
   for (ACE_Unbounded_Set<char *>::iterator i = this->allocated_chunks_.begin ();
        i != this->allocated_chunks_.end ();
        ++i)
-    delete [] *i;
+    delete[] *i;
   this->allocated_chunks_.reset ();
   return 0;
 }

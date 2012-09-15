@@ -258,14 +258,14 @@ ACE::handle_exception_ready (ACE_HANDLE handle, const ACE_Time_Value *timeout)
 ACE_INLINE void
 ACE::strdelete (char *s)
 {
-  delete [] s;
+  delete[] s;
 }
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE void
 ACE::strdelete (wchar_t *s)
 {
-  delete [] s;
+  delete[] s;
 }
 #endif /* ACE_HAS_WCHAR */
 

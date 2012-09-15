@@ -672,7 +672,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
   if (compiled_regexp)
     ACE_OS::free ((void *) compiled_regexp);
 #endif /* ACE_HAS_REGEX */
-  delete [] pattern_rep;  // delete pattern_rep;
+  delete[] pattern_rep;  // delete pattern_rep;
   return result;
 }
 
@@ -789,7 +789,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
   if (compiled_regexp)
     ACE_OS::free ((void *) compiled_regexp);
 #endif /* ACE_HAS_REGEX */
-  delete [] pattern_rep;  // delete pattern_rep;
+  delete[] pattern_rep;  // delete pattern_rep;
   return 0;
 }
 
@@ -817,8 +817,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
                   key, value, type));
       // We need to delete key and value since char_rep allocates
       // memory for them
-      delete [] key;
-      delete [] value;
+      delete[] key;
+      delete[] value;
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_END_DUMP));

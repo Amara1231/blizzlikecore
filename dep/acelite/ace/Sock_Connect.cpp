@@ -505,7 +505,7 @@ get_ip_interfaces_win32 (size_t &count,
 
   if (RetVal != NO_ERROR)
     {
-      delete [] octet_buffer;
+      delete[] octet_buffer;
       return -1;
      }
 
@@ -567,7 +567,7 @@ get_ip_interfaces_win32 (size_t &count,
         }
     }
 
-  delete [] octet_buffer;
+  delete[] octet_buffer;
   return 0;
 
 # elif defined (ACE_HAS_PHARLAP)
@@ -643,7 +643,7 @@ get_ip_interfaces_win32 (size_t &count,
   count = j;
   if (count == 0 && addrs != 0)
     {
-      delete [] addrs;
+      delete[] addrs;
       addrs = 0;
     }
 
@@ -759,12 +759,12 @@ get_ip_interfaces_win32 (size_t &count,
       ++count;
     }
 
-  delete [] buffer; // Clean up
+  delete[] buffer; // Clean up
 # endif /* ACE_HAS_IPV6 */
 
   if (count == 0)
     {
-      delete [] addrs;
+      delete[] addrs;
       addrs = 0;
     }
 
@@ -1156,7 +1156,7 @@ get_ip_interfaces_vxworks_lt600 (size_t &count,
 
 // return an array of all configured IP interfaces on this host, count
 // rc = 0 on success (count == number of interfaces else -1 caller is
-// responsible for calling delete [] on parray
+// responsible for calling delete[] on parray
 
 int
 ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)

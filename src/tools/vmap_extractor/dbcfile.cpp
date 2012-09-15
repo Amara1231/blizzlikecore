@@ -72,7 +72,7 @@ bool DBCFile::open()
 
 DBCFile::~DBCFile()
 {
-    delete [] data;
+    delete[] data;
 }
 
 DBCFile::Record DBCFile::getRecord(size_t id)

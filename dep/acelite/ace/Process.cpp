@@ -786,7 +786,7 @@ ACE_Process::convert_env_buffer (const char* env) const
     {
       ACE_OS::strcpy(wenv + start, buffer[i]);
       start += ACE_OS::strlen (buffer[i]) + 1;
-      delete [] buffer[i];
+      delete[] buffer[i];
     }
   wenv[start] = 0;
   return wenv;
@@ -1178,12 +1178,12 @@ ACE_Process_Options::~ACE_Process_Options (void)
 {
 #if !defined (ACE_HAS_WINCE)
   release_handles();
-  delete [] environment_buf_;
-  delete [] environment_argv_;
+  delete[] environment_buf_;
+  delete[] environment_argv_;
 #endif /* !ACE_HAS_WINCE */
-  delete [] command_line_buf_;
+  delete[] command_line_buf_;
   ACE::strdelete (command_line_copy_);
-  delete [] command_line_argv_;
+  delete[] command_line_argv_;
 }
 
 int
@@ -1281,7 +1281,7 @@ ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
   ACE_OS::strcpy (this->command_line_buf_,
                   ACE_TEXT_ANTI_TO_TCHAR (anti_clb));
 
-  delete [] anti_clb;
+  delete[] anti_clb;
 
   command_line_argv_calculated_ = false;
   return 0;

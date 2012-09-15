@@ -388,7 +388,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
                   error = 1;
                 }
 
-                delete [] local_sockaddr;
+                delete[] local_sockaddr;
               }
 #else
               // Call bind
@@ -400,7 +400,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
 #endif /* ACE_HAS_LKSCTP */
             }
 
-          delete [] local_inet_addrs;
+          delete[] local_inet_addrs;
         }
     }
   else if (ACE_OS::bind (this->get_handle (),

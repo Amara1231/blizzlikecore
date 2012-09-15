@@ -140,7 +140,7 @@ Processed_Static_Svc (const ACE_Static_Svc_Descriptor *assd)
 
 ACE_Service_Gestalt::Processed_Static_Svc::~Processed_Static_Svc (void)
 {
-  delete [] name_;
+  delete[] name_;
 }
 
 void

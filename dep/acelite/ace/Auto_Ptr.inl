@@ -120,7 +120,7 @@ ACE_Auto_Basic_Array_Ptr<X>::reset (X *p)
 {
   ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::reset");
   if (this->get () != p)
-    delete [] this->get ();
+    delete[] this->get ();
   this->p_ = p;
 }
 
@@ -146,7 +146,7 @@ template<class X> ACE_INLINE
 ACE_Auto_Basic_Array_Ptr<X>::~ACE_Auto_Basic_Array_Ptr (void)
 {
   ACE_TRACE ("ACE_Auto_Basic_Array_Ptr<X>::~ACE_Auto_Basic_Array_Ptr");
-  delete [] this->get ();
+  delete[] this->get ();
 }
 
 template<class X> ACE_INLINE X &

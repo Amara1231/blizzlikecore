@@ -37,7 +37,7 @@ namespace ACE
         {
           for (size_t i = 0UL; i < this->data_.index_; ++i)
             {
-              delete [] this->data_.list_[i];
+              delete[] this->data_.list_[i];
             }
         }
     }

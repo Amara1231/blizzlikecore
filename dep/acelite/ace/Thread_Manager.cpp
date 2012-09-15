@@ -1531,7 +1531,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
         result = -1;
     }
 
-  delete [] copy_table;
+  delete[] copy_table;
 
   return result;
 }
@@ -1794,7 +1794,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
         result = -1;
     }
 
-  delete [] copy_table;
+  delete[] copy_table;
 
   return result;
 }

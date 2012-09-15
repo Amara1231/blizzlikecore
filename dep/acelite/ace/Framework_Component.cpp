@@ -75,7 +75,7 @@ ACE_Framework_Repository::close (void)
             delete s;
           }
 
-      delete [] this->component_vector_;
+      delete[] this->component_vector_;
       this->component_vector_ = 0;
       this->current_size_ = 0;
     }

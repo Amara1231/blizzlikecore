@@ -26,9 +26,9 @@ ACE_NT_Service::~ACE_NT_Service (void)
       CloseServiceHandle (this->svc_sc_handle_);
       this->svc_sc_handle_ = 0;
     }
-  delete [] this->desc_;
-  delete [] this->name_;
-  delete [] this->host_;
+  delete[] this->desc_;
+  delete[] this->name_;
+  delete[] this->host_;
 }
 
 // This default implementation of ACE_NT_Service::open sets the
@@ -143,8 +143,8 @@ ACE_NT_Service::interrogate_requested (DWORD)
 void
 ACE_NT_Service::name (const ACE_TCHAR *name, const ACE_TCHAR *desc)
 {
-  delete [] this->desc_;
-  delete [] this->name_;
+  delete[] this->desc_;
+  delete[] this->name_;
 
   if (desc == 0)
     desc = name;
@@ -156,7 +156,7 @@ ACE_NT_Service::name (const ACE_TCHAR *name, const ACE_TCHAR *desc)
 void
 ACE_NT_Service::host (const ACE_TCHAR *host)
 {
-  delete [] this->host_;
+  delete[] this->host_;
 
   if (this->svc_sc_handle_ != 0)
     {

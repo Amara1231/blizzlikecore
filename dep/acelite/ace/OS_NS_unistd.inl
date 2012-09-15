@@ -427,7 +427,7 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
   char *result = 0;
   result = ACE_OS::getcwd (narrow_buf, size);
   ACE_Ascii_To_Wide wide_buf (result);
-  delete [] narrow_buf;
+  delete[] narrow_buf;
   if (result != 0)
     ACE_OS::strsncpy (buf, wide_buf.wchar_rep (), size);
   return result == 0 ? 0 : buf;
@@ -594,7 +594,7 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
   int result = ACE_OS::hostname(char_name, maxnamelen);
   ACE_OS::strcpy (name, ACE_Ascii_To_Wide (char_name).wchar_rep ());
 
-  delete [] char_name;
+  delete[] char_name;
   return result;
 #endif /* ACE_WIN32 && !ACE_HAS_WINCE */
 }

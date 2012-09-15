@@ -1599,7 +1599,7 @@ void System::describeSystem(
     t.pushIndent();
     {
         var(t, "Vendor", System::cpuVendor());
-        var(t, "Architecture", System::cpuArchitecture());
+        var(t, " ARCHITECTURE ", System::cpuArchitecture());
         var(t, "hasCPUID", System::hasCPUID());
         var(t, "hasMMX", System::hasMMX());
         var(t, "hasSSE", System::hasSSE());

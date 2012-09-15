@@ -66,7 +66,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           if (!temp_buffer)
             {
               ACE_Errno_Guard guard (errno);
-              delete [] buffer;
+              delete[] buffer;
               (void) ACE_OS::fclose (in);
               return -1;
             }
@@ -75,7 +75,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           ACE_OS::memcpy (temp_buffer, buffer, buffer_size);
           read_pos = buffer_size - 1;
           buffer_size *= 2;
-          delete [] buffer;
+          delete[] buffer;
           buffer = temp_buffer;
           continue;
         }
@@ -92,7 +92,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           if (!end)
             {
               ACE_OS::fclose (in);
-              delete [] buffer;
+              delete[] buffer;
               return -3;
             }
           *end = 0;
@@ -100,7 +100,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           if (config_.expand_path (config_.root_section (), buffer + 1, section, 1))
             {
               ACE_OS::fclose (in);
-              delete [] buffer;
+              delete[] buffer;
               return -3;
             }
           continue;
@@ -129,7 +129,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               if (config_.set_string_value (section, name, end))
                 {
                   ACE_OS::fclose (in);
-                  delete [] buffer;
+                  delete[] buffer;
                   return -4;
                 }
             }
@@ -141,7 +141,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               if (config_.set_integer_value (section, name, value))
                 {
                   ACE_OS::fclose (in);
-                  delete [] buffer;
+                  delete[] buffer;
                   return -4;
                 }
             }
@@ -170,12 +170,12 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               if (config_.set_binary_value (section, name, data, length))
                 {
                   ACE_OS::fclose (in);
-                  delete [] data;
-                  delete [] buffer;
+                  delete[] data;
+                  delete[] buffer;
                   return -4;
                 }
               else
-                delete [] data;
+                delete[] data;
             }
           else
             {
@@ -193,7 +193,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
           if (rc != 0)
             {
               ACE_OS::fclose (in);
-              delete [] buffer;
+              delete[] buffer;
               return rc;
             }
         }             // end if maybe old format
@@ -202,12 +202,12 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
   if (ferror (in))
     {
       ACE_OS::fclose (in);
-      delete [] buffer;
+      delete[] buffer;
       return -1;
     }
 
   ACE_OS::fclose (in);
-  delete [] buffer;
+  delete[] buffer;
   return 0;
 }
 
@@ -319,7 +319,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
                     --binary_length;
                     ++ptr;
                   }
-                delete [] (char*) binary_data;
+                delete[] (char*) binary_data;
                 break;
               }
             default:
@@ -602,7 +602,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
                     ++ptr;
                   }
                 line += ACE_TEXT ("\"");
-                delete [] (char *) binary_data;
+                delete[] (char *) binary_data;
                 break;
               }
             default:

@@ -19,7 +19,7 @@ closedir (ACE_DIR *d)
 #if defined (ACE_HAS_DIRENT)
 # if defined (ACE_WIN32) && defined (ACE_LACKS_CLOSEDIR)
   ACE_OS::closedir_emulation (d);
-  delete [] d->directory_name_;
+  delete[] d->directory_name_;
   delete d;
 # elif defined (ACE_HAS_WCLOSEDIR) && defined (ACE_USES_WCHAR)
   ::wclosedir (d);

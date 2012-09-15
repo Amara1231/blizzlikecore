@@ -129,7 +129,7 @@ ACE_Log_Record::msg_data (const ACE_TCHAR *data)
     {
       ACE_TCHAR *new_msg_data = 0;
       ACE_NEW_RETURN (new_msg_data, ACE_TCHAR[newlen], -1);
-      delete [] this->msg_data_;
+      delete[] this->msg_data_;
       this->msg_data_ = new_msg_data;
       this->msg_data_size_ = newlen;
     }
@@ -314,7 +314,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
             }
         }
 
-      delete [] verbose_msg;
+      delete[] verbose_msg;
 
       return result;
     }
@@ -398,7 +398,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
           s.flush ();
         }
 
-      delete [] verbose_msg;
+      delete[] verbose_msg;
 
       return result;
     }

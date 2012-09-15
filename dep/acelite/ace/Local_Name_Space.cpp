@@ -12,7 +12,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_NS_String::~ACE_NS_String (void)
 {
   if (this->delete_rep_)
-    delete [] this->rep_;
+    delete[] this->rep_;
 }
 
 ACE_WCHAR_T *

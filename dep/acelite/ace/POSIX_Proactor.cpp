@@ -906,10 +906,10 @@ int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
       ACE_TEXT(" number pending AIO=%d\n"),
       num_pending));
 
-  delete [] this->aiocb_list_;
+  delete[] this->aiocb_list_;
   this->aiocb_list_ = 0;
 
-  delete [] this->result_list_;
+  delete[] this->result_list_;
   this->result_list_ = 0;
 
   return (num_pending == 0 ? 0 : -1);

@@ -70,7 +70,7 @@ ACE_OS::readv_emulation (ACE_HANDLE handle,
     }
 
 #   if !defined (ACE_HAS_ALLOCA)
-  delete [] buf;
+  delete[] buf;
 #   endif /* !defined (ACE_HAS_ALLOCA) */
   return length;
 }

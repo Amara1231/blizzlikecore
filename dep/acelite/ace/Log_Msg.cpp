@@ -1933,7 +1933,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                     this_len = ACE_OS::sprintf (bp, format, wchar_t_str);
                   if(sizeof(ACE_OS::WChar) != sizeof(wchar_t))
                     {
-                      delete [] wchar_t_str;
+                      delete[] wchar_t_str;
                     }
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;
@@ -2377,8 +2377,8 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
              msg_buf,
              buf);
 
-  delete [] msg_buf;
-  delete [] buf;
+  delete[] msg_buf;
+  delete[] buf;
   return 0;
 }
 
