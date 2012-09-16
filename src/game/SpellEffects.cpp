@@ -675,46 +675,32 @@ void Spell::EffectDummy(uint32 i)
         {
             switch (m_spellInfo->Id)
             {
-                // Wrath of the Astromancer
-                case 42784:
+                case 3360:                                 // Curse of the Eye
                 {
-                    uint32 count = 0;
-                    for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
-                    {
-                        if (ihit->deleted)
-                            continue;
+                    if (!unitTarget)
+                        return;
 
-                        if (ihit->effectMask & (1<<i))
-                            ++count;
-                    }
+                    uint32 spell_id = (unitTarget->getGender() == GENDER_MALE) ? 10651 : 10653;
 
-                    damage = 12000; // maybe wrong value
-                    damage /= count;
-
-                    SpellEntry const *spellInfo = sSpellStore.LookupEntry(42784);
-
-                     // now deal the damage
-                    for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
-                    {
-                        if (ihit->deleted)
-                            continue;
-
-                        if (ihit->effectMask & (1<<i))
-                        {
-                            if (Unit* casttarget = Unit::GetUnit((*unitTarget), ihit->targetGUID))
-                                m_caster->DealDamage(casttarget, damage, NULL, SPELL_DIRECT_DAMAGE, SPELL_SCHOOL_MASK_ARCANE, spellInfo, false);
-                        }
-                    }
-
+                    m_caster->CastSpell(unitTarget, spell_id, true);
                     return;
                 }
-                case 8063:                                  // Deviate Fish
+                case 7671:                                 // Transformation (human<->worgen)
+                {
+                    if (!unitTarget)
+                        return;
+
+                    // Transform Visual
+                    unitTarget->CastSpell(unitTarget, 24085, true);
+                    return;
+                }
+                case 8063:                                 // Deviate Fish
                 {
                     if (m_caster->GetTypeId() != TYPEID_PLAYER)
                         return;
 
                     uint32 spell_id = 0;
-                    switch(urand(1,5))
+                    switch (urand(1, 5))
                     {
                         case 1: spell_id = 8064; break;     // Sleepy
                         case 2: spell_id = 8065; break;     // Invigorate
@@ -725,7 +711,7 @@ void Spell::EffectDummy(uint32 i)
                     m_caster->CastSpell(m_caster, spell_id, true, NULL);
                     return;
                 }
-                case 8213:                                  // Savory Deviate Delight
+                case 8213:                                 // Savory Deviate Delight
                 {
                     if (m_caster->GetTypeId() != TYPEID_PLAYER)
                         return;
@@ -742,7 +728,18 @@ void Spell::EffectDummy(uint32 i)
                     m_caster->CastSpell(m_caster,spell_id,true,NULL);
                     return;
                 }
-                case 8593:                                  // Symbol of life (restore creature to life)
+                case 8593:                                 // Symbol of life (restore creature to life)
+                case 9976:                                 // Polly Eats the E.C.A.C.
+                {
+                    if (!unitTarget || unitTarget->GetTypeId() != TYPEID_UNIT)
+                        return;
+
+                    // Summon Polly Jr.
+                    unitTarget->CastSpell(unitTarget, 9998, true);
+
+                    ((Creature*)unitTarget)->ForcedDespawn(100);
+                    return;
+                }
                 case 31225:                                 // Shimmering Vessel (restore creature to life)
                 {
                     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_UNIT)
@@ -1232,8 +1229,39 @@ void Spell::EffectDummy(uint32 i)
                     m_caster->CastSpell(unitTarget, 40932, true);
                     break;
                 }
-                // Demon Broiled Surprise
-                case 43723:
+                case 42784: // Wrath of the Astromancer
+                {
+                    uint32 count = 0;
+                    for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
+                    {
+                        if (ihit->deleted)
+                            continue;
+
+                        if (ihit->effectMask & (1<<i))
+                            ++count;
+                    }
+
+                    damage = 12000; // maybe wrong value
+                    damage /= count;
+
+                    SpellEntry const *spellInfo = sSpellStore.LookupEntry(42784);
+
+                     // now deal the damage
+                    for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
+                    {
+                        if (ihit->deleted)
+                            continue;
+
+                        if (ihit->effectMask & (1<<i))
+                        {
+                            if (Unit* casttarget = Unit::GetUnit((*unitTarget), ihit->targetGUID))
+                                m_caster->DealDamage(casttarget, damage, NULL, SPELL_DIRECT_DAMAGE, SPELL_SCHOOL_MASK_ARCANE, spellInfo, false);
+                        }
+                    }
+
+                    return;
+                }
+                case 43723: // Demon Broiled Surprise
                 {
                     if (m_caster->GetTypeId() != TYPEID_PLAYER)
                         return;
@@ -1253,7 +1281,7 @@ void Spell::EffectDummy(uint32 i)
                     }
                     return;
                 }
-                case 44875:                                 // Complete Raptor Capture
+                case 44875: // Complete Raptor Capture
                 {
                     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_UNIT)
                         return;
