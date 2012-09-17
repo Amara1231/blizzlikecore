@@ -675,7 +675,40 @@ void Spell::EffectDummy(uint32 i)
         {
             switch (m_spellInfo->Id)
             {
-                case 3360:                                 // Curse of the Eye
+                // Wrath of the Astromancer
+                case 42784:
+                {
+                    uint32 count = 0;
+                    for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
+                    {
+                        if (ihit->deleted)
+                            continue;
+
+                        if (ihit->effectMask & (1<<i))
+                            ++count;
+                    }
+
+                    damage = 12000; // maybe wrong value
+                    damage /= count;
+
+                    SpellEntry const *spellInfo = sSpellStore.LookupEntry(42784);
+
+                     // now deal the damage
+                    for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
+                    {
+                        if (ihit->deleted)
+                            continue;
+
+                        if (ihit->effectMask & (1<<i))
+                        {
+                            if (Unit* casttarget = Unit::GetUnit((*unitTarget), ihit->targetGUID))
+                                m_caster->DealDamage(casttarget, damage, NULL, SPELL_DIRECT_DAMAGE, SPELL_SCHOOL_MASK_ARCANE, spellInfo, false);
+                        }
+                    }
+
+                    return;
+                }
+                case 3360:                                  // Curse of the Eye
                 {
                     if (!unitTarget)
                         return;
@@ -685,7 +718,7 @@ void Spell::EffectDummy(uint32 i)
                     m_caster->CastSpell(unitTarget, spell_id, true);
                     return;
                 }
-                case 7671:                                 // Transformation (human<->worgen)
+                case 7671:                                  // Transformation (human<->worgen)
                 {
                     if (!unitTarget)
                         return;
@@ -694,13 +727,13 @@ void Spell::EffectDummy(uint32 i)
                     unitTarget->CastSpell(unitTarget, 24085, true);
                     return;
                 }
-                case 8063:                                 // Deviate Fish
+                case 8063:                                  // Deviate Fish
                 {
                     if (m_caster->GetTypeId() != TYPEID_PLAYER)
                         return;
 
                     uint32 spell_id = 0;
-                    switch (urand(1, 5))
+                    switch(urand(1,5))
                     {
                         case 1: spell_id = 8064; break;     // Sleepy
                         case 2: spell_id = 8065; break;     // Invigorate
@@ -711,7 +744,7 @@ void Spell::EffectDummy(uint32 i)
                     m_caster->CastSpell(m_caster, spell_id, true, NULL);
                     return;
                 }
-                case 8213:                                 // Savory Deviate Delight
+                case 8213:                                  // Savory Deviate Delight
                 {
                     if (m_caster->GetTypeId() != TYPEID_PLAYER)
                         return;
@@ -728,8 +761,7 @@ void Spell::EffectDummy(uint32 i)
                     m_caster->CastSpell(m_caster,spell_id,true,NULL);
                     return;
                 }
-                case 8593:                                 // Symbol of life (restore creature to life)
-                case 9976:                                 // Polly Eats the E.C.A.C.
+                case 9976:                                  // Polly Eats the E.C.A.C.
                 {
                     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_UNIT)
                         return;
@@ -740,6 +772,17 @@ void Spell::EffectDummy(uint32 i)
                     ((Creature*)unitTarget)->ForcedDespawn(100);
                     return;
                 }
+                case 10254:                                 // Stone Dwarf Awaken Visual
+                {
+                    if (m_caster->GetTypeId() != TYPEID_UNIT)
+                        return;
+
+                    // see spell 10255 (aura dummy)
+                    m_caster->clearUnitState(UNIT_STAT_ROOT);
+                    m_caster->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    return;
+                }
+                case 8593:                                  // Symbol of life (restore creature to life)
                 case 31225:                                 // Shimmering Vessel (restore creature to life)
                 {
                     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_UNIT)
@@ -937,10 +980,81 @@ void Spell::EffectDummy(uint32 i)
                     m_caster->CastSpell(m_caster, spell_id, true, NULL);
                     return;
                 }
+                case 17770:                                 // Wolfshead Helm Energy
+                {
+                    m_caster->CastSpell(m_caster, 29940, true, NULL);
+                    return;
+                }
+                case 17950:                                 // Shadow Portal
+                {
+                    if (!unitTarget)
+                        return;
+
+                    // Shadow Portal
+                    const uint32 spell_list[6] = {17863, 17939, 17943, 17944, 17946, 17948};
+
+                    m_caster->CastSpell(unitTarget, spell_list[urand(0, 5)], true);
+                    return;
+                }
+                case 19411:                                 // Lava Bomb
+                case 20474:                                 // Lava Bomb
+                {
+                    if (!unitTarget)
+                        return;
+
+                    // Hack alert!
+                    // This dummy are expected to cast spell 20494 to summon GO entry 177704
+                    // Spell does not exist client side, so we have to make a hack, creating the GO (SPELL_EFFECT_SUMMON_OBJECT_WILD)
+                    // Spell should appear in both SMSG_SPELL_START/GO and SMSG_SPELLLOGEXECUTE
+
+                    // For later, creating custom spell
+                    // _START: packguid: target, cast flags: 0xB, TARGET_FLAG_SELF
+                    // _GO: packGuid: target, cast flags: 0x4309, TARGET_FLAG_DEST_LOCATION
+                    // LOG: spell: 20494, effect, pguid: goguid
+
+                    GameObject* pGameObj = new GameObject;
+
+                    Map* map = unitTarget->GetMap();
+
+                    if (!pGameObj->Create(map->GenerateLocalLowGuid(HIGHGUID_GAMEOBJECT), 177704,
+                                          map,
+                                          unitTarget->GetPositionX(), unitTarget->GetPositionY(), unitTarget->GetPositionZ(),
+                                          unitTarget->GetOrientation()))
+                    {
+                        delete pGameObj;
+                        return;
+                    }
+
+                    DEBUG_LOG("Gameobject, create custom in SpellEffects.cpp EffectDummy");
+
+                    // Expect created without owner, but with level from _template
+                    pGameObj->SetRespawnTime(MINUTE / 2);
+                    pGameObj->SetUInt32Value(GAMEOBJECT_LEVEL, pGameObj->GetGOInfo()->trap.level);
+                    pGameObj->SetSpellId(m_spellInfo->Id);
+
+                    map->Add(pGameObj);
+
+                    return;
+                }
                 case 20577:                                 // Cannibalize
                 {
                     if (unitTarget)
                         m_caster->CastSpell(m_caster, 20578, false, NULL);
+
+                    return;
+                }
+                case 21147:                                 // Arcane Vacuum
+                {
+                    if (!unitTarget)
+                        return;
+
+                    // Spell used by Azuregos to teleport all the players to him
+                    // This also resets the target threat
+                    if (m_caster->getThreatManager().getThreat(unitTarget))
+                        m_caster->getThreatManager().modifyThreatPercent(unitTarget, -100);
+
+                    // cast summon player
+                    m_caster->CastSpell(unitTarget, 21150, true);
 
                     return;
                 }
@@ -1229,39 +1343,8 @@ void Spell::EffectDummy(uint32 i)
                     m_caster->CastSpell(unitTarget, 40932, true);
                     break;
                 }
-                case 42784: // Wrath of the Astromancer
-                {
-                    uint32 count = 0;
-                    for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
-                    {
-                        if (ihit->deleted)
-                            continue;
-
-                        if (ihit->effectMask & (1<<i))
-                            ++count;
-                    }
-
-                    damage = 12000; // maybe wrong value
-                    damage /= count;
-
-                    SpellEntry const *spellInfo = sSpellStore.LookupEntry(42784);
-
-                     // now deal the damage
-                    for (std::list<TargetInfo>::iterator ihit= m_UniqueTargetInfo.begin(); ihit != m_UniqueTargetInfo.end(); ++ihit)
-                    {
-                        if (ihit->deleted)
-                            continue;
-
-                        if (ihit->effectMask & (1<<i))
-                        {
-                            if (Unit* casttarget = Unit::GetUnit((*unitTarget), ihit->targetGUID))
-                                m_caster->DealDamage(casttarget, damage, NULL, SPELL_DIRECT_DAMAGE, SPELL_SCHOOL_MASK_ARCANE, spellInfo, false);
-                        }
-                    }
-
-                    return;
-                }
-                case 43723: // Demon Broiled Surprise
+                // Demon Broiled Surprise
+                case 43723:
                 {
                     if (m_caster->GetTypeId() != TYPEID_PLAYER)
                         return;
@@ -1281,7 +1364,7 @@ void Spell::EffectDummy(uint32 i)
                     }
                     return;
                 }
-                case 44875: // Complete Raptor Capture
+                case 44875:                                 // Complete Raptor Capture
                 {
                     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_UNIT)
                         return;
