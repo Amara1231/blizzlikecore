@@ -996,46 +996,6 @@ void Spell::EffectDummy(uint32 i)
                     m_caster->CastSpell(unitTarget, spell_list[urand(0, 5)], true);
                     return;
                 }
-                case 19411:                                 // Lava Bomb
-                case 20474:                                 // Lava Bomb
-                {
-                    if (!unitTarget)
-                        return;
-
-                    // Hack alert!
-                    // This dummy are expected to cast spell 20494 to summon GO entry 177704
-                    // Spell does not exist client side, so we have to make a hack, creating the GO (SPELL_EFFECT_SUMMON_OBJECT_WILD)
-                    // Spell should appear in both SMSG_SPELL_START/GO and SMSG_SPELLLOGEXECUTE
-
-                    // For later, creating custom spell
-                    // _START: packguid: target, cast flags: 0xB, TARGET_FLAG_SELF
-                    // _GO: packGuid: target, cast flags: 0x4309, TARGET_FLAG_DEST_LOCATION
-                    // LOG: spell: 20494, effect, pguid: goguid
-
-                    GameObject* pGameObj = new GameObject;
-
-                    Map* map = unitTarget->GetMap();
-
-                    if (!pGameObj->Create(map->GenerateLocalLowGuid(HIGHGUID_GAMEOBJECT), 177704,
-                                          map,
-                                          unitTarget->GetPositionX(), unitTarget->GetPositionY(), unitTarget->GetPositionZ(),
-                                          unitTarget->GetOrientation()))
-                    {
-                        delete pGameObj;
-                        return;
-                    }
-
-                    DEBUG_LOG("Gameobject, create custom in SpellEffects.cpp EffectDummy");
-
-                    // Expect created without owner, but with level from _template
-                    pGameObj->SetRespawnTime(MINUTE / 2);
-                    pGameObj->SetUInt32Value(GAMEOBJECT_LEVEL, pGameObj->GetGOInfo()->trap.level);
-                    pGameObj->SetSpellId(m_spellInfo->Id);
-
-                    map->Add(pGameObj);
-
-                    return;
-                }
                 case 20577:                                 // Cannibalize
                 {
                     if (unitTarget)
@@ -1106,6 +1066,18 @@ void Spell::EffectDummy(uint32 i)
                         return;
 
                     m_caster->CastSpell(m_caster, 13166, true, m_CastItem);
+                    return;
+                }
+                case 23138:                                 // Gate of Shazzrah
+                {
+                    if (!unitTarget)
+                        return;
+
+                    // Effect probably include a threat change, but it is unclear if fully
+                    // reset or just forced upon target for teleport (SMSG_HIGHEST_THREAT_UPDATE)
+
+                    // Gate of Shazzrah
+                    m_caster->CastSpell(unitTarget, 23139, true);
                     return;
                 }
                 case 23448:                                 // Transporter Arrival - Ultrasafe Transporter: Gadgetzan - backfires
@@ -1202,13 +1174,22 @@ void Spell::EffectDummy(uint32 i)
 
                     return;
                 }
-                // Polarity Shift
-                case 28089:
+                case 28089:                                 // Polarity Shift
                     if (unitTarget)
                         unitTarget->CastSpell(unitTarget, roll_chance_i(50) ? 28059 : 28084, true, NULL, NULL, m_caster->GetGUID());
                     break;
-                // Polarity Shift
-                case 39096:
+                case 28730:                                 // Arcane Torrent (Mana)
+                {
+                    Aura* dummy = m_caster->GetDummyAura(28734);
+                    if (dummy)
+                    {
+                        int32 bp = damage * dummy->GetStackAmount();
+                        m_caster->CastCustomSpell(m_caster, 28733, &bp, NULL, NULL, true);
+                        m_caster->RemoveAurasDueToSpell(28734);
+                    }
+                    return;
+                }
+                case 39096:                                 // Polarity Shift
                     if (unitTarget)
                         unitTarget->CastSpell(unitTarget, roll_chance_i(50) ? 39088 : 39091, true, NULL, NULL, m_caster->GetGUID());
                     break;
@@ -1230,6 +1211,30 @@ void Spell::EffectDummy(uint32 i)
                         && unitTarget->getThreatManager().getThreat(m_caster) > 0.0f)
                         m_caster->CastSpell(unitTarget,32835,true);
 
+                    return;
+                }
+                case 29969:                                 // Summon Blizzard
+                {
+                    if (!unitTarget)
+                        return;
+
+                    unitTarget->CastSpell(unitTarget, 29952, true, NULL, NULL, m_caster->GetGUID());
+                    return;
+                }
+                case 29979:                                 // Massive Magnetic Pull
+                {
+                    if (!unitTarget)
+                        return;
+
+                    m_caster->CastSpell(unitTarget, 30010, true);
+                    return;
+                }
+                case 30004:                                 // Flame Wreath
+                {
+                    if (!unitTarget || unitTarget->GetTypeId() != TYPEID_PLAYER)
+                        return;
+
+                    m_caster->CastSpell(unitTarget, 29946, true);
                     return;
                 }
                 case 30458:                                 // Nigh Invulnerability
