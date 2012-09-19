@@ -853,7 +853,7 @@ ExternalMailInterval = 1
 SkillChance.Prospecting = 0
 Event.Announce = 0
 BeepAtStart = 1
-Motd = "Welcome to the BlizzLike Group server."
+Motd = "Welcome to the BlizzLike Group Server."
 Server.LoginInfo = 0
 
 ###############################################################################
