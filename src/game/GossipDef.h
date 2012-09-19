@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_GOSSIP_H
-#define BlizzLikeCore_GOSSIP_H
+#ifndef BLIZZLIKECORE_GOSSIP_H
+#define BLIZZLIKECORE_GOSSIP_H
 
 #include "Common.h"
 #include "QuestDef.h"

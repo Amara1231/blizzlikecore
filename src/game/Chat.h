@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_CHAT_H
-#define BlizzLikeCore_CHAT_H
+#ifndef BLIZZLIKECORE_CHAT_H
+#define BLIZZLIKECORE_CHAT_H
 
 #include "SharedDefines.h"
 

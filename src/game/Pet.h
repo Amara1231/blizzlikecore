@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_PET_H
-#define BlizzLikeCore_PET_H
+#ifndef BLIZZLIKECORE_PET_H
+#define BLIZZLIKECORE_PET_H
 
 #include "ObjectGuid.h"
 #include "Unit.h"

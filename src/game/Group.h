@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_GROUP_H
-#define BlizzLikeCore_GROUP_H
+#ifndef BLIZZLIKECORE_GROUP_H
+#define BLIZZLIKECORE_GROUP_H
 
 #include "GroupReference.h"
 #include "GroupRefManager.h"

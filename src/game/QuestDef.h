@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_QUEST_H
-#define BlizzLikeCore_QUEST_H
+#ifndef BLIZZLIKECORE_QUEST_H
+#define BLIZZLIKECORE_QUEST_H
 
 #include "Platform/Define.h"
 #include "Database/DatabaseEnv.h"

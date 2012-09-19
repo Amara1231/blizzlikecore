@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_CHANNELMGR_H
-#define BlizzLikeCore_CHANNELMGR_H
+#ifndef BLIZZLIKECORE_CHANNELMGR_H
+#define BLIZZLIKECORE_CHANNELMGR_H
 
 #include "Channel.h"
 #include "Policies/Singleton.h"

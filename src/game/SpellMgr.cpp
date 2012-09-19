@@ -2328,7 +2328,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 41635: // Prayer of Mending
         case 44869: // Spectral Blast
         case 45027: // Revitalize
-        case 45976: // Muru Portal Channel
+        case 45976: // Open Portal
         case 39365: // Thundering Storm
         case 41071: // Raise Dead
         case 41172: // Rapid Shot
@@ -2337,6 +2337,7 @@ void SpellMgr::LoadSpellCustomAttr()
             break;
         case 41357: // L1 Acane Charge
         case 41376: // Spite
+        case 30004: // Flame Wreath
         case 39992: // Needle Spine
         case 29576: // Multi-Shot
         case 37790: // Spread Shot

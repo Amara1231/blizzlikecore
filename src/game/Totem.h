@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_TOTEM_H
-#define BlizzLikeCore_TOTEM_H
+#ifndef BLIZZLIKECORE_TOTEM_H
+#define BLIZZLIKECORE_TOTEM_H
 
 #include "TemporarySummon.h"
 

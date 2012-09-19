@@ -35,6 +35,7 @@ npc_mount_vendor        100%    Regular mount vendors all over the world. Displa
 npc_rogue_trainer        80%    Scripted trainers, so they are able to offer item 17126 for class quest 6681
 npc_sayge               100%    Darkmoon event fortune teller, buff player based on answers given
 npc_snake_trap_serpents  80%    AI for snakes that summoned by Snake Trap
+azuregos_magical_ledger 100%	support for quest Azuregos Magical Ledger
 EndContentData */
 
 #include "ScriptPCH.h"

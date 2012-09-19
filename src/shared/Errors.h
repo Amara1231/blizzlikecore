@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_ERRORS_H
-#define BlizzLikeCore_ERRORS_H
+#ifndef BLIZZLIKECORE_ERRORS_H
+#define BLIZZLIKECORE_ERRORS_H
 
 #include "Common.h"
 

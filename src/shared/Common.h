@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_COMMON_H
-#define BlizzLikeCore_COMMON_H
+#ifndef BLIZZLIKECORE_COMMON_H
+#define BLIZZLIKECORE_COMMON_H
 
 // config.h needs to be included 1st
 // TODO this thingy looks like hack ,but its not, need to

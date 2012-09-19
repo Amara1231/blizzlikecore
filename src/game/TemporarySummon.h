@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_TEMPSUMMON_H
-#define BlizzLikeCore_TEMPSUMMON_H
+#ifndef BLIZZLIKECORE_TEMPSUMMON_H
+#define BLIZZLIKECORE_TEMPSUMMON_H
 
 #include "Creature.h"
 

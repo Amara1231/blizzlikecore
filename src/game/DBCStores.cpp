@@ -155,7 +155,7 @@ typedef std::list<std::string> StoreProblemList;
 
 bool IsAcceptableClientBuild(uint32 build)
 {
-    int accepted_versions[] = EXPECTED_BlizzLikeCore_CLIENT_BUILD;
+    int accepted_versions[] = EXPECTED_BLIZZLIKECORE_CLIENT_BUILD;
     for (int i = 0; accepted_versions[i]; ++i)
         if (build == accepted_versions[i])
             return true;
@@ -166,7 +166,7 @@ bool IsAcceptableClientBuild(uint32 build)
 std::string AcceptableClientBuildsListStr()
 {
     std::ostringstream data;
-    int accepted_versions[] = EXPECTED_BlizzLikeCore_CLIENT_BUILD;
+    int accepted_versions[] = EXPECTED_BLIZZLIKECORE_CLIENT_BUILD;
     for (int i = 0; accepted_versions[i]; ++i)
         data << accepted_versions[i] << " ";
     return data.str();

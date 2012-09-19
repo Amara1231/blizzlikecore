@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_CREATURE_H
-#define BlizzLikeCore_CREATURE_H
+#ifndef BLIZZLIKECORE_CREATURE_H
+#define BLIZZLIKECORE_CREATURE_H
 
 #include "Common.h"
 #include "Unit.h"

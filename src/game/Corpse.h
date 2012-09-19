@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_CORPSE_H
-#define BlizzLikeCore_CORPSE_H
+#ifndef BLIZZLIKECORE_CORPSE_H
+#define BLIZZLIKECORE_CORPSE_H
 
 #include "Object.h"
 #include "Database/DatabaseEnv.h"

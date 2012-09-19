@@ -2319,7 +2319,7 @@ enum ActivateTaxiReply
 // others will not and opposite
 // will only support WoW and WoW:TBC 2.4.3 client build 8606...
 
-#define EXPECTED_BlizzLikeCore_CLIENT_BUILD        {8606, 0}
+#define EXPECTED_BLIZZLIKECORE_CLIENT_BUILD        {8606, 0}
 
 #endif
 

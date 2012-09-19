@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_PROGRESSBAR_H
-#define BlizzLikeCore_PROGRESSBAR_H
+#ifndef BLIZZLIKECORE_PROGRESSBAR_H
+#define BLIZZLIKECORE_PROGRESSBAR_H
 
 #include <stdio.h>
 #include "Platform/Define.h"

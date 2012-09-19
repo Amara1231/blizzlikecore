@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_GUILD_H
-#define BlizzLikeCore_GUILD_H
+#ifndef BLIZZLIKECORE_GUILD_H
+#define BLIZZLIKECORE_GUILD_H
 
 #define WITHDRAW_MONEY_UNLIMITED    0xFFFFFFFF
 #define WITHDRAW_SLOT_UNLIMITED     0xFFFFFFFF

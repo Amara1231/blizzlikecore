@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_LOG_H
-#define BlizzLikeCore_LOG_H
+#ifndef BLIZZLIKECORE_LOG_H
+#define BLIZZLIKECORE_LOG_H
 
 #include "Common.h"
 #include "Policies/Singleton.h"

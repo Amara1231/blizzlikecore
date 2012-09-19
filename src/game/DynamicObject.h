@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_DYNAMICOBJECT_H
-#define BlizzLikeCore_DYNAMICOBJECT_H
+#ifndef BLIZZLIKECORE_DYNAMICOBJECT_H
+#define BLIZZLIKECORE_DYNAMICOBJECT_H
 
 #include "Object.h"
 

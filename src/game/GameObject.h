@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_GAMEOBJECT_H
-#define BlizzLikeCore_GAMEOBJECT_H
+#ifndef BLIZZLIKECORE_GAMEOBJECT_H
+#define BLIZZLIKECORE_GAMEOBJECT_H
 
 #include "Common.h"
 #include "SharedDefines.h"

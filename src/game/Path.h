@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_PATH_H
-#define BlizzLikeCore_PATH_H
+#ifndef BLIZZLIKECORE_PATH_H
+#define BLIZZLIKECORE_PATH_H
 
 #include "Common.h"
 #include <vector>

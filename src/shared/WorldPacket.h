@@ -15,8 +15,8 @@
  * with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BlizzLikeCore_WORLDPACKET_H
-#define BlizzLikeCore_WORLDPACKET_H
+#ifndef BLIZZLIKECORE_WORLDPACKET_H
+#define BLIZZLIKECORE_WORLDPACKET_H
 
 #include "Common.h"
 #include "ByteBuffer.h"
