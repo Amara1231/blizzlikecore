@@ -44,9 +44,9 @@
 
 #ifdef _WIN32
 #include "ServiceWin32.h"
-char serviceName[] = "realmd";
+char serviceName[] = "blizzlike-realm";
 char serviceLongName[] = "blizzlike realm service";
-char serviceDescription[] = "Massive Network Game Object Server";
+char serviceDescription[] = "blizzlike realm service";
 /*
  * -1 - not in service mode
  *  0 - stopped
@@ -152,19 +152,20 @@ extern int main(int argc, char **argv)
     }
     sLog.Initialize();
 
-    sLog.outString( "%s [realm-daemon]", _FULLVERSION);
-    sLog.outString( "<Ctrl-C> to stop.\n" );
+    sLog.outString("%s [realm-daemon]", _FULLVERSION);
+    sLog.outString("<Ctrl-C> to stop.");
+    sLog.outString(" ");
     sLog.outString("Using configuration file %s.", cfg_file);
 
     // Check the version of the configuration file
     uint32 confVersion = sConfig.GetIntDefault("ConfVersion", 0);
     if (confVersion < _REALMDCONFVERSION)
     {
-        sLog.outError("*****************************************************************************");
-        sLog.outError(" WARNING: Your blizzlikerealm.conf v.indicates your conf file is out of date!");
-        sLog.outError("          Please, check for updates, as your current default values may cause");
-        sLog.outError("          strange behavior.");
-        sLog.outError("*****************************************************************************");
+        sLog.outError("************************************************************");
+        sLog.outError(" WARNING: Your blizzlikerealm.conf file is out of date");
+        sLog.outError("          Please, check for updates, as your current default");
+        sLog.outError("          values may cause strange behavior.");
+        sLog.outError("************************************************************");
         clock_t pause = 3000 + clock();
 
         while (pause > clock()) {}

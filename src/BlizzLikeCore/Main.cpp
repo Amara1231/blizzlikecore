@@ -38,9 +38,9 @@
 
 #ifdef _WIN32
 #include "ServiceWin32.h"
-char serviceName[] = "blizzliked";
-char serviceLongName[] = "BlizzLike Core service";
-char serviceDescription[] = "Massive Network Game Object Server";
+char serviceName[] = "blizzlike-core";
+char serviceLongName[] = "blizzlike core service";
+char serviceDescription[] = "blizzlike core service";
 /*
  * -1 - not in service mode
  *  0 - stopped
