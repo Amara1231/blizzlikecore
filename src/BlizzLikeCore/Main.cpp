@@ -142,16 +142,16 @@ extern int main(int argc, char **argv)
         sLog.outError("Verify that the file exists and has \'[worldserver]' written in the top of the file!");
         return 1;
     }
-    sLog.outString("Using configuration file %s.", cfg_file);
+    sLog.outDetail("Using configuration file %s.", cfg_file);
 
     uint32 confVersion = sConfig.GetIntDefault("ConfVersion", 0);
     if (confVersion < _BLIZZLIKE_CORE_CONFVER)
     {
-        sLog.outError("*****************************************************************************");
-        sLog.outError(" WARNING: Your blizzlikecore.conf version indicates your conf file is out of date!");
-        sLog.outError("          Please check for updates, as your current default values may cause");
-        sLog.outError("          strange behavior.");
-        sLog.outError("*****************************************************************************");
+        sLog.outError("************************************************************");
+        sLog.outError(" WARNING: Your blizzlikecore.conf file is out of date");
+        sLog.outError("          Please, check for updates, as your current default");
+        sLog.outError("          values may cause strange behavior.");
+        sLog.outError("************************************************************");
         clock_t pause = 3000 + clock();
 
         while (pause > clock()) {}

@@ -152,10 +152,10 @@ extern int main(int argc, char **argv)
     }
     sLog.Initialize();
 
+    sLog.outDetail("Using configuration file %s.", cfg_file);
     sLog.outString("%s [realm-daemon]", _FULLVERSION);
     sLog.outString("<Ctrl-C> to stop.");
     sLog.outString(" ");
-    sLog.outString("Using configuration file %s.", cfg_file);
 
     // Check the version of the configuration file
     uint32 confVersion = sConfig.GetIntDefault("ConfVersion", 0);

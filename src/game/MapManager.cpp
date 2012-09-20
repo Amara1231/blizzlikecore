@@ -162,6 +162,9 @@ bool MapManager::CanPlayerEnter(uint32 mapid, Player* player)
     if (!entry)
        return false;
 
+    if (entry->MapID == 169)
+       return true;
+
     const char *mapName = entry->name[player->GetSession()->GetSessionDbcLocale()];
 
     if (entry->IsDungeon())
