@@ -32,10 +32,9 @@
 #include <ace/Acceptor.h>
 #include <ace/SOCK_Acceptor.h>
 
-// Format is YYYYMMDDRR where RR is the change in the conf file
-// for that day.
-#ifndef _REALMDCONFVERSION
-# define _REALMDCONFVERSION 2010101001
+// Format is YYYYMMDD (change in the conf file)
+#ifndef _BLIZZLIKE_REALM_CONFVER
+# define _BLIZZLIKE_REALM_CONFVER 20120920
 #endif
 
 #ifndef _BLIZZLIKE_REALM_CONFIG
@@ -152,21 +151,19 @@ extern int main(int argc, char **argv)
     }
     sLog.Initialize();
 
-    sLog.outDetail("Using configuration file %s.", cfg_file);
     sLog.outString("%s [realm-daemon]", _FULLVERSION);
     sLog.outString("<Ctrl-C> to stop.");
     sLog.outString(" ");
 
     // Check the version of the configuration file
     uint32 confVersion = sConfig.GetIntDefault("ConfVersion", 0);
-    if (confVersion < _REALMDCONFVERSION)
+    if (confVersion != _BLIZZLIKE_REALM_CONFVER)
     {
-        sLog.outError("************************************************************");
-        sLog.outError(" WARNING: Your blizzlikerealm.conf file is out of date");
-        sLog.outError("          Please, check for updates, as your current default");
-        sLog.outError("          values may cause strange behavior.");
-        sLog.outError("************************************************************");
-        clock_t pause = 3000 + clock();
+        sLog.outError("*********************************************************");
+        sLog.outError(" WARNING: Your %s file is out of date.", cfg_file);
+        sLog.outError("          Please, check for updates.");
+        sLog.outError("*********************************************************");
+        clock_t pause = 6000 + clock();
 
         while (pause > clock()) {}
     }

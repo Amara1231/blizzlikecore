@@ -30,10 +30,9 @@
 # define _BLIZZLIKE_CORE_CONFIG  "blizzlikecore.conf"
 #endif //_BLIZZLIKE_CORE_CONFIG
 
-// Format is YYYYMMDDRR where RR is the change in the conf file
-// for that day.
+// Format is YYYYMMDD (change in the conf file)
 #ifndef _BLIZZLIKE_CORE_CONFVER
-# define _BLIZZLIKE_CORE_CONFVER 2012012301
+# define _BLIZZLIKE_CORE_CONFVER 20120920
 #endif //_BLIZZLIKE_CORE_CONFVER
 
 #ifdef _WIN32
@@ -142,17 +141,15 @@ extern int main(int argc, char **argv)
         sLog.outError("Verify that the file exists and has \'[worldserver]' written in the top of the file!");
         return 1;
     }
-    sLog.outDetail("Using configuration file %s.", cfg_file);
 
     uint32 confVersion = sConfig.GetIntDefault("ConfVersion", 0);
-    if (confVersion < _BLIZZLIKE_CORE_CONFVER)
+    if (confVersion != _BLIZZLIKE_CORE_CONFVER)
     {
-        sLog.outError("************************************************************");
-        sLog.outError(" WARNING: Your blizzlikecore.conf file is out of date");
-        sLog.outError("          Please, check for updates, as your current default");
-        sLog.outError("          values may cause strange behavior.");
-        sLog.outError("************************************************************");
-        clock_t pause = 3000 + clock();
+        sLog.outError("*********************************************************");
+        sLog.outError(" WARNING: Your %s file is out of date.", cfg_file);
+        sLog.outError("          Please, check for updates.");
+        sLog.outError("*********************************************************");
+        clock_t pause = 6000 + clock();
 
         while (pause > clock()) {}
     }

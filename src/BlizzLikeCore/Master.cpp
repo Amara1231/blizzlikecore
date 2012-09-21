@@ -35,6 +35,11 @@
 #include "Util.h"
 #include "BCSoap.h"
 
+// Format is BDB_YYYYMMDD
+#ifndef _REQ_BDB_VERSION
+# define _REQ_BDB_VERSION  "BDB_20120921"
+#endif //_REQ_BDB_VERSION
+
 #ifdef _WIN32
 #include "ServiceWin32.h"
 extern int m_ServiceStatus;
@@ -410,9 +415,23 @@ bool Master::_StartDB()
     // Insert version info into DB
     WorldDatabase.PExecute("UPDATE version SET core_version = '%s', core_revision = '%s'", _FULLVERSION, _REVISION);
 
+    // Check DB version
     sWorld.LoadDBVersion();
 
-    sLog.outString("Using World DB: %s", sWorld.GetDBVersion());
+    const char* db_version = sWorld.GetDBVersion();
+	if (strcmp(db_version, _REQ_BDB_VERSION) != 0)
+    {
+        sLog.outError("*********************************************************");
+        sLog.outError(" WARNING: Your World DB version: %s is wrong.", db_version);
+        sLog.outError("          Required World DB version: %s", _REQ_BDB_VERSION);
+        sLog.outError("*********************************************************");
+        clock_t pause = 6000 + clock();
+
+        while (pause > clock()) {}
+        return false;
+    }
+
+    sLog.outString("Using World DB: %s", db_version);
     return true;
 }
 
