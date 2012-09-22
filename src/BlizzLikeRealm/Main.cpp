@@ -34,12 +34,12 @@
 
 // Format is YYYYMMDD (change in the conf file)
 #ifndef _BLIZZLIKE_REALM_CONFVER
-# define _BLIZZLIKE_REALM_CONFVER 20120920
-#endif
+# define _BLIZZLIKE_REALM_CONFVER 20120921
+#endif //_BLIZZLIKE_REALM_CONFVER
 
 #ifndef _BLIZZLIKE_REALM_CONFIG
 # define _BLIZZLIKE_REALM_CONFIG  "blizzlikerealm.conf"
-#endif
+#endif //_BLIZZLIKE_REALM_CONFIG
 
 #ifdef _WIN32
 #include "ServiceWin32.h"

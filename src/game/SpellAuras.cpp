@@ -1594,10 +1594,23 @@ void Aura::TriggerSpell()
 //                    case 37125: break;
 //                    // Arcane Flurry
 //                    case 37268: break;
-//                    // Spout
-//                    case 37429: break;
-//                    // Spout
-//                    case 37430: break;
+                    case 37429:                             // Spout (left)
+                    case 37430:                             // Spout (right)
+                    {
+                        float newAngle = target->GetOrientation();
+
+                        if (auraId == 37429)
+                            newAngle += 2*M_PI/100;
+                        else
+                            newAngle -= 2*M_PI/100;
+
+                        newAngle = MapManager::NormalizeOrientation(newAngle);
+
+                        target->SetOrientation(newAngle);
+
+                        m_target->CastSpell(m_target, 37433, true);
+                        return;
+                    }
 //                    // Karazhan - Chess NPC AI, Snapshot timer
 //                    case 37440: break;
 //                    // Karazhan - Chess NPC AI, action timer

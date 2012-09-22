@@ -26,14 +26,14 @@
 #include <ace/Version.h>
 #include <ace/Get_Opt.h>
 
+// Format is YYYYMMDD (change in the conf file)
+#ifndef _BLIZZLIKE_CORE_CONFVER
+# define _BLIZZLIKE_CORE_CONFVER 20120921
+#endif //_BLIZZLIKE_CORE_CONFVER
+
 #ifndef _BLIZZLIKE_CORE_CONFIG
 # define _BLIZZLIKE_CORE_CONFIG  "blizzlikecore.conf"
 #endif //_BLIZZLIKE_CORE_CONFIG
-
-// Format is YYYYMMDD (change in the conf file)
-#ifndef _BLIZZLIKE_CORE_CONFVER
-# define _BLIZZLIKE_CORE_CONFVER 20120920
-#endif //_BLIZZLIKE_CORE_CONFVER
 
 #ifdef _WIN32
 #include "ServiceWin32.h"

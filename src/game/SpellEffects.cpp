@@ -5150,11 +5150,22 @@ void Spell::EffectScriptEffect(uint32 effIndex)
                     unitTarget->CastSpell(unitTarget, 39968, true);
                     break;
                 }*/
-                // Tidal Surge
-                case 38358:
-                    if (unitTarget)
-                        m_caster->CastSpell(unitTarget, 38353, true);
+                case 37431:                                 // Spout
+                {
+                    if (!unitTarget)
+                        return;
+
+                    unitTarget->CastSpell(unitTarget, urand(0, 1) ? 37429 : 37430, true);
                     return;
+                }
+                case 38358:                                 // Tidal Surge
+                {
+                    if (!unitTarget)
+                        return;
+
+                    unitTarget->CastSpell(unitTarget, 38353, true, NULL, NULL, m_caster->GetGUID());
+                    return;
+                }
                 /*// Flame Crash
                 case 41126:
                 {
