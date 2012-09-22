@@ -1363,7 +1363,7 @@ void Aura::TriggerSpell()
                     }
 //                    // Pain Spike
 //                    case 25572: break;
-                    case 26009:                             // Rotate 360
+/*                  case 26009:                             // Rotate 360
                     case 26136:                             // Rotate -360
                     {
                         float newAngle = target->GetOrientation();
@@ -1375,11 +1375,11 @@ void Aura::TriggerSpell()
 
                         newAngle = MapManager::NormalizeOrientation(newAngle);
 
-                        target->SetOrientation(newAngle);
+                        target->SetFacingTo(newAngle);
 
                         target->CastSpell(target, 26029, true);
                         return;
-                    }
+                    }*/
 //                    // Consume
 //                    case 26196: break;
 //                    // Berserk
@@ -1611,7 +1611,7 @@ void Aura::TriggerSpell()
 //                    case 37125: break;
 //                    // Arcane Flurry
 //                    case 37268: break;
-                    case 37429:                             // Spout (left)
+/*                  case 37429:                             // Spout (left)
                     case 37430:                             // Spout (right)
                     {
                         float newAngle = target->GetOrientation();
@@ -1623,11 +1623,11 @@ void Aura::TriggerSpell()
 
                         newAngle = MapManager::NormalizeOrientation(newAngle);
 
-                        target->SetOrientation(newAngle);
+                        target->SetFacingTo(newAngle);
 
                         m_target->CastSpell(m_target, 37433, true);
                         return;
-                    }
+                    }*/
 //                    // Karazhan - Chess NPC AI, Snapshot timer
 //                    case 37440: break;
 //                    // Karazhan - Chess NPC AI, action timer

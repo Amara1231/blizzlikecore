@@ -6832,6 +6832,28 @@ void Player::DuelComplete(DuelCompleteType type)
     if (uint32 amount = sWorld.getConfig(CONFIG_HONOR_AFTER_DUEL))
         duel->opponent->RewardHonor(NULL,1,amount);
 
+    // Gold after duel (the winner) - ImpConfig
+    if(uint32 amount = sWorld.getConfig(CONFIG_GOLD_AFTER_DUEL))
+    {
+        int copper = amount * 10000;
+ 
+        // set string varable
+        char const *duelwincstr;
+        std::stringstream ss;
+ 
+        // create chat message
+        ss << "You receive " << amount << " Gold for conquering " << GetName() << " in a duel!";
+ 
+        // convert string to const chr
+        std::string duelwinstr = ss.str();
+        duelwincstr = duelwinstr.c_str();
+        // give player gold
+        duel->opponent->ModifyMoney(copper);
+ 
+        // send chat message
+        ChatHandler(duel->opponent).SendSysMessage(duelwincstr);
+    }
+
     //cleanups
     SetUInt64Value(PLAYER_DUEL_ARBITER, 0);
     SetUInt32Value(PLAYER_DUEL_TEAM, 0);

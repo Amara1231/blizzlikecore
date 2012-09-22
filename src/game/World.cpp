@@ -1053,6 +1053,9 @@ void World::LoadConfigSettings(bool reload)
     m_configs[CONFIG_HONOR_AFTER_DUEL] = sConfig.GetIntDefault("HonorPointsAfterDuel", 0);
     if (m_configs[CONFIG_HONOR_AFTER_DUEL] < 0)
         m_configs[CONFIG_HONOR_AFTER_DUEL]= 0;
+    m_configs[CONFIG_GOLD_AFTER_DUEL] = sConfig.GetIntDefault("GoldAfterDuel", 0);
+    if(m_configs[CONFIG_GOLD_AFTER_DUEL] < 0)
+        m_configs[CONFIG_GOLD_AFTER_DUEL]= 0;
     m_configs[CONFIG_START_ALL_EXPLORED] = sConfig.GetBoolDefault("PlayerStart.MapsExplored", false);
     m_configs[CONFIG_START_ALL_REP] = sConfig.GetBoolDefault("PlayerStart.AllReputation", false);
     m_configs[CONFIG_ALWAYS_MAXSKILL] = sConfig.GetBoolDefault("AlwaysMaxWeaponSkill", false);
