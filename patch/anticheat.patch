@@ -7,10 +7,10 @@ index 0000000..4dc2128
 +-- Copyright (C) 2011-2012 BlizzLikeCore <http://blizzlike.servegame.com/>
 +INSERT INTO `blizzlike_string` VALUES (6620,'|cfff00000%s is kicked for use Teleport to Plane Hack.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(6621,'|cfff00000%s produces a anticheat alarm for %s.|r',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 diff --git a/src/BlizzLikeCore/blizzlikecore.conf.dist b/src/BlizzLikeCore/blizzlikecore.conf.dist
-index a732cca..d26e5d9 100644
+index 9927bb6..2334fe4 100644
 --- a/src/BlizzLikeCore/blizzlikecore.conf.dist
 +++ b/src/BlizzLikeCore/blizzlikecore.conf.dist
-@@ -2029,3 +2029,21 @@ DuelMod.Cooldowns = 0
+@@ -2034,3 +2034,21 @@ DuelMod.Cooldowns = 0
  AutoBroadcast.On = 0
  AutoBroadcast.Center = 0
  AutoBroadcast.Timer = 60000
@@ -682,7 +682,7 @@ index 44c1d55..a299ba8 100644
  }
  
 diff --git a/src/game/Player.cpp b/src/game/Player.cpp
-index 2619fdb..6f0c7aa 100644
+index 57f487d..48b5f91 100644
 --- a/src/game/Player.cpp
 +++ b/src/game/Player.cpp
 @@ -382,6 +382,27 @@ Player::Player (WorldSession *session): Unit()
@@ -713,7 +713,7 @@ index 2619fdb..6f0c7aa 100644
      m_mailsLoaded = false;
      m_mailsUpdated = false;
      unReadMails = 0;
-@@ -20458,12 +20479,16 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
+@@ -20480,12 +20501,16 @@ bool ItemPosCount::isContainedIn(ItemPosCountVec const& vec) const
  
  void Player::HandleFallDamage(MovementInfo& movementInfo)
  {
@@ -836,10 +836,10 @@ index c4c3f6f..70623ef 100644
  
      m_configs[CONFIG_COMPRESSION] = sConfig.GetIntDefault("Compression", 1);
 diff --git a/src/game/World.h b/src/game/World.h
-index a23430a..b28319c 100644
+index 4add340..d6a7213 100644
 --- a/src/game/World.h
 +++ b/src/game/World.h
-@@ -574,6 +574,10 @@ class World
+@@ -575,6 +575,10 @@ class World
          static int32 GetVisibilityNotifyPeriodInInstances() { return m_visibility_notify_periodInInstances;  }
          static int32 GetVisibilityNotifyPeriodInBGArenas()  { return m_visibility_notify_periodInBGArenas;   }
  
@@ -850,7 +850,7 @@ index a23430a..b28319c 100644
          void ProcessCliCommands();
          void QueueCliCommand(CliCommandHolder* commandHolder) { cliCmdQueue.add(commandHolder); }
  
-@@ -661,6 +665,10 @@ class World
+@@ -662,6 +666,10 @@ class World
          static int32 m_visibility_notify_periodInInstances;
          static int32 m_visibility_notify_periodInBGArenas;
  

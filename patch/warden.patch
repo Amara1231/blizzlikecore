@@ -48,10 +48,10 @@ index 0000000..57684e0
 +UNLOCK TABLES;
 \ No newline at end of file
 diff --git a/src/BlizzLikeCore/blizzlikecore.conf.dist b/src/BlizzLikeCore/blizzlikecore.conf.dist
-index a732cca..1a82123 100644
+index 9927bb6..5deb532 100644
 --- a/src/BlizzLikeCore/blizzlikecore.conf.dist
 +++ b/src/BlizzLikeCore/blizzlikecore.conf.dist
-@@ -2029,3 +2029,51 @@ DuelMod.Cooldowns = 0
+@@ -2034,3 +2034,51 @@ DuelMod.Cooldowns = 0
  AutoBroadcast.On = 0
  AutoBroadcast.Center = 0
  AutoBroadcast.Timer = 60000
@@ -103,7 +103,6 @@ index a732cca..1a82123 100644
 +Warden.ClientResponseDelay = 600
 +Warden.ClientCheckHoldOff = 5
 +Warden.LogFile = "warden.log"
-+
 diff --git a/src/BlizzLikeRealm/AuthSocket.cpp b/src/BlizzLikeRealm/AuthSocket.cpp
 index a5e5954..b309d55 100644
 --- a/src/BlizzLikeRealm/AuthSocket.cpp
@@ -3594,7 +3593,7 @@ index 0000000..25eacd8
 +
 +#endif
 diff --git a/src/game/World.cpp b/src/game/World.cpp
-index c4c3f6f..8b30778 100644
+index db0dcaf..840580e 100644
 --- a/src/game/World.cpp
 +++ b/src/game/World.cpp
 @@ -60,6 +60,7 @@
@@ -3605,7 +3604,7 @@ index c4c3f6f..8b30778 100644
  
  INSTANTIATE_SINGLETON_1(World);
  
-@@ -1097,6 +1098,14 @@ void World::LoadConfigSettings(bool reload)
+@@ -1100,6 +1101,14 @@ void World::LoadConfigSettings(bool reload)
      m_configs[CONFIG_CHATLOG_PUBLIC] = sConfig.GetBoolDefault("ChatLogs.Public", false);
      m_configs[CONFIG_CHATLOG_ADDON] = sConfig.GetBoolDefault("ChatLogs.Addon", false);
      m_configs[CONFIG_CHATLOG_BGROUND] = sConfig.GetBoolDefault("ChatLogs.BattleGround", false);
@@ -3620,7 +3619,7 @@ index c4c3f6f..8b30778 100644
  }
  
  // Initialize the World
-@@ -1485,6 +1494,10 @@ void World::SetInitialWorldSettings()
+@@ -1488,6 +1497,10 @@ void World::SetInitialWorldSettings()
      uint32 nextGameEvent = gameeventmgr.Initialize();
      m_timers[WUPDATE_EVENTS].SetInterval(nextGameEvent);    //depend on next event
  
@@ -3632,10 +3631,10 @@ index c4c3f6f..8b30778 100644
      sLog.outString("Starting BattleGround System");
      sBattleGroundMgr.CreateInitialBattleGrounds();
 diff --git a/src/game/World.h b/src/game/World.h
-index a23430a..eec78f3 100644
+index 4add340..522d330 100644
 --- a/src/game/World.h
 +++ b/src/game/World.h
-@@ -249,6 +249,12 @@ enum WorldConfigs
+@@ -250,6 +250,12 @@ enum WorldConfigs
      CONFIG_AUTOBROADCAST_TIMER,
      CONFIG_AUTOBROADCAST_ENABLED,
      CONFIG_AUTOBROADCAST_CENTER,
