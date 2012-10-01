@@ -29,10 +29,16 @@
 #include "Database/SqlOperations.h"
 #include "Timer.h"
 
-
 #include <ctime>
 #include <iostream>
 #include <fstream>
+
+#ifdef _WIN32
+# include <windows.h>
+# define sleep(x) Sleep(x * 1000)
+#else
+# include <unistd.h>
+#endif
 
 size_t Database::db_count = 0;
 
@@ -83,6 +89,7 @@ bool Database::Initialize(const char *infoString)
     if (!mysqlInit)
     {
         sLog.outError("Could not initialize Mysql connection");
+        sleep(10);
         return false;
     }
 
@@ -173,6 +180,7 @@ bool Database::Initialize(const char *infoString)
     {
         sLog.outError("Could not connect to MySQL database at %s: %s\n", host.c_str(),mysql_error(mysqlInit));
         mysql_close(mysqlInit);
+        sleep(10);
         return false;
     }
 }

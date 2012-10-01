@@ -49,6 +49,13 @@ char serviceDescription[] = "blizzlike core service";
 int m_ServiceStatus = -1;
 #endif
 
+#ifdef _WIN32
+# include <windows.h>
+# define sleep(x) Sleep(x * 1000)
+#else
+# include <unistd.h>
+#endif
+
 DatabaseType WorldDatabase;                                 ///< Accessor to the world database
 DatabaseType CharacterDatabase;                             ///< Accessor to the character database
 DatabaseType LoginDatabase;                                 ///< Accessor to the realm/login database
@@ -145,13 +152,10 @@ extern int main(int argc, char **argv)
     uint32 confVersion = sConfig.GetIntDefault("ConfVersion", 0);
     if (confVersion != _BLIZZLIKE_CORE_CONFVER)
     {
-        sLog.outError("*********************************************************");
-        sLog.outError(" WARNING: Your %s file is out of date.", cfg_file);
-        sLog.outError("          Please, check for updates.");
-        sLog.outError("*********************************************************");
-        clock_t pause = 6000 + clock();
-
-        while (pause > clock()) {}
+        sLog.outError(" WARNING:");
+        sLog.outError(" Your %s file is out of date.", cfg_file);
+        sLog.outError(" Please, check for updates.");
+        sleep(10);
     }
 
     sLog.outDetail("Using ACE: %s", ACE_VERSION);

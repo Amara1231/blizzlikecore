@@ -55,6 +55,13 @@ char serviceDescription[] = "blizzlike realm service";
 int m_ServiceStatus = -1;
 #endif
 
+#ifdef _WIN32
+# include <windows.h>
+# define sleep(x) Sleep(x * 1000)
+#else
+# include <unistd.h>
+#endif
+
 bool StartDB();
 void UnhookSignals();
 void HookSignals();
@@ -159,13 +166,10 @@ extern int main(int argc, char **argv)
     uint32 confVersion = sConfig.GetIntDefault("ConfVersion", 0);
     if (confVersion != _BLIZZLIKE_REALM_CONFVER)
     {
-        sLog.outError("*********************************************************");
-        sLog.outError(" WARNING: Your %s file is out of date.", cfg_file);
-        sLog.outError("          Please, check for updates.");
-        sLog.outError("*********************************************************");
-        clock_t pause = 6000 + clock();
-
-        while (pause > clock()) {}
+        sLog.outError(" WARNING:");
+        sLog.outError(" Your %s file is out of date.", cfg_file);
+        sLog.outError(" Please, check for updates.");
+        sleep(10);
     }
 
     sLog.outDetail("Using ACE: %s", ACE_VERSION);
@@ -331,6 +335,7 @@ bool StartDB()
     if (dbstring.empty())
     {
         sLog.outError("Database not specified");
+        sleep(10);
         return false;
     }
 
@@ -338,6 +343,7 @@ bool StartDB()
     if (!LoginDatabase.Initialize(dbstring.c_str()))
     {
         sLog.outError("Cannot connect to database");
+        sleep(10);
         return false;
     }
 
