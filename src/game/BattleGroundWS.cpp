@@ -113,20 +113,20 @@ void BattleGroundWS::Update(time_t diff)
           m_FlagSpellForceTimer += diff;
           if (m_FlagDebuffState == 0 && m_FlagSpellForceTimer >= 600000)  //10 minutes
           {
-            if (Player * plr = objmgr.GetPlayer(m_FlagKeepers[0]))
+            if (Player * plr = ObjectAccessor::FindPlayer(m_FlagKeepers[0]))
               plr->CastSpell(plr,WS_SPELL_FOCUSED_ASSAULT,true);
-            if (Player * plr = objmgr.GetPlayer(m_FlagKeepers[1]))
+            if (Player * plr = ObjectAccessor::FindPlayer(m_FlagKeepers[1]))
               plr->CastSpell(plr,WS_SPELL_FOCUSED_ASSAULT,true);
             m_FlagDebuffState = 1;
           }
           else if (m_FlagDebuffState == 1 && m_FlagSpellForceTimer >= 900000) //15 minutes
           {
-            if (Player * plr = objmgr.GetPlayer(m_FlagKeepers[0]))
+            if (Player * plr = ObjectAccessor::FindPlayer(m_FlagKeepers[0]))
             {
               plr->RemoveAurasDueToSpell(WS_SPELL_FOCUSED_ASSAULT);
               plr->CastSpell(plr,WS_SPELL_BRUTAL_ASSAULT,true);
             }
-            if (Player * plr = objmgr.GetPlayer(m_FlagKeepers[1]))
+            if (Player * plr = ObjectAccessor::FindPlayer(m_FlagKeepers[1]))
             {
               plr->RemoveAurasDueToSpell(WS_SPELL_FOCUSED_ASSAULT);
               plr->CastSpell(plr,WS_SPELL_BRUTAL_ASSAULT,true);
@@ -238,7 +238,7 @@ void BattleGroundWS::EventPlayerCapturedFlag(Player *Source)
 
     uint32 winner = 0;
 
-    //TODO FIX reputation and honor gains for low level players!
+    // TODO FIX reputation and honor gains for low level players!
 
     Source->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_ENTER_PVP_COMBAT);
     if (Source->GetTeam() == ALLIANCE)
@@ -257,8 +257,7 @@ void BattleGroundWS::EventPlayerCapturedFlag(Player *Source)
         if (GetTeamScore(ALLIANCE) < BG_WS_MAX_TEAM_SCORE)
             AddPoint(ALLIANCE, 1);
         PlaySoundToAll(BG_WS_SOUND_FLAG_CAPTURED_ALLIANCE);
-        RewardReputationToTeam(890, BG_WSG_Reputation[m_HonorMode][BG_WSG_FLAG_CAP], ALLIANCE);          // +35 reputation
-        RewardHonorToTeam(BG_WSG_Honor[m_HonorMode][BG_WSG_FLAG_CAP], ALLIANCE);                    // +40 bonushonor
+        RewardReputationToTeam(890, m_ReputationCapture, ALLIANCE);
     }
     else
     {
@@ -276,9 +275,10 @@ void BattleGroundWS::EventPlayerCapturedFlag(Player *Source)
         if (GetTeamScore(HORDE) < BG_WS_MAX_TEAM_SCORE)
             AddPoint(HORDE, 1);
         PlaySoundToAll(BG_WS_SOUND_FLAG_CAPTURED_HORDE);
-        RewardReputationToTeam(889, BG_WSG_Reputation[m_HonorMode][BG_WSG_FLAG_CAP], HORDE);             // +35 reputation
-        RewardHonorToTeam(BG_WSG_Honor[m_HonorMode][BG_WSG_FLAG_CAP], HORDE);                       // +40 bonushonor
+        RewardReputationToTeam(889, m_ReputationCapture, HORDE);
     }
+    //for flag capture is reward 2 honorable kills
+    RewardHonorToTeam(GetBonusHonorFromKill(2), Source->GetTeam());
 
     SpawnBGObject(BG_WS_OBJECT_H_FLAG, BG_WS_FLAG_RESPAWN_TIME);
     SpawnBGObject(BG_WS_OBJECT_A_FLAG, BG_WS_FLAG_RESPAWN_TIME);
@@ -675,6 +675,10 @@ void BattleGroundWS::ResetBGSubclass()
     m_FlagState[BG_TEAM_HORDE]          = BG_WS_FLAG_STATE_ON_BASE;
     m_TeamScores[BG_TEAM_ALLIANCE]      = 0;
     m_TeamScores[BG_TEAM_HORDE]         = 0;
+    bool isBGWeekend = false;           // TODO FIXME - call sBattleGroundMgr->IsBGWeekend(m_TypeID); - you must also implement that call!
+    m_ReputationCapture = (isBGWeekend) ? 45 : 35;
+    m_HonorWinKills = (isBGWeekend) ? 3 : 1;
+    m_HonorEndKills = (isBGWeekend) ? 4 : 2;
 
     /* Spirit nodes is static at this BG and then not required deleting at BG reset.
     if (m_BgCreatures[WS_SPIRIT_MAIN_ALLIANCE])
@@ -683,6 +687,20 @@ void BattleGroundWS::ResetBGSubclass()
     if (m_BgCreatures[WS_SPIRIT_MAIN_HORDE])
         DelCreature(WS_SPIRIT_MAIN_HORDE);
     */
+}
+
+void BattleGroundWS::EndBattleGround(uint32 winner)
+{
+    // win reward
+    if (winner == ALLIANCE)
+        RewardHonorToTeam(GetBonusHonorFromKill(m_HonorWinKills), ALLIANCE);
+    if (winner == HORDE)
+        RewardHonorToTeam(GetBonusHonorFromKill(m_HonorWinKills), HORDE);
+    // complete map_end rewards (even if no team wins)
+    RewardHonorToTeam(GetBonusHonorFromKill(m_HonorEndKills), ALLIANCE);
+    RewardHonorToTeam(GetBonusHonorFromKill(m_HonorEndKills), HORDE);
+
+    BattleGround::EndBattleGround(winner);
 }
 
 void BattleGroundWS::HandleKillPlayer(Player *player, Player *killer)

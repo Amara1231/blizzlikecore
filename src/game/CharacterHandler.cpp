@@ -383,7 +383,7 @@ void WorldSession::HandleCharDeleteOpcode(WorldPacket& recv_data)
     recv_data >> guid;
 
     // can't delete loaded character
-    if (objmgr.GetPlayer(guid))
+    if (ObjectAccessor::FindPlayer(guid))
         return;
 
     uint32 accountId = 0;

@@ -128,10 +128,10 @@ void BattleGroundEY::AddPoints(uint32 Team, uint32 Points)
     m_TeamScores[team_index] += Points;
     m_score[team_index] = m_TeamScores[team_index];
     m_HonorScoreTics[team_index] += Points;
-    if (m_HonorScoreTics[team_index] >= BG_EY_HonorScoreTicks[m_HonorMode])
+    if (m_HonorScoreTics[team_index] >= m_HonorTics)
     {
-        RewardHonorToTeam(20, Team);
-        m_HonorScoreTics[team_index] -= BG_EY_HonorScoreTicks[m_HonorMode];
+        RewardHonorToTeam(GetBonusHonorFromKill(1), Team);
+        m_HonorScoreTics[team_index] -= m_HonorTics;
     }
     UpdateTeamScore(Team);
 }
@@ -147,7 +147,7 @@ void BattleGroundEY::CheckSomeoneJoinedPoint()
             uint8 j = 0;
             while (j < m_PlayersNearPoint[EY_POINTS_MAX].size())
             {
-                Player *plr = objmgr.GetPlayer(m_PlayersNearPoint[EY_POINTS_MAX][j]);
+                Player *plr = ObjectAccessor::FindPlayer(m_PlayersNearPoint[EY_POINTS_MAX][j]);
                 if (!plr)
                 {
                     sLog.outError("BattleGroundEY: Player (GUID: %u) not found!", GUID_LOPART(m_PlayersNearPoint[EY_POINTS_MAX][j]));
@@ -187,7 +187,7 @@ void BattleGroundEY::CheckSomeoneLeftPoint()
             uint8 j = 0;
             while (j < m_PlayersNearPoint[i].size())
             {
-                Player *plr = objmgr.GetPlayer(m_PlayersNearPoint[i][j]);
+                Player *plr = ObjectAccessor::FindPlayer(m_PlayersNearPoint[i][j]);
                 if (!plr)
                 {
                     sLog.outError("BattleGroundEY: Player (GUID: %u) not found!", GUID_LOPART(m_PlayersNearPoint[i][j]));
@@ -242,7 +242,7 @@ void BattleGroundEY::UpdatePointStatuses()
 
         for (uint8 i = 0; i < m_PlayersNearPoint[point].size(); ++i)
         {
-            Player *plr = objmgr.GetPlayer(m_PlayersNearPoint[point][i]);
+            Player *plr = ObjectAccessor::FindPlayer(m_PlayersNearPoint[point][i]);
             if (plr)
             {
                 this->UpdateWorldStateForPlayer(PROGRESS_BAR_STATUS, m_PointBarStatus[point], plr);
@@ -275,6 +275,20 @@ void BattleGroundEY::UpdateTeamScore(uint32 Team)
         UpdateWorldState(EY_ALLIANCE_RESOURCES, score);
     else
         UpdateWorldState(EY_HORDE_RESOURCES, score);
+}
+
+void BattleGroundEY::EndBattleGround(uint32 winner)
+{
+    // win reward
+    if (winner == ALLIANCE)
+        RewardHonorToTeam(GetBonusHonorFromKill(1), ALLIANCE);
+    if (winner == HORDE)
+        RewardHonorToTeam(GetBonusHonorFromKill(1), HORDE);
+    // complete map reward
+    RewardHonorToTeam(GetBonusHonorFromKill(1), ALLIANCE);
+    RewardHonorToTeam(GetBonusHonorFromKill(1), HORDE);
+
+    BattleGround::EndBattleGround(winner);
 }
 
 void BattleGroundEY::UpdatePointsCount(uint32 Team)
@@ -498,6 +512,8 @@ void BattleGroundEY::ResetBGSubclass()
     m_DroppedFlagGUID = 0;
     m_PointAddingTimer = 0;
     m_TowerCapCheckTimer = 0;
+    bool isBGWeekend = false;           // TODO FIXME - call sBattleGroundMgr->IsBGWeekend(m_TypeID); - you must also implement that call!
+    uint32 m_HonorTics = (isBGWeekend) ? BG_EY_EYWeekendHonorTicks : BG_EY_NotEYWeekendHonorTicks;
 
     for (uint8 i = 0; i < EY_POINTS_MAX; ++i)
     {

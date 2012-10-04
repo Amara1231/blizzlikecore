@@ -27,6 +27,7 @@
 #include "World.h"
 #include "Util.h"
 #include "GridNotifiersImpl.h"
+#include "Formulas.h"
 
 namespace blizzlike
 {
@@ -239,7 +240,7 @@ void BattleGround::Update(time_t diff)
     {
         for (std::map<uint64, uint8>::iterator itr = m_RemovedPlayers.begin(); itr != m_RemovedPlayers.end(); ++itr)
         {
-            Player *plr = objmgr.GetPlayer(itr->first);
+            Player *plr = ObjectAccessor::FindPlayer(itr->first);
             switch(itr->second)
             {
                 //following code is handled by event:
@@ -273,7 +274,7 @@ void BattleGround::Update(time_t diff)
     {
         for (std::map<uint64, BattleGroundPlayer>::iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
         {
-            Player *plr = objmgr.GetPlayer(itr->first);
+            Player *plr = ObjectAccessor::FindPlayer(itr->first);
             itr->second.LastOnlineTime += diff;
 
             if (plr)
@@ -303,7 +304,7 @@ void BattleGround::Update(time_t diff)
                 Creature *sh = NULL;
                 for (std::vector<uint64>::iterator itr2 = (itr->second).begin(); itr2 != (itr->second).end(); ++itr2)
                 {
-                    Player *plr = objmgr.GetPlayer(*itr2);
+                    Player *plr = ObjectAccessor::FindPlayer(*itr2);
                     if (!plr)
                         continue;
 
@@ -332,7 +333,7 @@ void BattleGround::Update(time_t diff)
     {
         for (std::vector<uint64>::iterator itr = m_ResurrectQueue.begin(); itr != m_ResurrectQueue.end(); ++itr)
         {
-            Player *plr = objmgr.GetPlayer(*itr);
+            Player *plr = ObjectAccessor::FindPlayer(*itr);
             if (!plr)
                 continue;
             plr->ResurrectPlayer(1.0f);
@@ -357,6 +358,13 @@ void BattleGround::Update(time_t diff)
         else if (m_PrematureCountDownTimer < diff)
         {
             // time's up!
+            uint32 winner = 0;
+            if (GetPlayersCountByTeam(ALLIANCE) >= GetMinPlayersPerTeam())
+                winner = ALLIANCE;
+            else if (GetPlayersCountByTeam(HORDE) >= GetMinPlayersPerTeam())
+                winner = HORDE;
+
+            EndBattleGround(winner); 
             EndBattleGround(0); // noone wins
             m_PrematureCountDown = false;
         }
@@ -432,7 +440,7 @@ void BattleGround::Update(time_t diff)
             if (isArena())
             {
                 for (BattleGroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
-                    if (Player *plr = objmgr.GetPlayer(itr->first))
+                    if (Player *plr = ObjectAccessor::FindPlayer(itr->first))
                         plr->RemoveAurasDueToSpell(SPELL_ARENA_PREPARATION);
 
                 CheckArenaWinConditions();
@@ -442,7 +450,7 @@ void BattleGround::Update(time_t diff)
                 PlaySoundToAll(SOUND_BG_START);
 
                 for (BattleGroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
-                    if (Player* plr = objmgr.GetPlayer(itr->first))
+                    if (Player* plr = ObjectAccessor::FindPlayer(itr->first))
                         plr->RemoveAurasDueToSpell(SPELL_PREPARATION);
 
                 //Announce BG starting
@@ -486,7 +494,7 @@ void BattleGround::SendPacketToAll(WorldPacket *packet)
         if (itr->second.LastOnlineTime)
             continue;
 
-        Player *plr = objmgr.GetPlayer(itr->first);
+        Player *plr = ObjectAccessor::FindPlayer(itr->first);
         if (plr)
             plr->GetSession()->SendPacket(packet);
         else
@@ -501,7 +509,7 @@ void BattleGround::SendPacketToTeam(uint32 TeamID, WorldPacket *packet, Player *
         if (itr->second.LastOnlineTime)
             continue;
 
-        Player *plr = objmgr.GetPlayer(itr->first);
+        Player *plr = ObjectAccessor::FindPlayer(itr->first);
 
         if (!plr)
         {
@@ -536,7 +544,7 @@ void BattleGround::PlaySoundToTeam(uint32 SoundID, uint32 TeamID)
         if (itr->second.LastOnlineTime)
             continue;
 
-        Player *plr = objmgr.GetPlayer(itr->first);
+        Player *plr = ObjectAccessor::FindPlayer(itr->first);
 
         if (!plr)
         {
@@ -562,7 +570,7 @@ void BattleGround::CastSpellOnTeam(uint32 SpellID, uint32 TeamID)
         if (itr->second.LastOnlineTime)
             continue;
 
-        Player *plr = objmgr.GetPlayer(itr->first);
+        Player *plr = ObjectAccessor::FindPlayer(itr->first);
 
         if (!plr)
         {
@@ -586,7 +594,7 @@ void BattleGround::YellToAll(Creature* creature, const char* text, uint32 langua
             continue;
 
         WorldPacket data(SMSG_MESSAGECHAT, 200);
-        Player *plr = objmgr.GetPlayer(itr->first);
+        Player *plr = ObjectAccessor::FindPlayer(itr->first);
         if (!plr)
         {
             sLog.outError("BattleGround: Player (GUID: %u) not found!", GUID_LOPART(itr->first));
@@ -605,7 +613,7 @@ void BattleGround::RewardHonorToTeam(uint32 Honor, uint32 TeamID)
         if (itr->second.LastOnlineTime)
             continue;
 
-        Player *plr = objmgr.GetPlayer(itr->first);
+        Player *plr = ObjectAccessor::FindPlayer(itr->first);
 
         if (!plr)
         {
@@ -633,7 +641,7 @@ void BattleGround::RewardReputationToTeam(uint32 faction_id, uint32 Reputation, 
         if (itr->second.LastOnlineTime)
             continue;
 
-        Player *plr = objmgr.GetPlayer(itr->first);
+        Player *plr = ObjectAccessor::FindPlayer(itr->first);
 
         if (!plr)
         {
@@ -731,7 +739,7 @@ void BattleGround::EndBattleGround(uint32 winner)
             sLog.outArena("Arena match Type: %u for Team1Id: %u - Team2Id: %u ended. WinnerTeamId: %u. Winner rating: %u, Loser rating: %u. RatingChange: %i.", m_ArenaType, m_ArenaTeamIds[BG_TEAM_ALLIANCE], m_ArenaTeamIds[BG_TEAM_HORDE], winner_arena_team->GetId(), winner_rating, loser_rating, winner_change);
             if (sWorld.getConfig(CONFIG_ARENA_LOG_EXTENDED_INFO))
                 for (BattleGround::BattleGroundScoreMap::const_iterator itr = GetPlayerScoresBegin();itr !=GetPlayerScoresEnd(); ++itr)
-                    if (Player* player = objmgr.GetPlayer(itr->first))
+                    if (Player* player = ObjectAccessor::FindPlayer(itr->first))
                         sLog.outArena("Statistics for %s (GUID: " UI64FMTD ", Team: %d, IP: %s): %u damage, %u healing, %u killing blows", player->GetName(), itr->first, player->GetArenaTeamId(m_ArenaType == 5 ? 2 : m_ArenaType == 3), player->GetSession()->GetRemoteAddress().c_str(), itr->second->DamageDone, itr->second->HealingDone, itr->second->KillingBlows);
         }
         else
@@ -752,7 +760,7 @@ void BattleGround::EndBattleGround(uint32 winner)
 
     for (std::map<uint64, BattleGroundPlayer>::iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
     {
-        Player *plr = objmgr.GetPlayer(itr->first);
+        Player *plr = ObjectAccessor::FindPlayer(itr->first);
         uint32 team = itr->second.Team;
 
         if (!plr)
@@ -794,7 +802,6 @@ void BattleGround::EndBattleGround(uint32 winner)
         if (team == winner)
         {
             RewardMark(plr,ITEM_WINNER_COUNT);
-            UpdatePlayerScore(plr, SCORE_BONUS_HONOR, 20);
             RewardQuest(plr);
         }
         else if (winner != 0)
@@ -845,6 +852,13 @@ void BattleGround::EndBattleGround(uint32 winner)
 
     if (winmsg_id)
         SendMessageToAll(winmsg_id, CHAT_MSG_BG_SYSTEM_NEUTRAL);
+}
+
+uint32 BattleGround::GetBonusHonorFromKill(uint32 kills) const
+{
+    // Variable kills means how many honorable kills you scored (so we need kills * honor_for_one_kill)
+    uint32 maxLevel = std::min(GetMaxLevel(), 70U);
+    return blizzlike::Honor::hk_honor_at_level(maxLevel, float(kills));
 }
 
 uint32 BattleGround::GetBattlemasterEntry() const
@@ -996,7 +1010,7 @@ void BattleGround::RemovePlayerAtLeave(uint64 guid, bool Transport, bool SendPac
 
     RemovePlayerFromResurrectQueue(guid);
 
-    Player *plr = objmgr.GetPlayer(guid);
+    Player *plr = ObjectAccessor::FindPlayer(guid);
 
     // should remove spirit of redemption
     if (plr && plr->HasAuraType(SPELL_AURA_SPIRIT_OF_REDEMPTION))
@@ -1379,7 +1393,7 @@ void BattleGround::AddPlayerToResurrectQueue(uint64 npc_guid, uint64 player_guid
 {
     m_ReviveQueue[npc_guid].push_back(player_guid);
 
-    Player *plr = objmgr.GetPlayer(player_guid);
+    Player *plr = ObjectAccessor::FindPlayer(player_guid);
     if (!plr)
         return;
 
@@ -1402,7 +1416,7 @@ void BattleGround::RemovePlayerFromResurrectQueue(uint64 player_guid)
             {
                 (itr->second).erase(itr2);
 
-                Player *plr = objmgr.GetPlayer(player_guid);
+                Player *plr = ObjectAccessor::FindPlayer(player_guid);
                 if (!plr)
                     return;
 
@@ -1760,7 +1774,7 @@ void BattleGround::HandleKillPlayer(Player *player, Player *killer)
 
         for (std::map<uint64, BattleGroundPlayer>::iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
         {
-            Player *plr = objmgr.GetPlayer(itr->first);
+            Player *plr = ObjectAccessor::FindPlayer(itr->first);
 
             if (!plr || plr == killer)
                 continue;
@@ -1803,7 +1817,7 @@ void BattleGround::PlayerRelogin(uint64 guid)
     if (GetStatus() != STATUS_WAIT_LEAVE)
         return;
 
-    Player *plr = objmgr.GetPlayer(guid);
+    Player *plr = ObjectAccessor::FindPlayer(guid);
     if (!plr)
     {
         sLog.outError("BattleGround: Player (GUID: %u) not found!", GUID_LOPART(guid));
@@ -1829,7 +1843,7 @@ uint32 BattleGround::GetAlivePlayersCountByTeam(uint32 Team) const
     {
         if (itr->second.Team == Team)
         {
-            Player * pl = objmgr.GetPlayer(itr->first);
+            Player * pl = ObjectAccessor::FindPlayer(itr->first);
             if (pl && pl->isAlive() && !pl->HasByteFlag(UNIT_FIELD_BYTES_2, 3, FORM_SPIRITOFREDEMPTION))
                 ++count;
         }
@@ -1879,7 +1893,7 @@ void BattleGround::Announce()
         uint32 queue_id = 0;
 
         for (std::map<uint64, BattleGroundPlayer>::iterator itr = m_Players.begin(); itr != m_Players.end(); ++itr)
-            if (Player *plr = objmgr.GetPlayer(itr->first))
+            if (Player *plr = ObjectAccessor::FindPlayer(itr->first))
                 queue_id = plr->GetBattleGroundQueueIdFromLevel();
 
         char const* bgName = GetName();

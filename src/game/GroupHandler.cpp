@@ -65,7 +65,7 @@ void WorldSession::HandleGroupInviteOpcode(WorldPacket& recv_data)
         return;
     }
 
-    Player *player = objmgr.GetPlayer(membername.c_str());
+    Player *player = ObjectAccessor::Instance().FindPlayerByName(membername.c_str());
 
     // no player
     if (!player)
@@ -194,7 +194,7 @@ void WorldSession::HandleGroupAcceptOpcode(WorldPacket & /*recv_data*/)
         return;
     }
 
-    Player* leader = objmgr.GetPlayer(group->GetLeaderGUID());
+    Player* leader = ObjectAccessor::FindPlayer(group->GetLeaderGUID());
 
     // forming a new group, create it
     if (!group->IsCreated())
@@ -218,7 +218,7 @@ void WorldSession::HandleGroupDeclineOpcode(WorldPacket & /*recv_data*/)
     if (!group) return;
 
     // remember leader if online
-    Player *leader = objmgr.GetPlayer(group->GetLeaderGUID());
+    Player *leader = ObjectAccessor::FindPlayer(group->GetLeaderGUID());
 
     // uninvite, group can be deleted
     GetPlayer()->UninviteFromGroup();
@@ -321,7 +321,7 @@ void WorldSession::HandleGroupSetLeaderOpcode(WorldPacket& recv_data)
     uint64 guid;
     recv_data >> guid;
 
-    Player *player = objmgr.GetPlayer(guid);
+    Player *player = ObjectAccessor::FindPlayer(guid);
 
     /** error handling **/
     if (!player || !group->IsLeader(GetPlayer()->GetGUID()) || player->GetGroup() != group)
@@ -514,7 +514,7 @@ void WorldSession::HandleGroupChangeSubGroupOpcode(WorldPacket& recv_data)
     /********************/
 
     // everything's fine, do it
-    if (Player* player = objmgr.GetPlayer(name.c_str()))
+    if (Player* player = ObjectAccessor::Instance().FindPlayerByName(name.c_str()))
         group->ChangeMembersGroup(player, groupNr);
     else
         group->ChangeMembersGroup(objmgr.GetPlayerGUIDByName(name.c_str()), groupNr);

@@ -1402,7 +1402,7 @@ void WorldObject::MonsterTextEmote(const char* text, uint64 TargetGuid, bool IsB
 
 void WorldObject::MonsterWhisper(const char* text, uint64 receiver, bool IsBossWhisper)
 {
-    Player *player = objmgr.GetPlayer(receiver);
+    Player *player = ObjectAccessor::FindPlayer(receiver);
     if (!player || !player->GetSession())
         return;
 
@@ -1519,7 +1519,7 @@ void WorldObject::MonsterTextEmote(int32 textId, uint64 TargetGuid, bool IsBossE
 
 void WorldObject::MonsterWhisper(int32 textId, uint64 receiver, bool IsBossWhisper)
 {
-    Player *player = objmgr.GetPlayer(receiver);
+    Player *player = ObjectAccessor::FindPlayer(receiver);
     if (!player || !player->GetSession())
         return;
 

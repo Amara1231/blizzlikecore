@@ -121,7 +121,7 @@ void Guild::CreateDefaultGuildRanks(int locale_idx)
 
 bool Guild::AddMember(uint64 plGuid, uint32 plRank)
 {
-    Player* pl = objmgr.GetPlayer(plGuid);
+    Player* pl = ObjectAccessor::FindPlayer(plGuid);
     if (pl)
     {
         if (pl->GetGuildId() != 0)
@@ -405,7 +405,7 @@ bool Guild::FillPlayerData(uint64 guid, MemberSlot* memslot)
     uint32 plClass;
     uint32 plZone;
 
-    Player* pl = objmgr.GetPlayer(guid);
+    Player* pl = ObjectAccessor::FindPlayer(guid);
     if (pl)
     {
         accountId = pl->GetSession()->GetAccountId();
@@ -510,7 +510,7 @@ void Guild::DelMember(uint64 guid, bool isDisbanding)
         SetLeader(newLeaderGUID);
 
         // If player not online data in data field will be loaded from guild tabs no need to update it !!
-        if (Player *newLeader = objmgr.GetPlayer(newLeaderGUID))
+        if (Player *newLeader = ObjectAccessor::FindPlayer(newLeaderGUID))
             newLeader->SetRank(GR_GUILDMASTER);
 
         // when leader non-exist (at guild load with deleted leader only) not send broadcasts
@@ -523,7 +523,7 @@ void Guild::DelMember(uint64 guid, bool isDisbanding)
 
     members.erase(GUID_LOPART(guid));
 
-    Player *player = objmgr.GetPlayer(guid);
+    Player *player = ObjectAccessor::FindPlayer(guid);
     // If player not online data in data field will be loaded from guild tabs no need to update it !!
     if (player)
     {
@@ -540,7 +540,7 @@ void Guild::ChangeRank(uint64 guid, uint32 newRank)
     if (itr != members.end())
         itr->second.RankId = newRank;
 
-    Player *player = objmgr.GetPlayer(guid);
+    Player *player = ObjectAccessor::FindPlayer(guid);
     // If player not online data in data field will be loaded from guild tabs no need to update it !!
     if (player)
         player->SetRank(newRank);

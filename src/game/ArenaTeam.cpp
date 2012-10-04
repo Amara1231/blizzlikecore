@@ -54,7 +54,7 @@ ArenaTeam::~ArenaTeam()
 
 bool ArenaTeam::Create(uint64 captainGuid, uint32 type, std::string arenaTeamName)
 {
-    if (!objmgr.GetPlayer(captainGuid))                      // player not exist
+    if (!ObjectAccessor::FindPlayer(captainGuid))                      // player not exist
         return false;
     if (objmgr.GetArenaTeamByName(arenaTeamName))            // arena team with this name already exist
         return false;
@@ -95,7 +95,7 @@ bool ArenaTeam::AddMember(const uint64& playerGuid)
     if (GetMembersSize() >= GetType() * 2)
         return false;
 
-    Player *pl = objmgr.GetPlayer(playerGuid);
+    Player *pl = ObjectAccessor::FindPlayer(playerGuid);
     if (pl)
     {
         if (pl->GetArenaTeamId(GetSlot()))
@@ -246,7 +246,7 @@ bool ArenaTeam::LoadMembersFromDB(QueryResult_AutoPtr arenaTeamMembersResult)
 void ArenaTeam::SetCaptain(const uint64& guid)
 {
     // disable remove/promote buttons
-    Player *oldcaptain = objmgr.GetPlayer(GetCaptain());
+    Player *oldcaptain = ObjectAccessor::FindPlayer(GetCaptain());
     if (oldcaptain)
         oldcaptain->SetArenaTeamInfoField(GetSlot(), ARENA_TEAM_MEMBER, 1);
 
@@ -257,7 +257,7 @@ void ArenaTeam::SetCaptain(const uint64& guid)
     CharacterDatabase.PExecute("UPDATE arena_team SET captainguid = '%u' WHERE arenateamid = '%u'", GUID_LOPART(guid), GetId());
 
     // enable remove/promote buttons
-    if (Player *newcaptain = objmgr.GetPlayer(guid))
+    if (Player *newcaptain = ObjectAccessor::FindPlayer(guid))
     {
         newcaptain->SetArenaTeamInfoField(GetSlot(), ARENA_TEAM_MEMBER, 0);
         sLog.outArena("Player: %s [GUID: %u] promoted player: %s [GUID: %u] to leader of arena team [Id: %u] [Type: %u].", oldcaptain->GetName(), oldcaptain->GetGUIDLow(), newcaptain->GetName(), newcaptain->GetGUIDLow(), GetId(), GetType());
@@ -273,7 +273,7 @@ void ArenaTeam::DelMember(uint64 guid)
             break;
         }
 
-    if (Player *player = objmgr.GetPlayer(guid))
+    if (Player *player = ObjectAccessor::FindPlayer(guid))
     {
         player->SetInArenaTeam(0, GetSlot());
         player->GetSession()->SendArenaTeamCommandResult(ERR_ARENA_TEAM_QUIT_S, GetName(), "", 0);
@@ -319,7 +319,7 @@ void ArenaTeam::Roster(WorldSession *session)
 
     for (MemberList::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
     {
-        pl = objmgr.GetPlayer(itr->guid);
+        pl = ObjectAccessor::FindPlayer(itr->guid);
 
         data << uint64(itr->guid);                          // guid
         data << uint8((pl ? 1 : 0));                        // online flag
@@ -372,7 +372,7 @@ void ArenaTeam::NotifyStatsChanged()
     // updates arena team stats for every member of the team (not only the ones who participated!)
     for (MemberList::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
     {
-        Player * plr = objmgr.GetPlayer(itr->guid);
+        Player * plr = ObjectAccessor::FindPlayer(itr->guid);
         if (plr)
             Stats(plr->GetSession());
     }
@@ -445,7 +445,7 @@ void ArenaTeam::BroadcastPacket(WorldPacket *packet)
 {
     for (MemberList::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
     {
-        Player *player = objmgr.GetPlayer(itr->guid);
+        Player *player = ObjectAccessor::FindPlayer(itr->guid);
         if (player)
             player->GetSession()->SendPacket(packet);
     }
@@ -705,7 +705,7 @@ void ArenaTeam::FinishWeek()
 bool ArenaTeam::IsFighting() const
 {
     for (MemberList::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
-        if (Player *p = objmgr.GetPlayer(itr->guid))
+        if (Player *p = ObjectAccessor::FindPlayer(itr->guid))
             if (p->GetMap()->IsBattleArena())
                 return true;
     return false;

@@ -1599,7 +1599,7 @@ Player * ChatHandler::getSelectedPlayer()
     if (guid == 0)
         return m_session->GetPlayer();
 
-    return objmgr.GetPlayer(guid);
+    return ObjectAccessor::FindPlayer(guid);
 }
 
 Unit* ChatHandler::getSelectedUnit()
@@ -1905,7 +1905,7 @@ bool ChatHandler::GetPlayerGroupAndGUIDByName(const char* cname, Player* &plr, G
                 return false;
             }
 
-            plr = objmgr.GetPlayer(name.c_str());
+            plr = ObjectAccessor::Instance().FindPlayerByName(name.c_str());
             if (offline)
                 guid = objmgr.GetPlayerGUIDByName(name.c_str());
         }

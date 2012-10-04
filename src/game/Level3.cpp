@@ -2454,7 +2454,7 @@ bool ChatHandler::HandleLearnAllDefaultCommand(const char *args)
             return false;
         }
 
-        player = objmgr.GetPlayer(name.c_str());
+        player = ObjectAccessor::Instance().FindPlayerByName(name.c_str());
     }
     else
         player = getSelectedPlayer();
@@ -4072,7 +4072,7 @@ bool ChatHandler::HandleReviveCommand(const char *args)
             return false;
         }
 
-        player = objmgr.GetPlayer(name.c_str());
+        player = ObjectAccessor::Instance().FindPlayerByName(name.c_str());
         if (!player)
             player_guid = objmgr.GetPlayerGUIDByName(name);
     }
@@ -4478,7 +4478,7 @@ bool ChatHandler::HandleLevelUpCommand(const char *args)
             return false;
         }
 
-        chr = objmgr.GetPlayer(name.c_str());
+        chr = ObjectAccessor::Instance().FindPlayerByName(name.c_str());
         if (!chr)                                            // not in game
         {
             chr_guid = objmgr.GetPlayerGUIDByName(name);
@@ -4974,7 +4974,7 @@ bool ChatHandler::HandleResetHonorCommand (const char * args)
         }
 
         uint64 guid = objmgr.GetPlayerGUIDByName(name.c_str());
-        player = objmgr.GetPlayer(guid);
+        player = ObjectAccessor::FindPlayer(guid);
     }
     else
         player = getSelectedPlayer();
@@ -5079,7 +5079,7 @@ bool ChatHandler::HandleResetLevelCommand(const char * args)
         }
 
         uint64 guid = objmgr.GetPlayerGUIDByName(name.c_str());
-        player = objmgr.GetPlayer(guid);
+        player = ObjectAccessor::FindPlayer(guid);
     }
     else
         player = getSelectedPlayer();
@@ -5123,7 +5123,7 @@ bool ChatHandler::HandleResetStatsCommand(const char * args)
         }
 
         uint64 guid = objmgr.GetPlayerGUIDByName(name.c_str());
-        player = objmgr.GetPlayer(guid);
+        player = ObjectAccessor::FindPlayer(guid);
     }
     else
         player = getSelectedPlayer();
@@ -5161,7 +5161,7 @@ bool ChatHandler::HandleResetSpellsCommand(const char * args)
             return false;
         }
 
-        player = objmgr.GetPlayer(name.c_str());
+        player = ObjectAccessor::Instance().FindPlayerByName(name.c_str());
         if (!player)
             playerGUID = objmgr.GetPlayerGUIDByName(name.c_str());
     }
@@ -5208,7 +5208,7 @@ bool ChatHandler::HandleResetTalentsCommand(const char * args)
             return false;
         }
 
-        player = objmgr.GetPlayer(name.c_str());
+        player = ObjectAccessor::Instance().FindPlayerByName(name.c_str());
         if (!player)
             playerGUID = objmgr.GetPlayerGUIDByName(name.c_str());
     }
@@ -7019,7 +7019,7 @@ bool ChatHandler::HandleSendItemsCommand(const char *args)
 
     uint32 itemTextId = !text.empty() ? objmgr.CreateItemText(text) : 0;
 
-    Player *receiver = objmgr.GetPlayer(receiver_guid);
+    Player *receiver = ObjectAccessor::FindPlayer(receiver_guid);
 
     // fill mail
     MailDraft draft(subject, itemTextId);
@@ -7119,7 +7119,7 @@ bool ChatHandler::HandleSendMoneyCommand(const char *args)
 
     uint32 itemTextId = !text.empty() ? objmgr.CreateItemText(text) : 0;
 
-    Player *receiver = objmgr.GetPlayer(receiver_guid);
+    Player *receiver = ObjectAccessor::FindPlayer(receiver_guid);
 
         MailDraft(subject, itemTextId)
         .AddMoney(money)
@@ -7145,7 +7145,7 @@ bool ChatHandler::HandleSendMessageCommand(const char *args)
         return false;
 
     // Find the player and check that he is not logging out.
-    Player *rPlayer = objmgr.GetPlayer(name.c_str());
+    Player *rPlayer = ObjectAccessor::Instance().FindPlayerByName(name.c_str());
     if (!rPlayer)
     {
         SendSysMessage(LANG_PLAYER_NOT_FOUND);
@@ -7282,7 +7282,7 @@ bool ChatHandler::HandleFreezeCommand(const char *args)
     {
         name = TargetName;
         normalizePlayerName(name);
-        player = objmgr.GetPlayer(name.c_str()); //get player by name
+        player = ObjectAccessor::Instance().FindPlayerByName(name.c_str()); //get player by name
     }
 
     if (!player)
@@ -7362,7 +7362,7 @@ bool ChatHandler::HandleUnFreezeCommand(const char *args)
     {
         name = TargetName;
         normalizePlayerName(name);
-        player = objmgr.GetPlayer(name.c_str()); //get player by name
+        player = ObjectAccessor::Instance().FindPlayerByName(name.c_str()); //get player by name
     }
 
     //effect
@@ -7530,7 +7530,7 @@ bool ChatHandler::HandleChatSpySetCommand(const char *args)
     {
         cname = name;
         normalizePlayerName(cname);
-        target = objmgr.GetPlayer(cname.c_str());
+        target = ObjectAccessor::Instance().FindPlayerByName(cname.c_str());
     }
     else
         target = getSelectedPlayer();
@@ -7556,7 +7556,7 @@ bool ChatHandler::HandleChatSpyResetCommand(const char* /*args*/)
         Player* plr = itr->second->GetSession()->GetPlayer();
         if (plr && plr->m_chatSpyGuid)
         {
-            if(Player* spy = objmgr.GetPlayer(plr->m_chatSpyGuid))
+            if(Player* spy = ObjectAccessor::FindPlayer(plr->m_chatSpyGuid))
                 if(spy->IsInWorld())
                     ChatHandler(spy).PSendSysMessage(LANG_CHATSPY_CANCELLEDMASSIVE,
                         plr->GetName(), plr->GetGUIDLow());
@@ -7580,7 +7580,7 @@ bool ChatHandler::HandleChatSpyCancelCommand(const char* args)
     {
         cname = name;
         normalizePlayerName(cname);
-        target = objmgr.GetPlayer(cname.c_str());
+        target = ObjectAccessor::Instance().FindPlayerByName(cname.c_str());
     }
     else
         target = getSelectedPlayer();
@@ -7603,7 +7603,7 @@ bool ChatHandler::HandleChatSpyCancelCommand(const char* args)
         SendSysMessage(LANG_CHATSPY_YOURCANCELLED);
     else
     {
-        Player* spy = objmgr.GetPlayer(target->m_chatSpyGuid);
+        Player* spy = ObjectAccessor::FindPlayer(target->m_chatSpyGuid);
         PSendSysMessage(LANG_CHATSPY_SMBCANCELLED, (spy ? spy->GetName() : "ERROR"), (spy ? spy->GetGUIDLow() : 0));
     }
     target->m_chatSpyGuid = 0;
@@ -7622,7 +7622,7 @@ bool ChatHandler::HandleChatSpyStatusCommand(const char* args)
         Player* plr = itr->second->GetSession()->GetPlayer();
         if (plr && plr->m_chatSpyGuid)
         {
-            Player* spy = objmgr.GetPlayer(plr->m_chatSpyGuid);
+            Player* spy = ObjectAccessor::FindPlayer(plr->m_chatSpyGuid);
             PSendSysMessage(LANG_CHATSPY_ONESPYSANOTHER,
                 (spy ? spy->GetName() : "ERROR"), (spy ? spy->GetGUIDLow() : 0 ),
                 plr->GetName(), plr->GetGUIDLow()

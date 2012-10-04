@@ -212,11 +212,11 @@ void WorldSession::HandleBattleGroundPlayerPositionsOpcode(WorldPacket & /*recv_
                 uint32 count1 = 0;                                  //always constant zero?
                 uint32 count2 = 0;                                  //count of next fields
 
-                Player *ali_plr = objmgr.GetPlayer(((BattleGroundWS*)bg)->GetAllianceFlagPickerGUID());
+                Player *ali_plr = ObjectAccessor::FindPlayer(((BattleGroundWS*)bg)->GetAllianceFlagPickerGUID());
                 if (ali_plr)
                     ++count2;
 
-                Player *horde_plr = objmgr.GetPlayer(((BattleGroundWS*)bg)->GetHordeFlagPickerGUID());
+                Player *horde_plr = ObjectAccessor::FindPlayer(((BattleGroundWS*)bg)->GetHordeFlagPickerGUID());
                 if (horde_plr)
                     ++count2;
 
@@ -824,7 +824,7 @@ void WorldSession::HandleBattleGroundReportAFK(WorldPacket& recv_data)
 {
     uint64 playerGuid;
     recv_data >> playerGuid;
-    Player *reportedPlayer = objmgr.GetPlayer(playerGuid);
+    Player *reportedPlayer = ObjectAccessor::FindPlayer(playerGuid);
 
     if (!reportedPlayer)
     {

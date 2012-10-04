@@ -91,7 +91,7 @@ bool ChatHandler::HandleMuteCommand(const char* args)
         return false;
     }
 
-    Player *chr = objmgr.GetPlayer(guid);
+    Player *chr = ObjectAccessor::FindPlayer(guid);
 
     // check security
     uint32 account_id = 0;
@@ -157,7 +157,7 @@ bool ChatHandler::HandleUnmuteCommand(const char* args)
         return false;
     }
 
-    Player *chr = objmgr.GetPlayer(guid);
+    Player *chr = ObjectAccessor::FindPlayer(guid);
 
     // check security
     uint32 account_id = 0;
@@ -1899,7 +1899,7 @@ bool ChatHandler::HandleKickPlayerCommand(const char *args)
             return false;
         }
 
-        Player* player = objmgr.GetPlayer(kickName);
+        Player* player = ObjectAccessor::Instance().FindPlayerByName(kickName);
         if (!player)
         {
             SendSysMessage(LANG_PLAYER_NOT_FOUND);
@@ -1960,7 +1960,7 @@ bool ChatHandler::HandlePInfoCommand(const char* args)
             return false;
         }
 
-        target = objmgr.GetPlayer(name.c_str());
+        target = ObjectAccessor::Instance().FindPlayerByName(name.c_str());
         if (target)
             py = strtok(NULL, " ");
         else
@@ -3056,7 +3056,7 @@ bool ChatHandler::HandleCharacterRenameCommand(const char* args)
             return false;
         }
 
-        target = objmgr.GetPlayer(oldname.c_str());
+        target = ObjectAccessor::Instance().FindPlayerByName(oldname.c_str());
 
         if (!target)
             targetGUID = objmgr.GetPlayerGUIDByName(oldname);
@@ -3477,7 +3477,7 @@ bool ChatHandler::HandleCombatStopCommand(const char* args)
             return false;
         }
 
-        player = objmgr.GetPlayer(playername.c_str());
+        player = ObjectAccessor::Instance().FindPlayerByName(playername.c_str());
 
         if (!player)
         {

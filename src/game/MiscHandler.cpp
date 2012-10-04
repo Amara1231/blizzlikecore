@@ -1039,7 +1039,7 @@ void WorldSession::HandleInspectOpcode(WorldPacket& recv_data)
 
     _player->SetSelection(guid);
 
-    Player *plr = objmgr.GetPlayer(guid);
+    Player *plr = ObjectAccessor::FindPlayer(guid);
     if (!plr)                                                // wrong player
         return;
 
@@ -1123,7 +1123,7 @@ void WorldSession::HandleInspectHonorStatsOpcode(WorldPacket& recv_data)
     uint64 guid;
     recv_data >> guid;
 
-    Player *player = objmgr.GetPlayer(guid);
+    Player *player = ObjectAccessor::FindPlayer(guid);
 
     if (!player)
     {
@@ -1197,7 +1197,7 @@ void WorldSession::HandleWhoisOpcode(WorldPacket& recv_data)
         return;
     }
 
-    Player *plr = objmgr.GetPlayer(charname.c_str());
+    Player *plr = ObjectAccessor::Instance().FindPlayerByName(charname.c_str());
 
     if (!plr)
     {
