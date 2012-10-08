@@ -226,14 +226,22 @@ bool ChatHandler::HandleGMListIngameCommand(const char* /*args*/)
 bool ChatHandler::HandleAccountPasswordCommand(const char* args)
 {
     if (!*args)
+    {
+        SendSysMessage(LANG_CMD_SYNTAX);
+        SetSentErrorMessage(true);
         return false;
+    }
 
-    char *old_pass = strtok ((char*)args, " ");
-    char *new_pass = strtok (NULL, " ");
-    char *new_pass_c  = strtok (NULL, " ");
+    char *old_pass = strtok((char*)args, " ");
+    char *new_pass = strtok(NULL, " ");
+    char *new_pass_c  = strtok(NULL, " ");
 
     if (!old_pass || !new_pass || !new_pass_c)
+    {
+        SendSysMessage(LANG_CMD_SYNTAX);
+        SetSentErrorMessage(true);
         return false;
+    }
 
     std::string password_old = old_pass;
     std::string password_new = new_pass;
@@ -241,15 +249,15 @@ bool ChatHandler::HandleAccountPasswordCommand(const char* args)
 
     if (strcmp(new_pass, new_pass_c) != 0)
     {
-        SendSysMessage (LANG_NEW_PASSWORDS_NOT_MATCH);
-        SetSentErrorMessage (true);
+        SendSysMessage(LANG_NEW_PASSWORDS_NOT_MATCH);
+        SetSentErrorMessage(true);
         return false;
     }
 
     if (!sAccountMgr->CheckPassword (m_session->GetAccountId(), password_old))
     {
-        SendSysMessage (LANG_COMMAND_WRONGOLDPASSWORD);
-        SetSentErrorMessage (true);
+        SendSysMessage(LANG_COMMAND_WRONGOLDPASSWORD);
+        SetSentErrorMessage(true);
         return false;
     }
 
@@ -264,7 +272,6 @@ bool ChatHandler::HandleAccountPasswordCommand(const char* args)
             SendSysMessage(LANG_PASSWORD_TOO_LONG);
             SetSentErrorMessage(true);
             return false;
-        case AOR_NAME_NOT_EXIST:                            // not possible case, don't want get account name for output
         default:
             SendSysMessage(LANG_COMMAND_NOTCHANGEPASSWORD);
             SetSentErrorMessage(true);
@@ -279,7 +286,8 @@ bool ChatHandler::HandleAccountLockCommand(const char* args)
     if (!*args)
     {
         SendSysMessage(LANG_USE_BOL);
-        return true;
+        SetSentErrorMessage(true);
+        return false;
     }
 
     std::string argstr = (char*)args;
@@ -298,7 +306,8 @@ bool ChatHandler::HandleAccountLockCommand(const char* args)
     }
 
     SendSysMessage(LANG_USE_BOL);
-    return true;
+    SetSentErrorMessage(true);
+    return false;
 }
 
 // Display the 'Message of the day' for the realm
