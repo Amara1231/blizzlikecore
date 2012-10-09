@@ -2354,6 +2354,7 @@ void SpellMgr::LoadSpellCustomAttr()
         case 37676: // Insidious Whisper
         case 46008: // Negative Energy
         case 45641: // Fire Bloom
+		case 5484:  // Howl Of Terror (Warlock)
             spellInfo->MaxAffectedTargets = 5;
             break;
         case 40827: // Sinful Beam
